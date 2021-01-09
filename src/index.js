@@ -3,14 +3,28 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import GlobalStyle from "./globalStyles"
+import styled from 'styled-components';
 import reportWebVitals from './reportWebVitals';
+
+
+const HomepageContainer = styled.div`
+  background-image: url("/background.png");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-color: #555;
+  background-size: cover;  
+  height: 120vh;
+  width: 100%;
+`;
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <Router>
-    <App />
-    </Router>
+      <Router>
+        <HomepageContainer>
+          <App />
+        </HomepageContainer>
+      </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

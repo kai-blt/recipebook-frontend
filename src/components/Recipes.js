@@ -7,8 +7,12 @@ import styled from 'styled-components';
 const RecipeContainer = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;    
+    justify-content: space-between;   
+    align-items: flex-start;
+    margin: 0;
+    padding: 0; 
     width: 100%;
+    height: 100vh;
     .search {
         margin-bottom: 6%;
     }
@@ -16,13 +20,15 @@ const RecipeContainer = styled.div`
 
 const RecipeListPane = styled.div`
     width: 50%;
-    margin-right: 4%;
-    padding-right: 2%;
+    height: 100vh;
+    padding: 2%;
     border-right: 1px dashed #888;
 `;
 
 const RecipeDirectionsPane = styled.div`
     width: 50%;
+    height: 100vh;
+    padding: 2%;
 `;
 
 

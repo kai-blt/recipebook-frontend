@@ -6,7 +6,7 @@ const RecipeListContainer = styled.div`
     background-color: #eee;
     border-radius: 10px;
     padding: 2%;
-    box-shadow: 4px 4px 10px #888;
+    box-shadow: 4px 4px 10px #222;
 `;
 
 const ImageContainer = styled.div`
@@ -27,7 +27,6 @@ const ImageContainer = styled.div`
         height: 21vh;
         transition: all 0.5s;
     }
-
 `;
 
 

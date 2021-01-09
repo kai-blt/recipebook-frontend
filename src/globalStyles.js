@@ -54,28 +54,35 @@ export default createGlobalStyle`
 
 
     /* BASE CSS BEGIN */
-    *, 
-    *:before,
-    *:after {
+    * {
         box-sizing: border-box;
     }
 
     html {
         font-family: 'Roboto', sans-serif;
         font-size: 62.5%;
+        margin: 0;
+        padding: 0;
     }
 
     body {
         font-weight: 300;
         font-size: 1.6rem;
         letter-spacing: 0.5px;
-        color: #555;
-        padding: 0 2%;
+        color: #fff;
+        background-color: #444;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
     }
 
+
     nav {
-        margin: 0 1%;
-        font-size: 2rem;            
+        font-size: 2rem;      
+        margin: 2% 0;  
+        width: 80%;
+        border: 2px solid blue;    
     }
 
     img {
@@ -94,6 +101,10 @@ export default createGlobalStyle`
         }
     }
 
+    p {
+        margin: 4% 0;
+    }
+
     strong {
         font-weight: 700;
     }
@@ -101,7 +112,7 @@ export default createGlobalStyle`
     h1, h2, h3, h4, h5, h6 {
         font-weight: 700;
         color: #5bc0de;        
-        margin: 1%;
+        margin: 1% 0;
     }
 
     h1 {
@@ -120,9 +131,6 @@ export default createGlobalStyle`
         font-size: 1.6rem;
     }
 
-    div {
-        margin: 0.5%;
-    }
 
     label {
         font-weight: 700;
@@ -132,7 +140,7 @@ export default createGlobalStyle`
     input {
         width: 100%;
         padding: 2% 2%;
-        margin: 1% 0;
+        margin: 2% 0;
         border: 1px solid #999;
         border-radius: 6px;
     }
@@ -140,7 +148,6 @@ export default createGlobalStyle`
     button {
         width: 100%;
         padding: 2% 2%;
-        margin: 1% 0;
         font-size: 2rem;
         font-weight: 500;
         border: 1px solid #999;
