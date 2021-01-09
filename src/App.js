@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const AppContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 70%;
   height: 100vh;
@@ -20,7 +20,7 @@ const AppContainer = styled.div`
 function App() {
   return (
     <AppContainer>
-      {/* <Nav /> */}
+      <Nav /> 
       <Switch>
         <Route path="/recipes">
           <Recipes />

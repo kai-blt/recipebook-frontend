@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import axios from 'axios';
+import axiosWithAuth from '../axios/axiosWithAuth';
+
+
+const SignUp = styled.div`
+    text-decoration: underline;
+`;
+
+
 
 const initialFormValues = {
     username: '',
+    email: '',
     password: ''
 }
 
 function Login(props) {
     const [formValues, setFormValues] = useState(initialFormValues);
+    const [isCreatingAccount, setIsCreatingAccount] = useState(false);
     
     const history = useHistory();
 
@@ -19,7 +30,11 @@ function Login(props) {
         })
     }
 
-    const onSubmit = (e) => {
+    const handleClick = () => {
+        setIsCreatingAccount(!isCreatingAccount)
+    }
+
+    const signIn = (e) => {
         e.preventDefault();
         axios.post(
                 'http://localhost:2019/login',
@@ -40,29 +55,75 @@ function Login(props) {
             .catch(err => {
                 console.log(err);
             });
+    }
 
-        setFormValues(initialFormValues);
+
+    const signUp = (e) => {
+        e.preventDefault();
+
+        axios.post(
+                'http://localhost:2019/createnewuser', formValues)
+            .then(res => {
+                localStorage.setItem("token", res.data.access_token);
+                setIsCreatingAccount(!isCreatingAccount);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     return(
         <div>
-            <form onSubmit={onSubmit}>
-                <label>Username&nbsp;
-                    <input
-                        type="text"
-                        name="username"
-                        onChange={onChange}
-                    />
-                </label>
-                <label>Password&nbsp;
-                    <input
-                        type="password"
-                        name="password"
-                        onChange={onChange}
-                    />
-                </label>
-                <button>Login</button>
-            </form>
+            {!isCreatingAccount
+            ? (
+                <>
+                <form onSubmit={signIn}>
+                    <label>Username&nbsp;
+                        <input
+                            type="text"
+                            name="username"
+                            onChange={onChange}
+                        />
+                    </label>
+                    <label>Password&nbsp;
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={onChange}
+                        />
+                    </label>                
+                    <button>Login</button>
+                </form>
+                <SignUp onClick={handleClick}>Don't have an account? Sign Up!</SignUp>
+                </>
+            )
+            : (
+                <form onSubmit={signUp}>
+                    <label>Username&nbsp;
+                        <input
+                            type="text"
+                            name="username"
+                            onChange={onChange}
+                        />
+                    </label>
+                    <label>Email&nbsp;
+                        <input
+                            type="email"
+                            name="email"
+                            onChange={onChange}
+                        />
+                    </label>   
+                    <label>Password&nbsp;
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={onChange}
+                        />
+                    </label>                
+                    <button>Sign Up</button>
+                </form>
+            )}
+            
         </div>
     );
 }

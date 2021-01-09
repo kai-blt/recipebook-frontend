@@ -113,6 +113,7 @@ export default createGlobalStyle`
         font-weight: 700;
         color: #5bc0de;        
         margin: 1% 0;
+        text-shadow: 2px 2px 6px #222;
     }
 
     h1 {
@@ -139,15 +140,20 @@ export default createGlobalStyle`
 
     input {
         width: 100%;
-        padding: 2% 2%;
+        padding: 2% 0;
         margin: 2% 0;
         border: 1px solid #999;
         border-radius: 6px;
     }
 
+    form {
+        width: 100%;
+    }
+
     button {
         width: 100%;
         padding: 2% 2%;
+        margin-bottom: 2%;
         font-size: 2rem;
         font-weight: 500;
         border: 1px solid #999;
