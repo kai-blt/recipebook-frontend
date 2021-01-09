@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import axiosWithAuth from '../axios/axiosWithAuth';
 
 
 const SignUp = styled.div`

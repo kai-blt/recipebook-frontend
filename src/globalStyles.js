@@ -153,11 +153,13 @@ export default createGlobalStyle`
     button {
         width: 100%;
         padding: 2% 2%;
-        margin-bottom: 2%;
+        margin: 4% 0;
         font-size: 2rem;
         font-weight: 500;
-        border: 1px solid #999;
+        border: 0;
         border-radius: 6px;
+        color: #fff;
+        background-color:  #5bc0de;   
         transition: all 0.5s;
     
         &:hover {

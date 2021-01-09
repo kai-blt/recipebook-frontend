@@ -13,10 +13,20 @@ const RecipeContainer = styled.div`
     padding: 0; 
     width: 100%;
     height: 100vh;
-    .search {
-        margin-bottom: 6%;
-    }
 `;
+
+const SearchNav = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 6%;
+    .add {
+        width: 30%;
+        button {
+            margin-bottom: 2%;
+        }
+    }
+`;    
 
 const RecipeListPane = styled.div`
     width: 50%;
@@ -36,6 +46,8 @@ function Recipes(props) {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState('');
     const [clicked, setClicked] = useState('');
+    const [isAdding, setIsAdding] = useState(false);
+
 
 
     useEffect(() => {
@@ -63,7 +75,8 @@ function Recipes(props) {
         <h1>RECIPE BOOK</h1>
         <RecipeContainer>                         
             <RecipeListPane>
-                <div className="search">
+                <SearchNav>
+                    <div>
                     <label>Search&nbsp;
                         <input
                             type="text"
@@ -71,7 +84,11 @@ function Recipes(props) {
                             onChange={onChange}
                         />
                     </label>
-                </div>
+                    </div>
+                    <div className="add">
+                        <button>New Recipe</button>
+                    </div>
+                </SearchNav>
                 {recipes 
                     ? recipes
                         .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
