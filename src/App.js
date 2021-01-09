@@ -7,6 +7,10 @@ import Recipes from './components/Recipes';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
   width: 80%;
   margin: auto;
 `;
@@ -22,9 +26,6 @@ function App() {
         </Route>
         <Route path="/logout">
           <Logout />
-        </Route>
-        <Route path="/login">
-          <Login />
         </Route>
         <Route path="/">
           <Home />

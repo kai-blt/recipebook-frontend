@@ -1,4 +1,5 @@
-import React, { useState }from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const initialFormValues = {
@@ -9,6 +10,8 @@ const initialFormValues = {
 function Login(props) {
     const [formValues, setFormValues] = useState(initialFormValues);
     
+    const history = useHistory();
+
     const onChange = (e) => {
         setFormValues({
             ...formValues,
@@ -32,7 +35,7 @@ function Login(props) {
             .then(res => {
                 console.log(res.data);
                 localStorage.setItem("token", res.data.access_token);
-                props.history.push("/recipes");
+                history.push("/recipes");
             })
             .catch(err => {
                 console.log(err);

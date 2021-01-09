@@ -68,11 +68,39 @@ export default createGlobalStyle`
     body {
         font-weight: 300;
         font-size: 1.6rem;
+        letter-spacing: 0.5px;
         color: #555;
+        padding: 0 2%;
+    }
+
+    nav {
+        margin: 0 1%;
+        font-size: 2rem;            
+    }
+
+    img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    a {
+        color: seagreen;
+        text-decoration: none;
+        margin-right: 2%;
+        transition: all 0.3s;
+        &:hover {
+            color: #fff;
+            transition: all 0.3s;
+        }
+    }
+
+    strong {
+        font-weight: 700;
     }
 
     h1, h2, h3, h4, h5, h6 {
         font-weight: 700;
+        color: #5bc0de;        
         margin: 1%;
     }
 
@@ -94,5 +122,35 @@ export default createGlobalStyle`
 
     div {
         margin: 0.5%;
+    }
+
+    label {
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+    input {
+        width: 100%;
+        padding: 2% 2%;
+        margin: 1% 0;
+        border: 1px solid #999;
+        border-radius: 6px;
+    }
+
+    button {
+        width: 100%;
+        padding: 2% 2%;
+        margin: 1% 0;
+        font-size: 2rem;
+        font-weight: 500;
+        border: 1px solid #999;
+        border-radius: 6px;
+        transition: all 0.5s;
+    
+        &:hover {
+            color: #fff;
+            background-color: #555;
+            transition: all 0.5s;
+        }
     }
 `;
