@@ -54,6 +54,10 @@ function RecipeCard(props) {
         })
     }
 
+    const addIngredient = () => {
+        setFormValues({...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}]})
+    }
+
     return(
         <RecipeCardContainer>            
             <RecipeTitle>
@@ -107,7 +111,7 @@ function RecipeCard(props) {
                         </label>
                         
                         <h3>Ingredients</h3>
-                        {recipe.ingredients.map((ing, index) => (
+                        {formValues.ingredients.map((ing, index) => (
                             <IngredientFields>
                                 <div>
                                     <label>Quantity
@@ -136,12 +140,16 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div>
+                                <div>
+                                    <button onClick={addIngredient}>+</button>
+                                    <button onClick={addIngredient}>-</button>
+                                </div>
                             </IngredientFields>
                         ))}
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
-                        {recipe.steps.map((ing,index) => (
+                        {formValues.steps.map((ing,index) => (
                             <IngredientFields>
                                 <div>
                                     <label>Step {formValues.steps[index].stepnumber}
@@ -151,6 +159,10 @@ function RecipeCard(props) {
                                             value={formValues.steps[index].instructions}
                                         />
                                     </label>
+                                </div>
+                                <div>
+                                    <button onClick={addIngredient}>+</button>
+                                    <button onClick={addIngredient}>-</button>
                                 </div>
                             </IngredientFields>
                         ))}
