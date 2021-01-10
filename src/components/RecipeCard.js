@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const RecipeCardContainer = styled.div`
@@ -41,6 +41,7 @@ function RecipeCard(props) {
     const { recipe } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isEditing, setIsEditing] = useState(false);
+ 
 
     const handleEdit = (e) => {
         e.preventDefault();
@@ -54,8 +55,27 @@ function RecipeCard(props) {
         })
     }
 
+   
     const addIngredient = () => {
         setFormValues({...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}]})
+    }
+
+    const delIngredient = (e, ingredientName) => {
+        e.preventDefault();
+        const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName)  
+        setFormValues({...formValues, ingredients: newList}) 
+        console.log(formValues)      
+    }
+
+    const addStep = (e, stepnumber) => {
+        e.preventDefault();
+        setFormValues({...formValues, steps: [...formValues.steps, {stepnumber: stepnumber + 1, instructions: ""}]})
+    }
+
+    const delStep = (e, stepInstructions) => {
+        e.preventDefault();
+        const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions)  
+        setFormValues({...formValues, steps: newList})       
     }
 
     return(
@@ -142,14 +162,14 @@ function RecipeCard(props) {
                                 </div>
                                 <div>
                                     <button onClick={addIngredient}>+</button>
-                                    <button onClick={addIngredient}>-</button>
+                                    <button onClick={e => delIngredient(e, ing.name)}>-</button>
                                 </div>
                             </IngredientFields>
                         ))}
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
-                        {formValues.steps.map((ing,index) => (
+                        {formValues.steps.map((stp, index) => (
                             <IngredientFields>
                                 <div>
                                     <label>Step {formValues.steps[index].stepnumber}
@@ -161,8 +181,8 @@ function RecipeCard(props) {
                                     </label>
                                 </div>
                                 <div>
-                                    <button onClick={addIngredient}>+</button>
-                                    <button onClick={addIngredient}>-</button>
+                                    <button onClick={e => addStep(e, stp.stepnumber)}>+</button>
+                                    <button onClick={e => delStep(e, stp.instructions)}>-</button>
                                 </div>
                             </IngredientFields>
                         ))}

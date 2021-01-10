@@ -24,7 +24,7 @@ const ImageContainer = styled.div`
     text-shadow: 1px 1px 4px #000;
     transition: all 0.5s;
     &:hover {
-        height: 21vh;
+        opacity: 0.2;
         transition: all 0.5s;
     }
 `;
