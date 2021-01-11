@@ -85,9 +85,9 @@ function RecipeCard(props) {
     const handleChange = (e, index) => {
         switch(e.target.name) {
             case "ingredientname":
-                const newIngName = [ ...formValues.ingredients ]
-                newIngName[index].name = e.target.value;    
-                setFormValues({ ...formValues, ingredients: newIngName });
+                const newIngName = [ ...formValues.ingredients ];
+                newIngName[index].name = e.target.value;
+                setFormValues({...formValues, ingredients: newIngName });
                 break;
             case "quantity":
                 const newIngQuantity = [ ...formValues.ingredients ]
@@ -192,7 +192,7 @@ function RecipeCard(props) {
                         
                         <h3>Ingredients</h3>
                         {formValues.ingredients.map((ing, index) => (
-                            <IngredientFields key={uuidv4()}>
+                            <IngredientFields>
                                 <div>
                                     <label>Quantity
                                         <input 
@@ -233,7 +233,7 @@ function RecipeCard(props) {
                     <InfoBox>
                         <h3>Steps</h3>
                         {formValues.steps.map((stp, index) => (
-                            <IngredientFields key={uuidv4()}>
+                            <IngredientFields>
                                 <div>
                                     <label>Step {formValues.steps[index].stepnumber}
                                         <input 
