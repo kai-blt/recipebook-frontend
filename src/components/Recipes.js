@@ -44,8 +44,6 @@ const RecipeDirectionsPane = styled.div`
 `;
 
 
-
-
 function Recipes(props) {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState('');
@@ -53,12 +51,11 @@ function Recipes(props) {
     const [isCreating, setIsCreating] = useState(false);
 
 
-
     useEffect(() => {
-        axiosWithAuth().get('/users/users')
+        axiosWithAuth().get('/users/getuserinfo')
             .then(res => {
-                console.log(res.data[0].recipes);
-                setRecipes(res.data[0].recipes);
+                console.log(res.data.recipes);
+                setRecipes(res.data.recipes);
             })
             .catch(err => {
                 console.log(err);

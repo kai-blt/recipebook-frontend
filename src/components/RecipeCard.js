@@ -170,7 +170,7 @@ function RecipeCard(props) {
                 ? (
                     <>
                     <InfoBox>
-                        {recipe.imageURL === "" ? <img src="/placeholder.jpg" alt="Upload your image here"/> :<img src={recipe.imageURL} alt={recipe.name}/>} 
+                        {recipe.imageURL.includes("http:") ? <img src="/placeholder.jpg" alt="Upload your image here"/> :<img src={recipe.imageURL} alt={recipe.name}/>} 
                         <h3>Ingredients</h3>
                         {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
                     </InfoBox>
