@@ -41,7 +41,7 @@ const initialFormValues = {
 
 
 function RecipeCard(props) {
-    const { recipe, setRecipes } = props;
+    const { recipe, setRecipes, setClicked } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -78,7 +78,7 @@ function RecipeCard(props) {
                     });
             })
             .catch(err => console.log(err))  
-        
+        setClicked(formValues.name);
         setIsEditing(!isEditing);
     }
 
@@ -251,6 +251,7 @@ function RecipeCard(props) {
                             </IngredientFields>
                         ))}
                     </InfoBox>
+                    <button>Delete</button>
                     </>
                 )
             }

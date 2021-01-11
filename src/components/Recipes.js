@@ -99,7 +99,7 @@ function Recipes(props) {
                 {clicked
                     ? recipes
                         .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
-                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes}/>)
+                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
                     : null
                 }     
             </RecipeDirectionsPane>       
