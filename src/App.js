@@ -1,7 +1,6 @@
 import { Switch, Route } from 'react-router';
 import Nav from './components/Nav';
 import Home from './components/Home';
-import Logout from './components/Logout';
 import Recipes from './components/Recipes';
 import styled from 'styled-components';
 
@@ -24,9 +23,6 @@ function App() {
       <Switch>
         <Route path="/recipes">
           <Recipes />
-        </Route>
-        <Route path="/logout">
-          <Logout />
         </Route>
         <Route path="/">
           <Home />

@@ -166,6 +166,14 @@ export default createGlobalStyle`
             color: #fff;
             background-color: #555;
             transition: all 0.5s;
-        }
+        }     
+    }
+    
+    button.submitBtn {
+        background-color: green;
+    }
+
+    button.deleteBtn {
+        background-color: red;
     }
 `;

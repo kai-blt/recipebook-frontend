@@ -19,9 +19,16 @@ const RecipeTitle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    .edit {
-        width: 20%;
+    flex-flow: row wrap;
+    div {
+        width: 50%;
+        border: 1px solid green;
+    }
+
+    @media (max-width: 1000px) {
+        div {
+            width: 100%;
+        }
     }
 `;
 
@@ -161,8 +168,8 @@ function RecipeCard(props) {
                 </div>
                 <div className="edit">
                     {!isEditing
-                        ? <button onClick={handleEdit}>Edit</button>
-                        : <button onClick={handleSubmit}>Submit</button>
+                        ? <button className="editBtn" onClick={handleEdit}>Edit</button>
+                        : <button className="submitBtn" onClick={handleSubmit}>Submit</button>
                     }
                 </div>
             </RecipeTitle>
@@ -269,7 +276,7 @@ function RecipeCard(props) {
                             </IngredientFields>
                         ))}
                     </InfoBox>
-                    <button onClick={deleteRecipe}>Delete</button>
+                    <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
                     </>
                 )
             }

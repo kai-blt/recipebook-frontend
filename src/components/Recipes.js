@@ -14,18 +14,27 @@ const RecipeContainer = styled.div`
     margin: 0;
     padding: 0; 
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    border-radius: 10px;
+    background: #222;
+    box-shadow: inset 4px 4px 10px #111;
 `;
 
 const SearchNav = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    flex-flow: row wrap;
     margin-bottom: 6%;
-    .add {
-        width: 30%;
-        button {
-            margin-bottom: 2%;
+    border: 1px solid red;
+    div {
+        width: 40%;
+        border: 1px solid green;
+    }
+
+    @media (max-width: 600px) {
+        div {
+            width: 100%;
         }
     }
 `;    
@@ -39,7 +48,7 @@ const RecipeListPane = styled.div`
 
 const RecipeDirectionsPane = styled.div`
     width: 50%;
-    height: 100vh;
+    height: 100%;
     padding: 2%;
 `;
 

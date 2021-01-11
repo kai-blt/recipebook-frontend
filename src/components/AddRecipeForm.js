@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 
 const FormContainer = styled.div`
+    width: 50%;
     margin: 0 2%;
 `;
 
@@ -11,10 +12,7 @@ const RecipeTitle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    .edit {
-        width: 20%;
-    }
+    flex-flow: row wrap;    
 `;
 
 const InfoBox = styled.div`
