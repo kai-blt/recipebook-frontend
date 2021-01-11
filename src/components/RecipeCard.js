@@ -140,14 +140,14 @@ function RecipeCard(props) {
         axiosWithAuth().delete(`/recipes/recipe/${recipe.recipeid}`)
         .then(res => {
             console.log(res)
-            axiosWithAuth().get('/users/users')
-            .then(res => {
-                console.log(res.data[0].recipes);
-                setRecipes(res.data[0].recipes);
-            })
-            .catch(err => {
-                console.log(err);
-            });         
+            axiosWithAuth().get('/users/getuserinfo')
+                .then(res => {
+                    console.log(res.data.recipes);
+                    setRecipes(res.data.recipes);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         })
         .catch(err => console.log(err))  
     }

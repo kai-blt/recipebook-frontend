@@ -60,10 +60,10 @@ const AddRecipeForm = (props) => {
         axiosWithAuth().post('/recipes/recipe', newRecipe)
             .then(res => {
                 console.log(res)
-                axiosWithAuth().get('/users/users')
+                axiosWithAuth().get('/users/getuserinfo')
                     .then(res => {
-                        console.log(res.data[0].recipes);
-                        setRecipes(res.data[0].recipes);
+                        console.log(res.data.recipes);
+                        setRecipes(res.data.recipes);
                     })
                     .catch(err => {
                         console.log(err);
