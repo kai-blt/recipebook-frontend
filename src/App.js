@@ -5,7 +5,6 @@ import Logout from './components/Logout';
 import Recipes from './components/Recipes';
 import styled from 'styled-components';
 
-
 const AppContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;

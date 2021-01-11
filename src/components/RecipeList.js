@@ -38,7 +38,6 @@ function RecipeList(props) {
             <ImageContainer background={recipe.imageURL} onClick={onClick}>
                 {recipe.name}
             </ImageContainer>
-            {/* <img src={recipe.imageURL} alt={recipe.name}/> */}        
         </RecipeListContainer>
     );
 }

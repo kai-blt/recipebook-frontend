@@ -49,6 +49,7 @@ function Login(props) {
             .then(res => {
                 console.log(res.data);
                 localStorage.setItem("token", res.data.access_token);
+                localStorage.setItem("username", formValues.username)
                 history.push("/recipes");
             })
             .catch(err => {
@@ -121,8 +122,7 @@ function Login(props) {
                     </label>                
                     <button>Sign Up</button>
                 </form>
-            )}
-            
+            )}            
         </div>
     );
 }

@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect , useState } from 'react';
+import  { v4 as uuidv4 } from "uuid";
+import axios from 'axios';
+import axiosWithAuth from '../axios/axiosWithAuth';
 import styled from 'styled-components';
 
 const RecipeCardContainer = styled.div`
@@ -38,44 +41,98 @@ const initialFormValues = {
 
 
 function RecipeCard(props) {
-    const { recipe } = props;
+    const { recipe, setRecipes } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isEditing, setIsEditing] = useState(false);
- 
 
     const handleEdit = (e) => {
-        e.preventDefault();
+        e.preventDefault();   
         setIsEditing(!isEditing);
-        setFormValues({
-            name: recipe.name,
-            type: recipe.type,
-            imageURL: recipe.imageURL,
-            ingredients: recipe.ingredients,
-            steps: recipe.steps
-        })
+        setFormValues({ ...formValues, ...recipe })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();   
+        console.log(formValues.imageURL)
+        const newRecipe = {
+            name: formValues.name,
+            type: formValues.type,
+            user: {
+                    username: localStorage.getItem("username")
+                },
+            imageURL: formValues.imageURL,
+            ingredients: formValues.ingredients,
+            steps: formValues.steps
+        } 
+       
+        axiosWithAuth().put(`/recipes/recipe/${recipe.recipeid}`, newRecipe)
+            .then(res => {
+                console.log(res)
+                axiosWithAuth().get('/users/users')
+                    .then(res => {
+                        console.log(res.data[0].recipes);
+                        setRecipes(res.data[0].recipes);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => console.log(err))  
+        
+        setIsEditing(!isEditing);
+    }
+
+    const handleChange = (e, index) => {
+        switch(e.target.name) {
+            case "ingredientname":
+                const newIngName = [ ...formValues.ingredients ]
+                newIngName[index].name = e.target.value;    
+                setFormValues({ ...formValues, ingredients: newIngName });
+                break;
+            case "quantity":
+                const newIngQuantity = [ ...formValues.ingredients ]
+                newIngQuantity[index].quantity = e.target.value;    
+                setFormValues({ ...formValues, ingredients: newIngQuantity });
+                break;
+            case "measurement":
+                const newIngMeasurement = [ ...formValues.ingredients ]
+                newIngMeasurement[index].measurement = e.target.value;    
+                setFormValues({ ...formValues, ingredients: newIngMeasurement });
+                break;
+            case "instructions":
+                const newSteps = [ ...formValues.steps ]
+                newSteps[index].instructions = e.target.value;                
+                setFormValues({ ...formValues, steps: newSteps });
+                break;
+            default:
+                setFormValues({ ...formValues, [e.target.name]: e.target.value });
+                break;
+        }
     }
 
    
     const addIngredient = () => {
-        setFormValues({...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}]})
+        setFormValues({ ...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}] });
     }
 
     const delIngredient = (e, ingredientName) => {
         e.preventDefault();
-        const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName)  
-        setFormValues({...formValues, ingredients: newList}) 
-        console.log(formValues)      
+        const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName);    
+        setFormValues({ ...formValues, ingredients: newList });
     }
 
-    const addStep = (e, stepnumber) => {
+    const addStep = (e, index) => {
         e.preventDefault();
-        setFormValues({...formValues, steps: [...formValues.steps, {stepnumber: stepnumber + 1, instructions: ""}]})
+        formValues.steps.splice(index, 0, {stepnumber: index + 2, instructions: ""});
+        formValues.steps.map((step, index) => step.stepnumber = index + 1);
+        setFormValues({ ...formValues, formValues });
     }
 
     const delStep = (e, stepInstructions) => {
         e.preventDefault();
-        const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions)  
-        setFormValues({...formValues, steps: newList})       
+        const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions);  
+        newList.map((step, index) => step.stepnumber = index + 1);
+        setFormValues({ ...formValues, steps: newList });       
     }
 
     return(
@@ -87,7 +144,7 @@ function RecipeCard(props) {
                 <div className="edit">
                     {!isEditing
                         ? <button onClick={handleEdit}>Edit</button>
-                        : <button onClick={handleEdit}>Submit</button>
+                        : <button onClick={handleSubmit}>Submit</button>
                     }
                 </div>
             </RecipeTitle>
@@ -97,11 +154,11 @@ function RecipeCard(props) {
                     <InfoBox>
                         <img src={recipe.imageURL} alt={recipe.name}/>   
                         <h3>Ingredients</h3>
-                        {recipe.ingredients.map(ing => <div><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
+                        {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
-                        {recipe.steps.map(stp => <div><strong>{stp.stepnumber}.</strong> {stp.instructions}</div>)}
+                        {recipe.steps.map(stp => <div key={uuidv4()}><strong>{stp.stepnumber}.</strong> {stp.instructions}</div>)}
                     </InfoBox>
                     </>
                 )
@@ -113,13 +170,15 @@ function RecipeCard(props) {
                                 type="text"
                                 name="name"
                                 value={formValues.name}
+                                onChange={handleChange}
                             />
                         </label>  
                         <label>Recipe Type
                             <input 
                                 type="text"
-                                name="name"
+                                name="type"
                                 value={formValues.type}
+                                onChange={handleChange}
                             />
                         </label>  
                         <label>New Image URL
@@ -127,18 +186,20 @@ function RecipeCard(props) {
                                 type="text"
                                 name="imageURL"
                                 value={formValues.imageURL}
+                                onChange={handleChange}
                             />
                         </label>
                         
                         <h3>Ingredients</h3>
                         {formValues.ingredients.map((ing, index) => (
-                            <IngredientFields>
+                            <IngredientFields key={uuidv4()}>
                                 <div>
                                     <label>Quantity
                                         <input 
                                             type="text"
                                             name="quantity"
                                             value={formValues.ingredients[index].quantity}
+                                            onChange={e => handleChange(e, index)}
                                         />
                                     </label>
                                 </div>
@@ -148,6 +209,7 @@ function RecipeCard(props) {
                                             type="text"
                                             name="measurement"
                                             value={formValues.ingredients[index].measurement}
+                                            onChange={e => handleChange(e, index)}
                                         />
                                     </label>
                                 </div>
@@ -155,8 +217,9 @@ function RecipeCard(props) {
                                     <label>Ingredient
                                         <input 
                                             type="text"
-                                            name="name"
+                                            name="ingredientname"
                                             value={formValues.ingredients[index].name}
+                                            onChange={e => handleChange(e, index)}
                                         />
                                     </label>
                                 </div>
@@ -170,18 +233,19 @@ function RecipeCard(props) {
                     <InfoBox>
                         <h3>Steps</h3>
                         {formValues.steps.map((stp, index) => (
-                            <IngredientFields>
+                            <IngredientFields key={uuidv4()}>
                                 <div>
                                     <label>Step {formValues.steps[index].stepnumber}
                                         <input 
                                             type="text"
                                             name="instructions"
                                             value={formValues.steps[index].instructions}
+                                            onChange={e => handleChange(e, index)}
                                         />
                                     </label>
                                 </div>
                                 <div>
-                                    <button onClick={e => addStep(e, stp.stepnumber)}>+</button>
+                                    <button onClick={e => addStep(e, index)}>+</button>
                                     <button onClick={e => delStep(e, stp.instructions)}>-</button>
                                 </div>
                             </IngredientFields>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../axios/axiosWithAuth';
 import RecipeList from './RecipeList';
 import RecipeCard from './RecipeCard';
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
 const RecipeContainer = styled.div`
@@ -46,8 +47,6 @@ function Recipes(props) {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState('');
     const [clicked, setClicked] = useState('');
-    const [isAdding, setIsAdding] = useState(false);
-
 
 
     useEffect(() => {
@@ -92,7 +91,7 @@ function Recipes(props) {
                 {recipes 
                     ? recipes
                         .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                        .map(recipe => <RecipeList recipe={recipe} onClick={handleClick}/>)
+                        .map(recipe => <RecipeList key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
                     : <div>Fetching recipes...</div>
                 }
             </RecipeListPane>  
@@ -100,7 +99,7 @@ function Recipes(props) {
                 {clicked
                     ? recipes
                         .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
-                        .map(recipe => <RecipeCard recipe={recipe} />)
+                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes}/>)
                     : null
                 }     
             </RecipeDirectionsPane>       

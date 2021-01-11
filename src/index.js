@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import reportWebVitals from './reportWebVitals';
 
 
+
 const HomepageContainer = styled.div`
   background-image: url("/background.png");
   background-repeat: no-repeat;
