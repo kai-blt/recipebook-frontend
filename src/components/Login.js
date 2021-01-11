@@ -65,7 +65,7 @@ function Login(props) {
         e.preventDefault();
 
         axios.post(
-                'http://localhost:2019/createnewuser', formValues)
+                'https://kaiblt-recipebook.herokuapp.com/createnewuser', formValues)
             .then(res => {
                 localStorage.setItem("token", res.data.access_token);
                 setIsCreatingAccount(!isCreatingAccount);
