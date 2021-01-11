@@ -1,6 +1,5 @@
-import React, { useEffect , useState } from 'react';
+import React, { useState } from 'react';
 import  { v4 as uuidv4 } from "uuid";
-import axios from 'axios';
 import axiosWithAuth from '../axios/axiosWithAuth';
 import styled from 'styled-components';
 
@@ -14,6 +13,7 @@ const InfoBox = styled.div`
         margin: 1% 1.5%;
     }
 `;
+
 
 const RecipeTitle = styled.div`
     display: flex;
@@ -35,8 +35,8 @@ const initialFormValues = {
     name: "",
     type: "",
     imageURL: "",
-    ingredients: [],
-    steps: []
+    ingredients: [{ quantity: "", measurement: "", name: "" }],
+    steps: [{stepnumber: 1, instructions: ""}]
 }
 
 
@@ -135,6 +135,24 @@ function RecipeCard(props) {
         setFormValues({ ...formValues, steps: newList });       
     }
 
+    const deleteRecipe = (e) => {
+        e.preventDefault();
+        axiosWithAuth().delete(`/recipes/recipe/${recipe.recipeid}`)
+        .then(res => {
+            console.log(res)
+            axiosWithAuth().get('/users/users')
+            .then(res => {
+                console.log(res.data[0].recipes);
+                setRecipes(res.data[0].recipes);
+            })
+            .catch(err => {
+                console.log(err);
+            });         
+        })
+        .catch(err => console.log(err))  
+    }
+
+
     return(
         <RecipeCardContainer>            
             <RecipeTitle>
@@ -152,7 +170,7 @@ function RecipeCard(props) {
                 ? (
                     <>
                     <InfoBox>
-                        <img src={recipe.imageURL} alt={recipe.name}/>   
+                        {recipe.imageURL === "" ? <img src="/placeholder.jpg" alt="Upload your image here"/> :<img src={recipe.imageURL} alt={recipe.name}/>} 
                         <h3>Ingredients</h3>
                         {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
                     </InfoBox>
@@ -251,7 +269,7 @@ function RecipeCard(props) {
                             </IngredientFields>
                         ))}
                     </InfoBox>
-                    <button>Delete</button>
+                    <button onClick={deleteRecipe}>Delete</button>
                     </>
                 )
             }

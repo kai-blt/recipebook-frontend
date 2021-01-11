@@ -80,9 +80,9 @@ export default createGlobalStyle`
 
     nav {
         font-size: 2rem;      
+        text-align: center;
         margin: 2% 0;  
-        width: 80%;
-        border: 2px solid blue;    
+        width: 100%;   
     }
 
     img {

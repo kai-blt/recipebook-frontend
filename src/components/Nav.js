@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+
+const LogOut = styled.div`
+    text-decoration: underline;
+`;
 
 function Nav(props) {
+    const history = useHistory();
+
+    const handleLogOut = () => {
+        localStorage.setItem("token", '');
+        history.push('/');
+    }
+
     return(
         <nav>
-            {localStorage.getItem("token") !== '' 
-                ? <Link to="/logout">Logout</Link>
-                : null
-            }
+            <h1>RECIPE BOOK </h1>
+            {(localStorage.getItem("token") !== "") ?  <LogOut onClick={handleLogOut}>LogOut</LogOut> : <div></div>}
         </nav>
     );
 }

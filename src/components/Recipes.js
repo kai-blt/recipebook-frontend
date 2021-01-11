@@ -4,6 +4,7 @@ import RecipeList from './RecipeList';
 import RecipeCard from './RecipeCard';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import AddRecipeForm from './AddRecipeForm';
 
 const RecipeContainer = styled.div`
     display: flex;
@@ -43,10 +44,14 @@ const RecipeDirectionsPane = styled.div`
 `;
 
 
+
+
 function Recipes(props) {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState('');
     const [clicked, setClicked] = useState('');
+    const [isCreating, setIsCreating] = useState(false);
+
 
 
     useEffect(() => {
@@ -69,9 +74,13 @@ function Recipes(props) {
         setClicked(e.target.innerHTML);
     }
 
+    const createNewRecipe = (e) => {
+        e.preventDefault();
+        setIsCreating(!isCreating);
+    }
+
     return(
         <>
-        <h1>RECIPE BOOK</h1>
         <RecipeContainer>                         
             <RecipeListPane>
                 <SearchNav>
@@ -85,7 +94,7 @@ function Recipes(props) {
                     </label>
                     </div>
                     <div className="add">
-                        <button>New Recipe</button>
+                        <button onClick={createNewRecipe}>New Recipe</button>
                     </div>
                 </SearchNav>
                 {recipes 
@@ -94,15 +103,22 @@ function Recipes(props) {
                         .map(recipe => <RecipeList key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
                     : <div>Fetching recipes...</div>
                 }
-            </RecipeListPane>  
-            <RecipeDirectionsPane>
-                {clicked
-                    ? recipes
-                        .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
-                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
-                    : null
-                }     
-            </RecipeDirectionsPane>       
+            </RecipeListPane>
+
+            {isCreating
+                ?
+                   <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                : 
+                    <RecipeDirectionsPane>
+                        {clicked
+                            ? recipes
+                                .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
+                                .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
+                            : null
+                        }     
+                    </RecipeDirectionsPane>
+                
+            }    
         </RecipeContainer>
         </>
     );

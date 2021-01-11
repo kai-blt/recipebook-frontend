@@ -18,8 +18,9 @@ const AppContainer = styled.div`
 
 function App() {
   return (
-    <AppContainer>
-      <Nav /> 
+    <>
+    <AppContainer>      
+      <Nav />
       <Switch>
         <Route path="/recipes">
           <Recipes />
@@ -32,6 +33,7 @@ function App() {
         </Route>
       </Switch>
     </ AppContainer>
+    </>
   );
 }
 
