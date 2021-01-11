@@ -26,10 +26,9 @@ const SearchNav = styled.div`
     align-items: flex-end;
     flex-flow: row wrap;
     margin-bottom: 6%;
-    border: 1px solid red;
+    
     div {
         width: 40%;
-        border: 1px solid green;
     }
 
     @media (max-width: 600px) {

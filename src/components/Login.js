@@ -6,6 +6,9 @@ import axios from 'axios';
 
 const SignUp = styled.div`
     text-decoration: underline;
+    &:hover {
+        color: #555;
+    }
 `;
 
 

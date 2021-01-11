@@ -22,7 +22,6 @@ const RecipeTitle = styled.div`
     flex-flow: row wrap;
     div {
         width: 50%;
-        border: 1px solid green;
     }
 
     @media (max-width: 1000px) {

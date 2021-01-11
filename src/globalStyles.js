@@ -91,7 +91,7 @@ export default createGlobalStyle`
     }
 
     a {
-        color: seagreen;
+        color: #fff;
         text-decoration: none;
         margin-right: 2%;
         transition: all 0.3s;
