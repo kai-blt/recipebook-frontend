@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../axios/axiosWithAuth';
+import * as yup from 'yup';
+import schema from '../validation/schema';
 import styled from 'styled-components';
 
 
@@ -72,6 +74,10 @@ const IngredientFields = styled.div`
     }
 `;
 
+const ErrorMessages = styled.div`
+    color: #d9534f;
+`;
+
 
 const initialFormValues = {
     name: "",
@@ -81,15 +87,35 @@ const initialFormValues = {
     steps: [{stepnumber: 1, instructions: ""}]
 }
 
+const initialErrors = {
+    name: "",
+    type: "",
+    imageURL: "",
+    quantity: "",
+    ingredientname: "",
+    measurement: "",
+    group: "",
+    instructions: ""
+}
 
 const AddRecipeForm = (props) => {
     const { setIsCreating, setRecipes } = props;
-
     const [formValues, setFormValues] = useState(initialFormValues);
+    const [errors, setErrors] = useState(initialErrors);
+    const [enableSubmit, setEnableSubmit] = useState(true);
+
+
+    useEffect(() => {
+        schema.isValid(formValues).then(valid => {
+            console.log(valid);
+            setEnableSubmit(!valid);
+        });
+    }, [formValues]);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();   
-        console.log(formValues.imageURL)
+
         const newRecipe = {
             name: formValues.name,
             type: formValues.type,
@@ -100,7 +126,12 @@ const AddRecipeForm = (props) => {
             ingredients: formValues.ingredients,
             steps: formValues.steps
         } 
-       
+
+        if (formValues.ingredients.length < 1) {
+            setEnableSubmit(false);
+        }
+
+
         axiosWithAuth().post('/recipes/recipe', newRecipe)
             .then(res => {
                 console.log(res)
@@ -118,6 +149,15 @@ const AddRecipeForm = (props) => {
     }
 
     const handleChange = (e, index) => {
+        yup.reach(schema, e.target.name)
+            .validate(e.target.value)
+            .then(() => {
+                setErrors({...errors, [e.target.name]: ""})
+            })
+            .catch(err => {
+                setErrors({...errors, [e.target.name]: err.errors[0] })
+            })
+
         switch(e.target.name) {
             case "ingredientname":
                 const newIngName = [ ...formValues.ingredients ];
@@ -135,10 +175,8 @@ const AddRecipeForm = (props) => {
                 setFormValues({ ...formValues, ingredients: newIngMeasurement });
                 break;
             case "group":
-                let group = "";
-                (e.target.value === "") ? group = "Ingredient" : group = e.target.value;
                 const newGroup = [ ...formValues.ingredients ]
-                newGroup[index].group = group;    
+                newGroup[index].group = e.target.value;    
                 setFormValues({ ...formValues, ingredients: newGroup });
                 break;
             case "instructions":
@@ -189,7 +227,7 @@ const AddRecipeForm = (props) => {
         <FormContainer>
               <RecipeTitle>
                 <div>
-                    <h2>{formValues.name}</h2>
+                    <h2>{formValues.name}</h2>                    
                 </div>
             </RecipeTitle>
             <InfoBox>
@@ -223,8 +261,13 @@ const AddRecipeForm = (props) => {
                         onChange={handleChange}
                     />
                 </label>
-                </InfoBox>
-                <InfoBox>
+                <ErrorMessages>
+                    {errors.name}
+                    {errors.type}
+                    {errors.imageURL}
+                </ErrorMessages>
+            </InfoBox>
+            <InfoBox>
                 <h3>Ingredients</h3>
                 {formValues.ingredients.map((ing, index) => (
                     <IngredientFields>
@@ -274,8 +317,14 @@ const AddRecipeForm = (props) => {
                         </div>
                     </IngredientFields>
                 ))}
-                </InfoBox>
-                <InfoBox>
+                <ErrorMessages>
+                    {errors.quantity}
+                    {errors.measurement}
+                    {errors.ingredientname}
+                    {errors.group}
+                </ErrorMessages>
+            </InfoBox>
+            <InfoBox>
                 <h3>Steps</h3>
                 {formValues.steps.map((stp, index) => (
                     <IngredientFields>
@@ -295,8 +344,11 @@ const AddRecipeForm = (props) => {
                         </div>
                     </IngredientFields>
                 ))}
-            </InfoBox>        
-        <button className="addBtn" onClick={handleSubmit}>Submit</button>
+            </InfoBox>   
+            <ErrorMessages>
+                {errors.instructions}
+            </ErrorMessages>
+            {enableSubmit ? <button className="disabled">Submit</button> :  <button className="addBtn" onClick={handleSubmit}>Submit</button>}
         </FormContainer>
     )
 }

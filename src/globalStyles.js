@@ -197,6 +197,11 @@ export default createGlobalStyle`
         background-color: #d9534f;
     }
 
+    button.disabled {
+        width: 100%;
+        background-color: #555;
+    }
+
     @media(max-width: 1200px) {
         h1 {
             font-size: 8rem;

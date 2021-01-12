@@ -14,7 +14,6 @@ const HomepageContainer = styled.div`
   background-attachment: fixed;
   background-color: #555;
   background-size: cover;  
-  height: 120vh;
   width: 100%;
 `;
 
