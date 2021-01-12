@@ -90,8 +90,8 @@ function RecipeCard(props) {
                 console.log(res)
                 axiosWithAuth().get('/users/users')
                     .then(res => {
-                        console.log(res.data[0].recipes);
-                        setRecipes(res.data[0].recipes);
+                        console.log(res.data.recipes);
+                        setRecipes(res.data.recipes);
                     })
                     .catch(err => {
                         console.log(err);
