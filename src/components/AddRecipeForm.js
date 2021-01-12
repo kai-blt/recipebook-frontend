@@ -158,22 +158,31 @@ const AddRecipeForm = (props) => {
 
     const delIngredient = (e, ingredientName) => {
         e.preventDefault();
-        const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName);    
-        setFormValues({ ...formValues, ingredients: newList });
+        if (formValues.ingredients.length !== 1) {
+            const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName);    
+            setFormValues({ ...formValues, ingredients: newList });
+        }
     }
 
     const addStep = (e, index) => {
         e.preventDefault();
-        formValues.steps.splice(index, 0, {stepnumber: index + 2, instructions: ""});
-        formValues.steps.map((step, index) => step.stepnumber = index + 1);
-        setFormValues({ ...formValues, formValues });
+        if (formValues.steps.length === 1) {
+            formValues.steps.push({stepnumber: index + 2, instructions: ""});
+            setFormValues({ ...formValues, formValues });
+        } else {
+            formValues.steps.splice(index, 0, {stepnumber: index + 2, instructions: ""});
+            formValues.steps.map((step, index) => step.stepnumber = index + 1);
+            setFormValues({ ...formValues, formValues });
+        }
     }
 
     const delStep = (e, stepInstructions) => {
         e.preventDefault();
-        const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions);  
-        newList.map((step, index) => step.stepnumber = index + 1);
-        setFormValues({ ...formValues, steps: newList });       
+        if (formValues.steps.length !== 1) {
+            const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions);  
+            newList.map((step, index) => step.stepnumber = index + 1);
+            setFormValues({ ...formValues, steps: newList });    
+        }
     }
 
     return (
