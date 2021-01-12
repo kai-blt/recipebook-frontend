@@ -17,7 +17,7 @@ function Nav(props) {
     return(
         <nav>
             <h1>RECIPE BOOK </h1>
-            {(localStorage.getItem("token") !== "") ?  <LogOut onClick={handleLogOut}>LogOut</LogOut> : <div></div>}
+            {(localStorage.getItem("token") !== "") ?  <LogOut onClick={handleLogOut}>Logout</LogOut> : <div></div>}
         </nav>
     );
 }

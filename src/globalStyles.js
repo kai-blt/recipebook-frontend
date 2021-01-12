@@ -1,7 +1,9 @@
 import { createGlobalStyle } from "styled-components/macro";
 
 export default createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+    /* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap'); */
+    /* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap'); */
 
     /* http://meyerweb.com/eric/tools/css/reset/ 
     v2.0 | 20110126
@@ -59,7 +61,7 @@ export default createGlobalStyle`
     }
 
     html {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         font-size: 62.5%;
         margin: 0;
         padding: 0;
@@ -143,6 +145,7 @@ export default createGlobalStyle`
 
     input {
         font-size: 1.6rem;
+        font-family: 'Montserrat', sans-serif;
         line-height: 2.5rem;
         padding-left: 2%;
         width: 100%;
@@ -160,6 +163,7 @@ export default createGlobalStyle`
         margin: 4% 0;
         font-size: 2rem;
         font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
         border: 0;
         border-radius: 6px;
         color: #fff;
@@ -191,5 +195,66 @@ export default createGlobalStyle`
     button.cancelBtn {
         width: 100%;
         background-color: #d9534f;
+    }
+
+    @media(max-width: 1200px) {
+        h1 {
+            font-size: 8rem;
+            line-height: 7rem;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            line-height: 3rem;
+            padding-bottom: 4%;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-size: 1rem;
+        }
+    }
+
+    @media(max-width: 700px) {
+        h1 {
+            font-size: 7.5rem;
+            line-height: 7rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+            padding-bottom: 4%;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 0.5rem;
+        }
+    }
+
+    @media(max-width: 500px) {
+        h1 {
+            font-size: 6rem;
+            line-height: 6rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            padding-bottom: 4%;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        h4 {
+            font-size: 0.5rem;
+        }
     }
 `;

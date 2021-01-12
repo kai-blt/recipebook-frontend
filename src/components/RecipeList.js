@@ -26,6 +26,19 @@ const ImageContainer = styled.div`
     &:hover {
         opacity: 0.2;
         transition: all 0.5s;
+    }  
+
+    @media(max-width: 1200px) {
+        font-size: 4rem;
+    }
+
+    @media(max-width: 700px) {
+        font-size: 2rem;
+    }
+
+    @media(max-width: 500px) {
+        font-size: 1.5rem;
+        padding-left: 10%;
     }
 `;
 

@@ -11,7 +11,7 @@ import reportWebVitals from './reportWebVitals';
 const HomepageContainer = styled.div`
   background-image: url("/background.png");
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
   background-color: #555;
   background-size: cover;  
   height: 120vh;
