@@ -14,7 +14,7 @@ const RecipeContainer = styled.div`
     margin: 0;
     padding: 0; 
     width: 100%;
-    height: 100%;
+    height: 400%;
     border-radius: 10px;
     background: #222;
     box-shadow: inset 4px 4px 10px #111;
@@ -42,13 +42,13 @@ const RecipeListPane = styled.div`
     width: 50%;
     height: 100vh;
     padding: 2%;
-    border-right: 1px dashed #888;
 `;
 
 const RecipeDirectionsPane = styled.div`
     width: 50%;
     height: 100%;
     padding: 2%;
+    border-left: 1px dashed #888;
 `;
 
 

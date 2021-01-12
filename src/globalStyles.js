@@ -170,10 +170,12 @@ export default createGlobalStyle`
     }
     
     button.submitBtn {
+        width: 70%;
         background-color: green;
     }
 
     button.deleteBtn {
+        width: 20%;
         background-color: red;
     }
 `;

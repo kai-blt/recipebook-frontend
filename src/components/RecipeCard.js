@@ -38,6 +38,12 @@ const IngredientFields = styled.div`
 `;
 
 
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+
 const initialFormValues = {
     name: "",
     type: "",
@@ -184,7 +190,7 @@ function RecipeCard(props) {
                 <div className="edit">
                     {!isEditing
                         ? <button className="editBtn" onClick={handleEdit}>Edit</button>
-                        : <button className="submitBtn" onClick={handleSubmit}>Submit</button>
+                        : null
                     }
                 </div>
             </RecipeTitle>
@@ -291,7 +297,10 @@ function RecipeCard(props) {
                             </IngredientFields>
                         ))}
                     </InfoBox>
-                    <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
+                    <ButtonContainer>
+                        <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
+                        <button className="submitBtn" onClick={handleSubmit}>Submit</button>
+                    </ButtonContainer>
                     </>
                 )
             }
