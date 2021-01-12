@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import  { v4 as uuidv4 } from "uuid";
 import axiosWithAuth from '../axios/axiosWithAuth';
+import gsap from 'gsap';
 import styled from 'styled-components';
 
 const RecipeCardContainer = styled.div`
@@ -51,12 +52,25 @@ function RecipeCard(props) {
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isEditing, setIsEditing] = useState(false);
 
+    //Animation Ref
+    const animationRef = useRef(null);
+
+    useEffect(() => {
+        gsap.from(animationRef.current, {
+            autoAlpha: 0,
+            duration: 1.25,
+            ease: 'power4.inOut'
+        })
+    }, []);
+
+    //Edit Handler
     const handleEdit = (e) => {
         e.preventDefault();   
         setIsEditing(!isEditing);
         setFormValues({ ...formValues, ...recipe })
     }
 
+    //Submit Handler
     const handleSubmit = (e) => {
         e.preventDefault();   
         console.log(formValues.imageURL)
@@ -88,6 +102,7 @@ function RecipeCard(props) {
         setIsEditing(!isEditing);
     }
 
+    //Change Handler
     const handleChange = (e, index) => {
         switch(e.target.name) {
             case "ingredientname":
@@ -117,6 +132,7 @@ function RecipeCard(props) {
     }
 
    
+    //Button Handlers
     const addIngredient = () => {
         setFormValues({ ...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}] });
     }
@@ -160,7 +176,7 @@ function RecipeCard(props) {
 
 
     return(
-        <RecipeCardContainer>            
+        <RecipeCardContainer ref={animationRef}>            
             <RecipeTitle>
                 <div>
                     <h2>{recipe.name}</h2>
