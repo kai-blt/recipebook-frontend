@@ -93,7 +93,7 @@ const initialFormValues = {
     name: "",
     type: "",
     imageURL: "",
-    ingredients: [{ quantity: "", measurement: "", name: "" }],
+    ingredients: [{ quantity: "", measurement: "", name: "", group: "" }],
     steps: [{stepnumber: 1, instructions: ""}]
 }
 
@@ -170,6 +170,13 @@ function RecipeCard(props) {
                 const newIngMeasurement = [ ...formValues.ingredients ]
                 newIngMeasurement[index].measurement = e.target.value;    
                 setFormValues({ ...formValues, ingredients: newIngMeasurement });
+                break;
+            case "group":
+                let group = "";
+                (e.target.value === "") ? group = "Ingredient" : group = e.target.value;
+                const newGroup = [ ...formValues.ingredients ]
+                newGroup[index].group = group;    
+                setFormValues({ ...formValues, ingredients: newGroup });
                 break;
             case "instructions":
                 const newSteps = [ ...formValues.steps ]

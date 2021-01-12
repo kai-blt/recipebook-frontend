@@ -118,7 +118,9 @@ function Recipes(props) {
 
             {isCreating
                 ?
-                   <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                    <RecipeDirectionsPane>
+                        <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                    </RecipeDirectionsPane>
                 : 
                     <RecipeDirectionsPane>
                         {clicked
@@ -127,8 +129,7 @@ function Recipes(props) {
                                 .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
                             : null
                         }     
-                    </RecipeDirectionsPane>
-                
+                    </RecipeDirectionsPane>                
             }    
         </RecipeContainer>
         </>

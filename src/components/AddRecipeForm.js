@@ -4,34 +4,80 @@ import styled from 'styled-components';
 
 
 const FormContainer = styled.div`
-    width: 50%;
-    margin: 0 2%;
+    margin-bottom: 4%;
 `;
 
 const RecipeTitle = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: row wrap;    
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    .edit {
+        width: 20%;
+    }
+
+    @media (max-width: 1000px) {
+        .edit {
+            width: 100%;
+        }
+    }   
 `;
 
 const InfoBox = styled.div`
-    margin: 3% 0;
-    div {
-        margin: 1% 1.5%;
+    margin: 10% 0;
+`;
+
+
+const EditInfoBox = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    .title {
+        width: 65%;
+    }
+
+    .type {
+        width: 30%;
     }
 `;
 
 const IngredientFields = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2%;
+
+    .qty {
+        width: 10%;
+    }
+
+    .msr {
+        width: 15%;
+    }
+
+    .ing {
+        width: 30%;
+    }
+
+    .grp {
+        width: 20%;
+    }
+
+    .step {
+        width: 85%;
+    }
+
+    .btns {
+        width:  8%;
+    }
 `;
+
 
 const initialFormValues = {
     name: "",
     type: "",
     imageURL: "",
-    ingredients: [{ quantity: "", measurement: "", name: "" }],
+    ingredients: [{ quantity: "", measurement: "", name: "", group: "" }],
     steps: [{stepnumber: 1, instructions: ""}]
 }
 
@@ -88,6 +134,13 @@ const AddRecipeForm = (props) => {
                 newIngMeasurement[index].measurement = e.target.value;    
                 setFormValues({ ...formValues, ingredients: newIngMeasurement });
                 break;
+            case "group":
+                let group = "";
+                (e.target.value === "") ? group = "Ingredient" : group = e.target.value;
+                const newGroup = [ ...formValues.ingredients ]
+                newGroup[index].group = group;    
+                setFormValues({ ...formValues, ingredients: newGroup });
+                break;
             case "instructions":
                 const newSteps = [ ...formValues.steps ]
                 newSteps[index].instructions = e.target.value;                
@@ -129,95 +182,112 @@ const AddRecipeForm = (props) => {
                 <div>
                     <h2>{formValues.name}</h2>
                 </div>
-                <div>
-                   <button onClick={handleSubmit}>Submit</button>
-                </div>
             </RecipeTitle>
-        <InfoBox>
-            <label>Recipe Title
-                <input 
-                    type="text"
-                    name="name"
-                    value={formValues.name}
-                    onChange={handleChange}
-                />
-            </label>  
-            <label>Recipe Type
-                <input 
-                    type="text"
-                    name="type"
-                    value={formValues.type}
-                    onChange={handleChange}
-                />
-            </label>  
-            <label>New Image URL
-                <input 
-                    type="text"
-                    name="imageURL"
-                    value={formValues.imageURL}
-                    onChange={handleChange}
-                />
-            </label>
-            
-            <h3>Ingredients</h3>
-            {formValues.ingredients.map((ing, index) => (
-                <IngredientFields>
-                    <div>
-                        <label>Quantity
-                            <input 
-                                type="text"
-                                name="quantity"
-                                value={formValues.ingredients[index].quantity}
-                                onChange={e => handleChange(e, index)}
-                            />
-                        </label>
+            <InfoBox>
+                <EditInfoBox>
+                    <div className="title">
+                    <label>Title
+                        <input 
+                            type="text"
+                            name="name"
+                            value={formValues.name}
+                            onChange={handleChange}
+                        />
+                    </label>  
                     </div>
-                    <div>
-                        <label>Measurement
-                            <input 
-                                type="text"
-                                name="measurement"
-                                value={formValues.ingredients[index].measurement}
-                                onChange={e => handleChange(e, index)}
-                            />
-                        </label>
+                    <div className="type">
+                    <label>Type
+                        <input 
+                            type="text"
+                            name="type"
+                            value={formValues.type}
+                            onChange={handleChange}
+                        />
+                    </label>  
                     </div>
-                    <div>
-                        <label>Ingredient
-                            <input 
-                                type="text"
-                                name="ingredientname"
-                                value={formValues.ingredients[index].name}
-                                onChange={e => handleChange(e, index)}
-                            />
-                        </label>
-                    </div>
-                    <div>
-                        <button onClick={addIngredient}>+</button>
-                        <button onClick={e => delIngredient(e, ing.name)}>-</button>
-                    </div>
-                </IngredientFields>
-            ))}
-            <h3>Steps</h3>
-            {formValues.steps.map((stp, index) => (
-                <IngredientFields>
-                    <div>
-                        <label>Step {formValues.steps[index].stepnumber}
-                            <input 
-                                type="text"
-                                name="instructions"
-                                value={formValues.steps[index].instructions}
-                                onChange={e => handleChange(e, index)}
-                            />
-                        </label>
-                    </div>
-                    <div>
-                        <button onClick={e => addStep(e, index)}>+</button>
-                        <button onClick={e => delStep(e, stp.instructions)}>-</button>
-                    </div>
-                </IngredientFields>
-            ))}
-        </InfoBox>
+                </EditInfoBox>                       
+                <label>Image URL
+                    <input 
+                        type="text"
+                        name="imageURL"
+                        value={formValues.imageURL}
+                        onChange={handleChange}
+                    />
+                </label>
+                </InfoBox>
+                <InfoBox>
+                <h3>Ingredients</h3>
+                {formValues.ingredients.map((ing, index) => (
+                    <IngredientFields>
+                        <div className="qty">
+                            <label>Qty
+                                <input 
+                                    type="text"
+                                    name="quantity"
+                                    value={formValues.ingredients[index].quantity}
+                                    onChange={e => handleChange(e, index)}
+                                />
+                            </label>
+                        </div>
+                        <div className="msr">
+                            <label>Measure
+                                <input 
+                                    type="text"
+                                    name="measurement"
+                                    value={formValues.ingredients[index].measurement}
+                                    onChange={e => handleChange(e, index)}
+                                />
+                            </label>
+                        </div>
+                        <div className="ing"> 
+                            <label>Ingredient
+                                <input 
+                                    type="text"
+                                    name="ingredientname"
+                                    value={formValues.ingredients[index].name}
+                                    onChange={e => handleChange(e, index)}
+                                />
+                            </label>
+                        </div>
+                        <div className="grp">
+                            <label>Group
+                                <input 
+                                    type="text"
+                                    name="group"
+                                    value={formValues.ingredients[index].group}
+                                    onChange={e => handleChange(e, index)}
+                                />
+                            </label>
+                        </div> 
+                        <div>
+                            <button onClick={addIngredient}>+</button>
+                            <button onClick={e => delIngredient(e, ing.name)}>-</button>
+                        </div>
+                    </IngredientFields>
+                ))}
+                </InfoBox>
+                <InfoBox>
+                <h3>Steps</h3>
+                {formValues.steps.map((stp, index) => (
+                    <IngredientFields>
+                        <div className="step">
+                            <label>Step {formValues.steps[index].stepnumber}
+                                <input 
+                                    type="text"
+                                    name="instructions"
+                                    value={formValues.steps[index].instructions}
+                                    onChange={e => handleChange(e, index)}
+                                />
+                            </label>
+                        </div>
+                        <div>
+                            <button onClick={e => addStep(e, index)}>+</button>
+                            <button onClick={e => delStep(e, stp.instructions)}>-</button>
+                        </div>
+                    </IngredientFields>
+                ))}
+            </InfoBox>        
+        <button className="addBtn" onClick={handleSubmit}>Submit</button>
         </FormContainer>
     )
 }

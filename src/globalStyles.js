@@ -178,6 +178,11 @@ export default createGlobalStyle`
         background-color: #5bc0de;
     }
 
+    button.addBtn {
+        width: 100%;
+        background-color: #5bc0de;
+    }
+
     button.deleteBtn {
         width: 20%;
         background-color: #d9534f;
