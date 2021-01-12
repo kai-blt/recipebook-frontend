@@ -9,7 +9,7 @@ const AppContainer = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  width: 70%;
+  width: 80%;
   height: 100vh;
   margin: auto;  
 `;

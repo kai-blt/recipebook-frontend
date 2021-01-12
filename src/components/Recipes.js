@@ -41,13 +41,20 @@ const SearchNav = styled.div`
 const RecipeListPane = styled.div`
     width: 50%;
     height: 100vh;
-    padding: 2%;
+    padding-top: 4%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 50%;
+    padding-bottom: 50%;
 `;
 
 const RecipeDirectionsPane = styled.div`
     width: 50%;
     height: 100%;
-    padding: 2%;
+    padding-top: 4%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 50%;
     border-left: 1px dashed #888;
 `;
 
