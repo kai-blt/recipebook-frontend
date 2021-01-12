@@ -9,24 +9,34 @@ const RecipeCardContainer = styled.div`
 `;
 
 const InfoBox = styled.div`
-    margin: 3% 0;
-    div {
-        margin: 1% 1.5%;
+    margin: 10% 0;
+`;
+
+const EditInfoBox = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    .title {
+        width: 65%;
+    }
+
+    .type {
+        width: 30%;
     }
 `;
 
 
 const RecipeTitle = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    align-items: flex-start;
     flex-flow: row wrap;
-    div {
-        width: 50%;
+    .edit {
+        width: 20%;
     }
 
     @media (max-width: 1000px) {
-        div {
+        .edit {
             width: 100%;
         }
     }
@@ -35,12 +45,47 @@ const RecipeTitle = styled.div`
 const IngredientFields = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2%;
+
+    .qty {
+        width: 10%;
+    }
+
+    .msr {
+        width: 15%;
+    }
+
+    .ing {
+        width: 30%;
+    }
+
+    .grp {
+        width: 20%;
+    }
+
+    .step {
+        width: 85%;
+    }
+
+    .btns {
+        width:  8%;
+    }
 `;
 
 
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
+`;
+
+const IngButtonContainer = styled.div`
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    div {
+        width: 100%;
+    }
 `;
 
 
@@ -190,7 +235,7 @@ function RecipeCard(props) {
                 <div className="edit">
                     {!isEditing
                         ? <button className="editBtn" onClick={handleEdit}>Edit</button>
-                        : null
+                        : <button className="cancelBtn" onClick={handleEdit}>X</button>
                     }
                 </div>
             </RecipeTitle>
@@ -210,24 +255,29 @@ function RecipeCard(props) {
                 )
                 : (
                     <>
-                    <InfoBox>
-                        <label>Recipe Title
-                            <input 
-                                type="text"
-                                name="name"
-                                value={formValues.name}
-                                onChange={handleChange}
-                            />
-                        </label>  
-                        <label>Recipe Type
-                            <input 
-                                type="text"
-                                name="type"
-                                value={formValues.type}
-                                onChange={handleChange}
-                            />
-                        </label>  
-                        <label>New Image URL
+                        <EditInfoBox>
+                            <div className="title">
+                            <label>Title
+                                <input 
+                                    type="text"
+                                    name="name"
+                                    value={formValues.name}
+                                    onChange={handleChange}
+                                />
+                            </label>  
+                            </div>
+                            <div className="type">
+                            <label>Type
+                                <input 
+                                    type="text"
+                                    name="type"
+                                    value={formValues.type}
+                                    onChange={handleChange}
+                                />
+                            </label>  
+                            </div>
+                        </EditInfoBox>                       
+                        <label>Image URL
                             <input 
                                 type="text"
                                 name="imageURL"
@@ -235,22 +285,23 @@ function RecipeCard(props) {
                                 onChange={handleChange}
                             />
                         </label>
-                        
+                    <InfoBox>
                         <h3>Ingredients</h3>
                         {formValues.ingredients.map((ing, index) => (
+                            <>
                             <IngredientFields>
-                                <div>
-                                    <label>Quantity
+                                <div className="qty">
+                                    <label>Qty<br/>
                                         <input 
                                             type="text"
                                             name="quantity"
                                             value={formValues.ingredients[index].quantity}
-                                            onChange={e => handleChange(e, index)}
+                                            onChange={e => handleChange(e, index)}                                            
                                         />
-                                    </label>
+                                        </label>
                                 </div>
-                                <div>
-                                    <label>Measurement
+                                <div className="msr">
+                                    <label>Measure
                                         <input 
                                             type="text"
                                             name="measurement"
@@ -259,7 +310,7 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div>
-                                <div>
+                                <div className="ing">
                                     <label>Ingredient
                                         <input 
                                             type="text"
@@ -268,19 +319,35 @@ function RecipeCard(props) {
                                             onChange={e => handleChange(e, index)}
                                         />
                                     </label>
-                                </div>
-                                <div>
-                                    <button onClick={addIngredient}>+</button>
-                                    <button onClick={e => delIngredient(e, ing.name)}>-</button>
-                                </div>
+                                </div>             
+                                <div className="grp">
+                                    <label>Group
+                                        <input 
+                                            type="text"
+                                            name="group"
+                                            value={formValues.ingredients[index].group}
+                                            onChange={e => handleChange(e, index)}
+                                        />
+                                    </label>
+                                </div> 
+                                <IngButtonContainer className="btns">
+                                    <div>
+                                        <button onClick={e => delIngredient(e, ing.name)}>-</button>
+                                    </div>
+                                    <div>
+                                        <button onClick={addIngredient}>+</button>
+                                    </div>
+                                </IngButtonContainer>                               
                             </IngredientFields>
+                            
+                            </>
                         ))}
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
                         {formValues.steps.map((stp, index) => (
                             <IngredientFields>
-                                <div>
+                                <div className="step">
                                     <label>Step {formValues.steps[index].stepnumber}
                                         <input 
                                             type="text"
@@ -290,10 +357,10 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div>
-                                <div>
-                                    <button onClick={e => addStep(e, index)}>+</button>
+                                <IngButtonContainer className="btns">
                                     <button onClick={e => delStep(e, stp.instructions)}>-</button>
-                                </div>
+                                    <button onClick={e => addStep(e, index)}>+</button>
+                                </IngButtonContainer>
                             </IngredientFields>
                         ))}
                     </InfoBox>

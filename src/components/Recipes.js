@@ -41,8 +41,8 @@ const RecipeListPane = styled.div`
     width: 50%;
     height: 100vh;
     padding-top: 4%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 8%;
+    padding-right: 8%;
     padding-bottom: 50%;
     padding-bottom: 50%;
 `;
@@ -51,8 +51,8 @@ const RecipeDirectionsPane = styled.div`
     width: 50%;
     height: 100%;
     padding-top: 4%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 8%;
+    padding-right: 8%;
     padding-bottom: 50%;
     border-left: 1px dashed #888;
 `;

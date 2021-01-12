@@ -68,7 +68,8 @@ export default createGlobalStyle`
     body {
         font-weight: 300;
         font-size: 1.6rem;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.5px;        
+        line-height: 2.5rem;
         color: #fff;
         background-color: #444;
         width: 100vw;
@@ -112,7 +113,8 @@ export default createGlobalStyle`
     h1, h2, h3, h4, h5, h6 {
         font-weight: 700;
         color: #5bc0de;        
-        margin: 1% 0;
+        margin-top: 2%;
+        margin-bottom: 4%;
         text-shadow: 2px 2px 6px #222;
     }
 
@@ -122,10 +124,11 @@ export default createGlobalStyle`
 
     h2 {
         font-size: 4rem;
+        padding-bottom: 4%;
     }
 
     h3 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     h4 {
@@ -134,14 +137,15 @@ export default createGlobalStyle`
 
 
     label {
-        font-weight: 700;
-        font-size: 2rem;
+        font-weight: 500;
+        font-size: 1.5rem;
     }
 
     input {
+        font-size: 1.6rem;
+        line-height: 2.5rem;
+        padding-left: 2%;
         width: 100%;
-        padding: 2% 0;
-        margin: 2% 0;
         border: 1px solid #999;
         border-radius: 6px;
     }
@@ -171,11 +175,16 @@ export default createGlobalStyle`
     
     button.submitBtn {
         width: 70%;
-        background-color: green;
+        background-color: #5bc0de;
     }
 
     button.deleteBtn {
         width: 20%;
-        background-color: red;
+        background-color: #d9534f;
+    }
+
+    button.cancelBtn {
+        width: 100%;
+        background-color: #d9534f;
     }
 `;
