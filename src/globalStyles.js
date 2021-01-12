@@ -178,7 +178,7 @@ export default createGlobalStyle`
     }
     
     button.submitBtn {
-        width: 70%;
+        width: 60%;
         background-color: #5bc0de;
     }
 
@@ -188,7 +188,7 @@ export default createGlobalStyle`
     }
 
     button.deleteBtn {
-        width: 20%;
+        width: 30%;
         background-color: #d9534f;
     }
 
@@ -221,6 +221,10 @@ export default createGlobalStyle`
         h4 {
             font-size: 1rem;
         }
+
+        button {
+            font-size: 1.5rem;
+        }
     }
 
     @media(max-width: 700px) {
@@ -240,6 +244,10 @@ export default createGlobalStyle`
 
         h4 {
             font-size: 0.5rem;
+        }
+
+        button {
+            font-size: 1rem;
         }
     }
 

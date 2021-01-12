@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import  { v4 as uuidv4 } from "uuid";
+import * as yup from 'yup';
+import schema from '../validation/schema';
 import axiosWithAuth from '../axios/axiosWithAuth';
 import gsap from 'gsap';
 import styled from 'styled-components';
@@ -102,6 +104,8 @@ function RecipeCard(props) {
     const { recipe, setRecipes, setClicked } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isEditing, setIsEditing] = useState(false);
+    const [enableSubmit, setEnableSubmit] = useState(true);
+    const [errors, setErrors] = useState(true);
 
     //Animation Ref
     const animationRef = useRef(null);
@@ -114,6 +118,14 @@ function RecipeCard(props) {
         })
     }, []);
 
+    
+    useEffect(() => {
+        schema.isValid(formValues).then(valid => {
+            console.log(valid);
+            setEnableSubmit(!valid);
+        });
+    }, [formValues]);
+
     //Edit Handler
     const handleEdit = (e) => {
         e.preventDefault();   
@@ -124,6 +136,16 @@ function RecipeCard(props) {
     //Submit Handler
     const handleSubmit = (e) => {
         e.preventDefault();   
+
+        yup.reach(schema, e.target.name)
+        .validate(e.target.value)
+        .then(() => {
+            setErrors({...errors, [e.target.name]: ""})
+        })
+        .catch(err => {
+            setErrors({...errors, [e.target.name]: err.errors[0] })
+        })
+
         console.log(formValues.imageURL)
         const newRecipe = {
             name: formValues.name,
@@ -383,7 +405,7 @@ function RecipeCard(props) {
                     </InfoBox>
                     <ButtonContainer>
                         <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
-                        <button className="submitBtn" onClick={handleSubmit}>Submit</button>
+                        {enableSubmit ? <button className="disabled">Submit</button> :  <button className="submitBtn" onClick={handleSubmit}>Submit</button>}
                     </ButtonContainer>
                     </>
                 )

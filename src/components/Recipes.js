@@ -58,11 +58,24 @@ const RecipeDirectionsPane = styled.div`
 `;
 
 
+const initialErrors = {
+    name: "",
+    type: "",
+    imageURL: "",
+    quantity: "",
+    ingredientname: "",
+    measurement: "",
+    group: "",
+    instructions: ""
+}
+
+
 function Recipes(props) {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState('');
     const [clicked, setClicked] = useState('');
     const [isCreating, setIsCreating] = useState(false);
+    const [enableSubmit, setEnableSubmit] = useState(true);
 
 
     useEffect(() => {
@@ -75,6 +88,7 @@ function Recipes(props) {
                 console.log(err);
             });
     }, []);    
+
 
     const onChange = (e) => {
         setSearch(e.target.value);
