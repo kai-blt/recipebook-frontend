@@ -88,7 +88,7 @@ function RecipeCard(props) {
         axiosWithAuth().put(`/recipes/recipe/${recipe.recipeid}`, newRecipe)
             .then(res => {
                 console.log(res)
-                axiosWithAuth().get('/users/users')
+                axiosWithAuth().get('/users/getuserinfo')
                     .then(res => {
                         console.log(res.data.recipes);
                         setRecipes(res.data.recipes);
