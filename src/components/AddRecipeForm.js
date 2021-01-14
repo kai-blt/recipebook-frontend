@@ -72,6 +72,13 @@ const IngredientFields = styled.div`
     .btns {
         width:  8%;
     }
+
+    @media (max-width: 700px) {
+        flex-flow: column wrap;
+        .qty, .msr, .ing, .grp, .step, .btns {
+            width: 100%;
+        }
+    }
 `;
 
 const ErrorMessages = styled.div`

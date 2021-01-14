@@ -151,7 +151,6 @@ export default createGlobalStyle`
         font-size: 1.6rem;
         font-family: 'Montserrat', sans-serif;
         line-height: 2.5rem;
-        padding-left: 2%;
         width: 100%;
         border: 1px solid #999;
         border-radius: 6px;
