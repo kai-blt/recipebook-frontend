@@ -94,6 +94,7 @@ export default createGlobalStyle`
     img {
         width: 100%;
         border-radius: 10px;
+        margin-bottom: 4%;
     }
 
     a {

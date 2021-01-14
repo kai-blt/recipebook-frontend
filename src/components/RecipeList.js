@@ -14,7 +14,7 @@ const ImageContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 20vh;
-    background-image: url(${ ({background}) => background});
+    background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 8px;
