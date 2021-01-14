@@ -19,9 +19,14 @@ const initialFormValues = {
     password: ''
 }
 
+const ErrorMessages = styled.div`
+    color: #d9534f;
+`;
+
 function Login(props) {
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+    const [errors, setErrors] = useState("");
     
     const history = useHistory();
 
@@ -56,7 +61,8 @@ function Login(props) {
                 history.push("/recipes");
             })
             .catch(err => {
-                console.log(err);
+                console.log(JSON.parse(JSON.stringify(err.response.data.error_description)));
+                setErrors(JSON.parse(JSON.stringify(err.response.data.error_description)));
             });
     }
 
@@ -71,7 +77,8 @@ function Login(props) {
                 setIsCreatingAccount(!isCreatingAccount);
             })
             .catch(err => {
-                console.log(err);
+                console.log(JSON.parse(JSON.stringify(err.response.data.error_description)));
+                setErrors(JSON.parse(JSON.stringify(err.response.data.error_description)));
             });
     }
 
@@ -125,7 +132,10 @@ function Login(props) {
                     </label>                
                     <button>Sign Up</button>
                 </form>
-            )}            
+            )}
+            <ErrorMessages>
+                {errors}
+            </ErrorMessages>            
         </div>
     );
 }
