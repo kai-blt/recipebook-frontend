@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import schema from '../validation/schema';
 import axiosWithAuth from '../axios/axiosWithAuth';
 import gsap from 'gsap';
+import placeholder from '../assets/placeholder.jpg'
 import styled from 'styled-components';
 
 const RecipeCardContainer = styled.div`
@@ -282,7 +283,7 @@ function RecipeCard(props) {
                 ? (
                     <>
                     <InfoBox>
-                        {recipe.imageURL.includes("http:") ? <img src="/placeholder.jpg" alt="Upload your image here"/> :<img src={recipe.imageURL} alt={recipe.name}/>} 
+                        {recipe.imageURL.match(/http/i) ? <img src={recipe.imageURL} alt={recipe.name}/> : <img src={placeholder} alt="Upload your image here"/> } 
                         <h3>Ingredients</h3>
                         {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
                     </InfoBox>

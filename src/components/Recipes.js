@@ -14,6 +14,7 @@ const RecipeContainer = styled.div`
     margin: 0;
     padding: 0; 
     width: 100%;
+    height: 100vh;
     border-radius: 10px;
     background: #222;
     box-shadow: inset 4px 4px 10px #111;
@@ -49,7 +50,7 @@ const RecipeListPane = styled.div`
 
 const RecipeDirectionsPane = styled.div`
     width: 50%;
-    height: 100%;
+    height: 100vh;
     padding-top: 4%;
     padding-left: 8%;
     padding-right: 8%;
