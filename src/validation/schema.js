@@ -8,7 +8,7 @@ export default yup.object().shape({
     type: yup
         .string(),
     imageURL: yup
-        .string(),
+        .string(),   
     quantity: yup
         .number().typeError("Please enter a number for qty"),
     measurement: yup
@@ -19,4 +19,5 @@ export default yup.object().shape({
         .string(),
     instructions: yup
         .string()
+        
 });

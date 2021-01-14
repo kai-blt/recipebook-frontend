@@ -73,9 +73,12 @@ export default createGlobalStyle`
         letter-spacing: 0.5px;        
         line-height: 2.5rem;
         color: #fff;
-        background-color: #444;
-        width: 100vw;
-        height: 100vh;
+        background-image: url("/background.png");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #555;
+        background-size: cover;  
+        width: 100%;
         margin: 0;
         padding: 0;
     }

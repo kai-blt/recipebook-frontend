@@ -106,10 +106,11 @@ const AddRecipeForm = (props) => {
 
 
     useEffect(() => {
-        schema.isValid(formValues).then(valid => {
-            console.log(valid);
-            setEnableSubmit(!valid);
-        });
+        schema.isValid(formValues)
+            .then(valid => {
+                console.log(valid);
+                setEnableSubmit(!valid);
+            });
     }, [formValues]);
 
     
@@ -126,12 +127,7 @@ const AddRecipeForm = (props) => {
             ingredients: formValues.ingredients,
             steps: formValues.steps
         } 
-
-        if (formValues.ingredients.length < 1) {
-            setEnableSubmit(false);
-        }
-
-
+        
         axiosWithAuth().post('/recipes/recipe', newRecipe)
             .then(res => {
                 console.log(res)
