@@ -48,31 +48,12 @@ const RecipeTitle = styled.div`
 const IngredientFields = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-flow: column wrap;
     align-items: center;
-    padding-bottom: 2%;
+    padding-bottom: 15%;
 
-    .qty {
-        width: 10%;
-    }
-
-    .msr {
-        width: 15%;
-    }
-
-    .ing {
-        width: 30%;
-    }
-
-    .grp {
-        width: 20%;
-    }
-
-    .step {
-        width: 85%;
-    }
-
-    .btns {
-        width:  8%;
+    div {
+        width: 100%;
     }
 `;
 
@@ -82,13 +63,13 @@ const ButtonContainer = styled.div`
     justify-content: space-between;
 `;
 
-const IngButtonContainer = styled.div`
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    div {
-        width: 100%;
-    }
+const FieldsButtonContainer = styled.div`  
+     display: flex;
+     justify-content: space-between;
+     margin-top: 2%;
+     div {
+         width: 40%;
+     }
 `;
 
 
@@ -369,14 +350,14 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div> 
-                                <IngButtonContainer className="btns">
+                                <FieldsButtonContainer className="btns">
                                     <div>
                                         <button onClick={e => delIngredient(e, ing.name)}>-</button>
                                     </div>
                                     <div>
                                         <button onClick={addIngredient}>+</button>
                                     </div>
-                                </IngButtonContainer>                               
+                                </FieldsButtonContainer>                               
                             </IngredientFields>
                             
                             </>
@@ -396,10 +377,14 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div>
-                                <IngButtonContainer className="btns">
-                                    <button onClick={e => delStep(e, stp.instructions)}>-</button>
-                                    <button onClick={e => addStep(e, index)}>+</button>
-                                </IngButtonContainer>
+                                <FieldsButtonContainer className="btns">
+                                    <div>
+                                        <button onClick={e => delStep(e, stp.instructions)}>-</button>
+                                    </div>
+                                    <div>
+                                        <button onClick={e => addStep(e, index)}>+</button>
+                                    </div>
+                                </FieldsButtonContainer>
                             </IngredientFields>
                         ))}
                     </InfoBox>

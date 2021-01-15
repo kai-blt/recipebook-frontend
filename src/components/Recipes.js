@@ -122,6 +122,7 @@ function Recipes(props) {
         e.preventDefault();
         setClicked(e.target.innerHTML);
         setIsViewing(!isViewing);
+        setIsCreating(!isCreating)
     }
 
     const createNewRecipe = (e) => {
@@ -166,7 +167,7 @@ function Recipes(props) {
                         </div>
                         <div className="add">
                             <button onClick={createNewRecipe}>New Recipe</button>
-                            <button onClick={() => setIsViewing(!isViewing)}>Back</button>
+                            <button onClick={handleClick}>Back to Recipe List</button>
                         </div>
                     </SearchNav>
                     {isCreating

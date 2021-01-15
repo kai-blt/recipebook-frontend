@@ -46,39 +46,23 @@ const EditInfoBox = styled.div`
 const IngredientFields = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-flow: column wrap;
     align-items: center;
-    padding-bottom: 2%;
+    padding-bottom: 15%;
 
-    .qty {
-        width: 10%;
+    div {
+        width: 100%;
     }
+`;
 
-    .msr {
-        width: 15%;
-    }
+const ButtonContainer = styled.div`
+     display: flex;
+     justify-content: space-between;
+     margin-top: 2%; 
 
-    .ing {
-        width: 30%;
-    }
-
-    .grp {
-        width: 20%;
-    }
-
-    .step {
-        width: 85%;
-    }
-
-    .btns {
-        width:  8%;
-    }
-
-    @media (max-width: 700px) {
-        flex-flow: column wrap;
-        .qty, .msr, .ing, .grp, .step, .btns {
-            width: 100%;
-        }
-    }
+     div {
+         width: 40%;
+     }
 `;
 
 const ErrorMessages = styled.div`
@@ -314,10 +298,14 @@ const AddRecipeForm = (props) => {
                                 />
                             </label>
                         </div> 
-                        <div>
-                            <button onClick={addIngredient}>+</button>
-                            <button onClick={e => delIngredient(e, ing.name)}>-</button>
-                        </div>
+                        <ButtonContainer>
+                            <div>
+                                <button onClick={addIngredient}>+</button>
+                            </div>
+                            <div>
+                                <button onClick={e => delIngredient(e, ing.name)}>-</button>
+                            </div>
+                        </ButtonContainer>
                     </IngredientFields>
                 ))}
                 <ErrorMessages>
@@ -341,10 +329,14 @@ const AddRecipeForm = (props) => {
                                 />
                             </label>
                         </div>
-                        <div>
-                            <button onClick={e => addStep(e, index)}>+</button>
-                            <button onClick={e => delStep(e, stp.instructions)}>-</button>
-                        </div>
+                        <ButtonContainer>
+                            <div>
+                                <button onClick={e => addStep(e, index)}>+</button>
+                            </div>
+                            <div>
+                                <button onClick={e => delStep(e, stp.instructions)}>-</button>
+                            </div>
+                        </ButtonContainer>
                     </IngredientFields>
                 ))}
             </InfoBox>   
