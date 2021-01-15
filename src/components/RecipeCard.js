@@ -98,7 +98,7 @@ function RecipeCard(props) {
             duration: 1.25,
             ease: 'power4.inOut'
         })
-    }, []);
+    }, [isEditing]);
 
     
     useEffect(() => {
@@ -255,7 +255,7 @@ function RecipeCard(props) {
                 <div className="edit">
                     {!isEditing
                         ? <button className="editBtn" onClick={handleEdit}>Edit</button>
-                        : <button className="cancelBtn" onClick={handleEdit}>X</button>
+                        : <button className="cancelBtn" onClick={handleEdit}>Cancel</button>
                     }
                 </div>
             </RecipeTitle>
@@ -352,7 +352,7 @@ function RecipeCard(props) {
                                 </div> 
                                 <FieldsButtonContainer className="btns">
                                     <div>
-                                        <button onClick={e => delIngredient(e, ing.name)}>-</button>
+                                        <button className="deleteBtn2" onClick={e => delIngredient(e, ing.name)}>-</button>
                                     </div>
                                     <div>
                                         <button onClick={addIngredient}>+</button>
@@ -379,7 +379,7 @@ function RecipeCard(props) {
                                 </div>
                                 <FieldsButtonContainer className="btns">
                                     <div>
-                                        <button onClick={e => delStep(e, stp.instructions)}>-</button>
+                                        <button className="deleteBtn2" onClick={e => delStep(e, stp.instructions)}>-</button>
                                     </div>
                                     <div>
                                         <button onClick={e => addStep(e, index)}>+</button>

@@ -10,7 +10,6 @@ const AppContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 80%;
-  height: 100vh;
   margin: auto;  
 `;
 

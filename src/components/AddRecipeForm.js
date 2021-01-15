@@ -300,10 +300,10 @@ const AddRecipeForm = (props) => {
                         </div> 
                         <ButtonContainer>
                             <div>
-                                <button onClick={addIngredient}>+</button>
+                                <button className="deleteBtn2" onClick={e => delIngredient(e, ing.name)}>-</button>
                             </div>
                             <div>
-                                <button onClick={e => delIngredient(e, ing.name)}>-</button>
+                                <button onClick={addIngredient}>+</button>
                             </div>
                         </ButtonContainer>
                     </IngredientFields>
@@ -331,10 +331,10 @@ const AddRecipeForm = (props) => {
                         </div>
                         <ButtonContainer>
                             <div>
-                                <button onClick={e => addStep(e, index)}>+</button>
+                                <button className="deleteBtn2" onClick={e => delStep(e, stp.instructions)}>-</button>
                             </div>
                             <div>
-                                <button onClick={e => delStep(e, stp.instructions)}>-</button>
+                                <button onClick={e => addStep(e, index)}>+</button>
                             </div>
                         </ButtonContainer>
                     </IngredientFields>

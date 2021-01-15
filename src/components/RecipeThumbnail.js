@@ -29,7 +29,7 @@ const ImageContainer = styled.div`
     }  
 
     @media(max-width: 1200px) {
-        font-size: 4rem;
+        font-size: 2.5rem;
     }
 
     @media(max-width: 700px) {
@@ -38,7 +38,6 @@ const ImageContainer = styled.div`
 
     @media(max-width: 500px) {
         font-size: 1.5rem;
-        padding-left: 10%;
     }
 `;
 
@@ -47,7 +46,7 @@ function RecipeThumbnail(props) {
     const { recipe, onClick } = props;
 
     return(
-        <RecipeListContainer>       
+        <RecipeListContainer >       
             <ImageContainer background={recipe.imageURL} onClick={onClick}>
                 {recipe.name}
             </ImageContainer>

@@ -95,7 +95,7 @@ function Recipes(props) {
     const [clicked, setClicked] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [isViewing, setIsViewing] = useState(false);
-
+   
 
     useEffect(() => {
         axiosWithAuth().get('/users/getuserinfo')
@@ -117,7 +117,12 @@ function Recipes(props) {
         e.preventDefault();
         setClicked(e.target.innerHTML);
         setIsViewing(!isViewing);
-        setIsCreating(!isCreating)
+    }
+
+    const handleBack = (e) => {
+        e.preventDefault();
+        setIsViewing(false);
+        setIsCreating(false);
     }
 
     const createNewRecipe = (e) => {
@@ -162,7 +167,7 @@ function Recipes(props) {
                         </div>
                         <div className="add">
                             <button onClick={createNewRecipe}>New Recipe</button>
-                            <button onClick={handleClick}>Back to Recipe List</button>
+                            <button onClick={handleBack}>Back to Recipe List</button>
                         </div>
                     </SearchNav>
                     {isCreating

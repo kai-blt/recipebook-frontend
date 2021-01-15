@@ -162,7 +162,7 @@ export default createGlobalStyle`
 
     button {
         width: 100%;
-        padding: 2% 2%;
+        padding: 2%;
         margin: 4% 0;
         font-size: 2rem;
         font-weight: 500;
@@ -195,6 +195,12 @@ export default createGlobalStyle`
         background-color: #d9534f;
     }
 
+    button.deleteBtn2 {
+        width: 100%;
+        background-color: #d9534f;
+    }
+
+
     button.cancelBtn {
         width: 100%;
         background-color: #d9534f;
@@ -218,7 +224,7 @@ export default createGlobalStyle`
         }
 
         h3 {
-            font-size: 2rem;
+            font-size: 3rem;
         }
 
         h4 {
@@ -250,7 +256,7 @@ export default createGlobalStyle`
         }
 
         button {
-            font-size: 1rem;
+            font-size: 1.5rem;
         }
     }
 
@@ -266,11 +272,20 @@ export default createGlobalStyle`
         }
 
         h3 {
-            font-size: 1rem;
+            font-size: 2rem;
         }
 
         h4 {
             font-size: 0.5rem;
+        }
+
+        label {
+            font-size: 1.25rem;
+        }
+
+        button {
+            font-size: 1.5rem;
+            padding: 4%;
         }
     }
 `;
