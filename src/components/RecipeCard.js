@@ -122,7 +122,6 @@ function RecipeCard(props) {
     
     useEffect(() => {
         schema.isValid(formValues).then(valid => {
-            console.log(valid);
             setEnableSubmit(!valid);
         });
     }, [formValues]);

@@ -43,7 +43,7 @@ const ImageContainer = styled.div`
 `;
 
 
-function RecipeList(props) {
+function RecipeThumbnail(props) {
     const { recipe, onClick } = props;
 
     return(
@@ -55,4 +55,4 @@ function RecipeList(props) {
     );
 }
 
-export default RecipeList;
+export default RecipeThumbnail;

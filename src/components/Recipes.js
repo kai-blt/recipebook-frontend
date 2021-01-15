@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../axios/axiosWithAuth';
-import RecipeList from './RecipeList';
+import RecipeThumbnail from './RecipeThumbnail';
 import RecipeCard from './RecipeCard';
 import { v4 as uuidv4 } from 'uuid';
+import spinner from '../assets/spinner.gif'
 import styled from 'styled-components';
 import AddRecipeForm from './AddRecipeForm';
+
+
+
 
 const RecipeContainer = styled.div`
     display: flex;
@@ -18,6 +22,23 @@ const RecipeContainer = styled.div`
     border-radius: 10px;
     background: #222;
     box-shadow: inset 4px 4px 10px #111;
+   
+
+    .desktoptoggle {
+        display: initial;
+    }
+    .mobiletoggle {
+        display: none;
+    }
+
+    @media (max-width: 600px) {
+        .desktoptoggle {
+            display: none;
+        }
+        .mobiletoggle {
+            display: initial;
+        }
+    }
 `;
 
 const SearchNav = styled.div`
@@ -38,6 +59,8 @@ const SearchNav = styled.div`
     }
 `;    
 
+
+
 const RecipeListPane = styled.div`
     width: 50%;
     height: 100vh;
@@ -46,6 +69,10 @@ const RecipeListPane = styled.div`
     padding-right: 8%;
     padding-bottom: 50%;
     padding-bottom: 50%;
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
 `;
 
 const RecipeDirectionsPane = styled.div`
@@ -56,19 +83,15 @@ const RecipeDirectionsPane = styled.div`
     padding-right: 8%;
     padding-bottom: 50%;
     border-left: 1px dashed #888;
+    @media (max-width: 600px) {
+      width: 0;
+    }
 `;
 
+const Spinner = styled.img`
+    width: 10%;
+`;
 
-const initialErrors = {
-    name: "",
-    type: "",
-    imageURL: "",
-    quantity: "",
-    ingredientname: "",
-    measurement: "",
-    group: "",
-    instructions: ""
-}
 
 
 function Recipes(props) {
@@ -76,7 +99,7 @@ function Recipes(props) {
     const [search, setSearch] = useState('');
     const [clicked, setClicked] = useState('');
     const [isCreating, setIsCreating] = useState(false);
-    const [enableSubmit, setEnableSubmit] = useState(true);
+    const [isViewing, setIsViewing] = useState(false);
 
 
     useEffect(() => {
@@ -98,6 +121,7 @@ function Recipes(props) {
     const handleClick = (e) => {
         e.preventDefault();
         setClicked(e.target.innerHTML);
+        setIsViewing(!isViewing);
     }
 
     const createNewRecipe = (e) => {
@@ -106,48 +130,76 @@ function Recipes(props) {
     }
 
     return(
-        <>
-        <RecipeContainer>                         
-            <RecipeListPane>
-                <SearchNav>
-                    <div>
-                    <label>Search&nbsp;
-                        <input
-                            type="text"
-                            name="search"
-                            onChange={onChange}
-                        />
-                    </label>
-                    </div>
-                    <div className="add">
-                        <button onClick={createNewRecipe}>New Recipe</button>
-                    </div>
-                </SearchNav>
-                {recipes 
-                    ? recipes
-                        .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                        .map(recipe => <RecipeList key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
-                    : <div>Fetching recipes...</div>
-                }
-            </RecipeListPane>
-
-            {isCreating
-                ?
-                    <RecipeDirectionsPane>
-                        <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
-                    </RecipeDirectionsPane>
-                : 
-                    <RecipeDirectionsPane>
-                        {clicked
-                            ? recipes
-                                .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
-                                .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
-                            : null
-                        }     
-                    </RecipeDirectionsPane>                
-            }    
-        </RecipeContainer>
-        </>
+            <RecipeContainer>                         
+                <RecipeListPane  className="desktoptoggle">
+                    <SearchNav>
+                        <div>
+                        <label>Search&nbsp;
+                            <input
+                                type="text"
+                                name="search"
+                                onChange={onChange}
+                            />
+                        </label>
+                        </div>
+                        <div className="add">
+                            <button onClick={createNewRecipe}>New Recipe</button>
+                        </div>
+                    </SearchNav>
+                    {recipes 
+                        ? recipes
+                            .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                            .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
+                        : <div><Spinner src={spinner} alt="spinner"/></div>
+                    }                
+                </RecipeListPane>
+                <RecipeListPane  className="mobiletoggle">
+                    <SearchNav>
+                        <div>
+                        <label>Search&nbsp;
+                            <input
+                                type="text"
+                                name="search"
+                                onChange={onChange}
+                            />
+                        </label>
+                        </div>
+                        <div className="add">
+                            <button onClick={createNewRecipe}>New Recipe</button>
+                            <button onClick={() => setIsViewing(!isViewing)}>Back</button>
+                        </div>
+                    </SearchNav>
+                    {isCreating
+                        ? <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                        : isViewing
+                            ? clicked
+                                ? recipes
+                                    .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
+                                    .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
+                                :  null
+                            : recipes 
+                                ? recipes
+                                    .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                                    .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
+                                : <div><Spinner src={spinner} alt="spinner"/></div>
+                    }
+                </RecipeListPane>
+                {isCreating
+                    ?
+                        <RecipeDirectionsPane  className="desktoptoggle">
+                            <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                        </RecipeDirectionsPane>
+                    : 
+                        <RecipeDirectionsPane  className="desktoptoggle">
+                            {clicked
+                                ? recipes
+                                    .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
+                                    .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
+                                : null
+                            }     
+                        </RecipeDirectionsPane>                
+                }                 
+            </RecipeContainer>
     );
 }
 
