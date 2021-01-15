@@ -15,10 +15,7 @@ const RecipeContainer = styled.div`
     flex-flow: row nowrap;
     justify-content: space-between;   
     align-items: flex-start;
-    margin: 0;
-    padding: 0; 
     width: 100%;
-    height: 100vh;
     border-radius: 10px;
     background: #222;
     box-shadow: inset 4px 4px 10px #111;
@@ -63,7 +60,6 @@ const SearchNav = styled.div`
 
 const RecipeListPane = styled.div`
     width: 50%;
-    height: 100vh;
     padding-top: 4%;
     padding-left: 8%;
     padding-right: 8%;
@@ -77,7 +73,6 @@ const RecipeListPane = styled.div`
 
 const RecipeDirectionsPane = styled.div`
     width: 50%;
-    height: 100vh;
     padding-top: 4%;
     padding-left: 8%;
     padding-right: 8%;
