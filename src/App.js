@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Switch, Route } from 'react-router';
 import Nav from './components/Nav';
 import Home from './components/Home';
@@ -15,16 +16,18 @@ const AppContainer = styled.div`
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <>
     <AppContainer>      
-      <Nav />
+      <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Switch>
         <Route path="/recipes">
           <Recipes />
         </Route>
         <Route path="/">
-          <Home />
+          <Home setIsLoggedIn={setIsLoggedIn} />
         </Route>
       </Switch>
     </ AppContainer>

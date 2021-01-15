@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const SignUp = styled.div`
     text-decoration: underline;
+    transition: all 0.5s;
     &:hover {
         color: #555;
     }
@@ -28,6 +29,7 @@ const ErrorMessages = styled.div`
 `;
 
 function Login(props) {
+    const { setIsLoggedIn } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
     const [errors, setErrors] = useState("");
@@ -67,6 +69,7 @@ function Login(props) {
                 localStorage.setItem("token", res.data.access_token);
                 localStorage.setItem("username", formValues.username)
                 setIsLoading(false);
+                setIsLoggedIn(true);
                 history.push("/recipes");
             })
             .catch(err => {
@@ -86,6 +89,7 @@ function Login(props) {
             .then(res => {
                 localStorage.setItem("token", res.data.access_token);
                 setIsLoading(false);
+                setIsLoggedIn(true);
                 setIsCreatingAccount(!isCreatingAccount);
             })
             .catch(err => {
