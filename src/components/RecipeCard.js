@@ -13,7 +13,19 @@ const RecipeCardContainer = styled.div`
 
 const InfoBox = styled.div`
     margin: 10% 0;
+   
 `;
+
+const ImageContainer = styled.div`
+    height: 30vh;
+    background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 8px;
+    color: #fff;
+    margin-bottom: 6%;
+`;
+
 
 const EditInfoBox = styled.div`
     display: flex;
@@ -271,7 +283,7 @@ function RecipeCard(props) {
                 ? (
                     <>
                     <InfoBox>
-                        {recipe.imageURL.match(/http/i) ? <img src={recipe.imageURL} alt={recipe.name}/> : <img src={placeholder} alt="Upload your image here"/> } 
+                        {recipe.imageURL.match(/http/i) ? <ImageContainer background={recipe.imageURL} /> : null } 
                         <h3>Ingredients</h3>
                         {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
                     </InfoBox>
