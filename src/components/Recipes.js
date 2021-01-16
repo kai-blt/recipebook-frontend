@@ -117,7 +117,7 @@ function Recipes(props) {
     const [clicked, setClicked] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [isViewing, setIsViewing] = useState(false);
-    const [searchToggle, setSearchToggle] = useState(false);
+    const [searchToggle, setSearchToggle] = useState(true);
 
     useEffect(() => {
         axiosWithAuth().get('/users/getuserinfo')
