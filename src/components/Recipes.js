@@ -63,8 +63,9 @@ const SearchNav = styled.div`
 const RadioToggle = styled.div`
     display: inline-flex;
     flex-direction: row-reverse;
-    flex-wrap: wrap;
-    margin-bottom: 6%;
+    flex-wrap: nowrap;
+    margin-top: 2%;
+    margin-bottom: 2%;
     input, label {
         margin-right: 2px;
         width: 20px;
@@ -196,12 +197,27 @@ function Recipes(props) {
                                 onChange={onChange}
                             />
                         </label>
+                        <RadioToggle>
+                            <div>
+                                <label>
+                                    <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                    Ingredient
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                    Title
+                                </label>
+                            </div>
+                        </RadioToggle>
                         </div>
                         <div className="add">
                             <button onClick={createNewRecipe}>New Recipe</button>
                             <button onClick={handleBack}>Back to Recipe List</button>
                         </div>
                     </SearchNav>
+                    
                     {isCreating
                         ? <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
                         : isViewing
@@ -210,11 +226,17 @@ function Recipes(props) {
                                     .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
                                     .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
                                 :  null
-                            : recipes 
-                                ? recipes
-                                    .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                                    .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
-                                : <div><Spinner src={spinner} alt="spinner"/></div>
+                            : searchToggle
+                                ? recipes 
+                                    ? recipes
+                                        .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                                        .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                                    : <div><Spinner src={spinner} alt="spinner"/></div>
+                                : recipes 
+                                    ? recipes
+                                        .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
+                                        .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                                    : <div><Spinner src={spinner} alt="spinner"/></div>
                     }
                 </RecipeListPane>
                 {isCreating

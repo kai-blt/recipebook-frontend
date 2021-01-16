@@ -22,6 +22,10 @@ const ImageContainer = styled.div`
     border-radius: 8px;
     color: #fff;
     margin-bottom: 6%;
+
+    @media (max-width: 1000px) {
+      height: 20vh;
+    }
 `;
 
 
