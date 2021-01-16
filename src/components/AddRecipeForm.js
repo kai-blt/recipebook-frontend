@@ -178,13 +178,13 @@ const AddRecipeForm = (props) => {
     }
 
     const addIngredient = () => {
-        setFormValues({ ...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}] });
+        setFormValues({ ...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: "", group: ""}] });
     }
 
-    const delIngredient = (e, ingredientName) => {
+    const delIngredient = (e, ingIndex) => {
         e.preventDefault();
         if (formValues.ingredients.length !== 1) {
-            const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName);    
+            const newList = formValues.ingredients.filter((ing, index) => index !== ingIndex);    
             setFormValues({ ...formValues, ingredients: newList });
         }
     }
@@ -201,10 +201,10 @@ const AddRecipeForm = (props) => {
         }
     }
 
-    const delStep = (e, stepInstructions) => {
+    const delStep = (e, stpIndex) => {
         e.preventDefault();
         if (formValues.steps.length !== 1) {
-            const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions);  
+            const newList = formValues.steps.filter((stp, index) => index !== stpIndex);  
             newList.map((step, index) => step.stepnumber = index + 1);
             setFormValues({ ...formValues, steps: newList });    
         }
@@ -300,7 +300,7 @@ const AddRecipeForm = (props) => {
                         </div> 
                         <ButtonContainer>
                             <div>
-                                <button className="deleteBtn2" onClick={e => delIngredient(e, ing.name)}>-</button>
+                                <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
                             </div>
                             <div>
                                 <button onClick={addIngredient}>+</button>
@@ -331,7 +331,7 @@ const AddRecipeForm = (props) => {
                         </div>
                         <ButtonContainer>
                             <div>
-                                <button className="deleteBtn2" onClick={e => delStep(e, stp.instructions)}>-</button>
+                                <button className="deleteBtn2" onClick={e => delStep(e, index)}>-</button>
                             </div>
                             <div>
                                 <button onClick={e => addStep(e, index)}>+</button>
