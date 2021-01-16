@@ -267,8 +267,7 @@ export default createGlobalStyle`
 
     @media(max-width: 500px) {
         h1 {
-            font-size: 6rem;
-            line-height: 6rem;
+            font-size: 4rem;
         }
 
         h2 {

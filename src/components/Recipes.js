@@ -64,8 +64,8 @@ const RadioToggle = styled.div`
     display: inline-flex;
     flex-direction: row-reverse;
     flex-wrap: nowrap;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-bottom: 4%;
     input, label {
         margin-right: 2px;
         width: 20px;
@@ -95,6 +95,14 @@ const RecipeDirectionsPane = styled.div`
     @media (max-width: 600px) {
       width: 0;
     }
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;   
+    justify-content: space-between;
+    div {
+        width: 45%;
+    } 
 `;
 
 const Spinner = styled.img`
@@ -212,10 +220,14 @@ function Recipes(props) {
                             </div>
                         </RadioToggle>
                         </div>
-                        <div className="add">
-                            <button onClick={createNewRecipe}>New Recipe</button>
-                            <button onClick={handleBack}>Back to Recipe List</button>
-                        </div>
+                        <ButtonContainer>
+                            <div>
+                                <button onClick={handleBack}>Back to List</button>
+                            </div>
+                            <div>
+                                <button onClick={createNewRecipe}>New Recipe</button>
+                            </div>
+                        </ButtonContainer>
                     </SearchNav>
                     
                     {isCreating
