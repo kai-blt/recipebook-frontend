@@ -56,7 +56,16 @@ const SearchNav = styled.div`
     }
 `;    
 
-
+const RadioToggle = styled.div`
+    display: inline-flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    margin-bottom: 6%;
+    input, label {
+        margin: 0;
+        width: 20px;
+    }
+`;
 
 const RecipeListPane = styled.div`
     width: 50%;
@@ -95,12 +104,11 @@ function Recipes(props) {
     const [clicked, setClicked] = useState('');
     const [isCreating, setIsCreating] = useState(false);
     const [isViewing, setIsViewing] = useState(false);
-   
+    const [searchToggle, setSearchToggle] = useState(false);
 
     useEffect(() => {
         axiosWithAuth().get('/users/getuserinfo')
             .then(res => {
-                console.log(res.data.recipes);
                 setRecipes(res.data.recipes);
             })
             .catch(err => {
@@ -110,7 +118,7 @@ function Recipes(props) {
 
 
     const onChange = (e) => {
-        setSearch(e.target.value);
+        setSearch(e.target.value.toLowerCase());
     }
 
     const handleClick = (e) => {
@@ -135,24 +143,44 @@ function Recipes(props) {
                 <RecipeListPane  className="desktoptoggle">
                     <SearchNav>
                         <div>
-                        <label>Search&nbsp;
-                            <input
-                                type="text"
-                                name="search"
-                                onChange={onChange}
-                            />
-                        </label>
+                            <label>Search&nbsp;
+                                <input
+                                    type="text"
+                                    name="search"
+                                    onChange={onChange}
+                                />
+                            </label>
                         </div>
-                        <div className="add">
+                        <div className="add">                            
                             <button onClick={createNewRecipe}>New Recipe</button>
                         </div>
                     </SearchNav>
-                    {recipes 
-                        ? recipes
-                            .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                            .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>)
-                        : <div><Spinner src={spinner} alt="spinner"/></div>
-                    }                
+                    <RadioToggle>
+                        <div>
+                            <label>
+                                <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                Title
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                Ingredient
+                            </label>
+                        </div>
+                    </RadioToggle>
+                    { searchToggle
+                        ? recipes 
+                          ? recipes
+                              .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                              .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                          : <div><Spinner src={spinner} alt="spinner"/></div>
+                        : recipes 
+                            ? recipes
+                                .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
+                                .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                            : <div><Spinner src={spinner} alt="spinner"/></div>
+                    }
                 </RecipeListPane>
                 <RecipeListPane  className="mobiletoggle">
                     <SearchNav>
