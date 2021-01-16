@@ -32,7 +32,7 @@ function Nav(props) {
 
     return(
         <nav>
-            <h1>RECIPE BOOK </h1>
+            <h1>RECIPE BOOK</h1>
             {isLoggedIn ?  <LogOut onClick={handleLogOut}>Logout</LogOut> : null}
         </nav>
     );

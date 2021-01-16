@@ -195,7 +195,7 @@ const AddRecipeForm = (props) => {
             formValues.steps.push({stepnumber: index + 2, instructions: ""});
             setFormValues({ ...formValues, formValues });
         } else {
-            formValues.steps.splice(index, 0, {stepnumber: index + 2, instructions: ""});
+            formValues.steps.splice(index + 1, 0, {stepnumber: index + 2, instructions: ""});
             formValues.steps.map((step, index) => step.stepnumber = index + 1);
             setFormValues({ ...formValues, formValues });
         }

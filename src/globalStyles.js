@@ -130,6 +130,7 @@ export default createGlobalStyle`
 
     h2 {
         font-size: 4rem;
+        line-height: 4.5rem;
         padding-bottom: 4%;
     }
 

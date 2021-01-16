@@ -72,6 +72,14 @@ const FieldsButtonContainer = styled.div`
      }
 `;
 
+const StepContainer = styled.div`
+    display: flex;
+    padding: 2%;
+    div {
+        padding-right: 2%;
+    }
+`;
+
 
 const initialFormValues = {
     name: "",
@@ -269,7 +277,7 @@ function RecipeCard(props) {
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
-                        {recipe.steps.map(stp => <div key={uuidv4()}><strong>{stp.stepnumber}.</strong> {stp.instructions}</div>)}
+                        {recipe.steps.map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div> {stp.instructions}</div></StepContainer>)}
                     </InfoBox>
                     </>
                 )
