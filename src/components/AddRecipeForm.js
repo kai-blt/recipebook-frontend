@@ -58,10 +58,11 @@ const IngredientFields = styled.div`
 const ButtonContainer = styled.div`
      display: flex;
      justify-content: space-between;
-     margin-top: 2%; 
+     flex-flow: row nowrap;
+     margin-top: 2%;
 
      div {
-         width: 40%;
+         width: 20%;
      }
 `;
 
@@ -303,7 +304,7 @@ const AddRecipeForm = (props) => {
                                 <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
                             </div>
                             <div>
-                                <button onClick={addIngredient}>+</button>
+                                <button className="addBtn" onClick={addIngredient}>+</button>
                             </div>
                         </ButtonContainer>
                     </IngredientFields>
@@ -334,7 +335,7 @@ const AddRecipeForm = (props) => {
                                 <button className="deleteBtn2" onClick={e => delStep(e, index)}>-</button>
                             </div>
                             <div>
-                                <button onClick={e => addStep(e, index)}>+</button>
+                                <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
                             </div>
                         </ButtonContainer>
                     </IngredientFields>

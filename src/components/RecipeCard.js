@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import  { v4 as uuidv4 } from "uuid";
 import * as yup from 'yup';
 import schema from '../validation/schema';
 import axiosWithAuth from '../axios/axiosWithAuth';
-import gsap from 'gsap';
-import placeholder from '../assets/placeholder.jpg'
 import styled from 'styled-components';
 
 const RecipeCardContainer = styled.div`
@@ -43,14 +41,19 @@ const EditInfoBox = styled.div`
 
 const RecipeTitle = styled.div`
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     flex-flow: row wrap;
     .edit {
         width: 20%;
     }
 
-    @media (max-width: 1000px) {
+    h2 {
+        margin: 0;
+        padding: 0;
+    }
+
+    @media (max-width: 1200px) {
         .edit {
             width: 100%;
         }
@@ -73,16 +76,15 @@ const IngredientFields = styled.div`
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-flow: row nowrap;
+    margin-top: 2%;
+    background: 1px solid red;
+
+    div {
+        width: 20%;
+    }
 `;
 
-const FieldsButtonContainer = styled.div`  
-     display: flex;
-     justify-content: space-between;
-     margin-top: 2%;
-     div {
-         width: 40%;
-     }
-`;
 
 const StepContainer = styled.div`
     display: flex;
@@ -108,17 +110,6 @@ function RecipeCard(props) {
     const [isEditing, setIsEditing] = useState(false);
     const [enableSubmit, setEnableSubmit] = useState(true);
     const [errors, setErrors] = useState(true);
-
-    //Animation Ref
-    const animationRef = useRef(null);
-
-    useEffect(() => {
-        gsap.from(animationRef.current, {
-            autoAlpha: 0,
-            duration: 1.25,
-            ease: 'power4.inOut'
-        })
-    }, [isEditing]);
 
     
     useEffect(() => {
@@ -267,7 +258,7 @@ function RecipeCard(props) {
 
 
     return(
-        <RecipeCardContainer ref={animationRef}>            
+        <RecipeCardContainer>            
             <RecipeTitle>
                 <div>
                     <h2>{recipe.name}</h2>
@@ -285,7 +276,7 @@ function RecipeCard(props) {
                     <InfoBox>
                         {recipe.imageURL.match(/http/i) ? <ImageContainer background={recipe.imageURL} /> : null } 
                         <h3>Ingredients</h3>
-                        {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity} {ing.measurement}</strong> {ing.name}</div>)}
+                        {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity > 0 ? ing.quantity : null} {ing.measurement}</strong> {ing.name}</div>)}
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
@@ -370,14 +361,14 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div> 
-                                <FieldsButtonContainer className="btns">
+                                <ButtonContainer className="btns">
                                     <div>
                                         <button className="deleteBtn2" onClick={e => delIngredient(e, ing.name)}>-</button>
                                     </div>
                                     <div>
-                                        <button onClick={addIngredient}>+</button>
+                                        <button className="addBtn" onClick={addIngredient}>+</button>
                                     </div>
-                                </FieldsButtonContainer>                               
+                                </ButtonContainer>                               
                             </IngredientFields>
                             
                             </>
@@ -397,14 +388,14 @@ function RecipeCard(props) {
                                         />
                                     </label>
                                 </div>
-                                <FieldsButtonContainer className="btns">
+                                <ButtonContainer className="btns">
                                     <div>
                                         <button className="deleteBtn2" onClick={e => delStep(e, stp.instructions)}>-</button>
                                     </div>
                                     <div>
-                                        <button onClick={e => addStep(e, index)}>+</button>
+                                        <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
                                     </div>
-                                </FieldsButtonContainer>
+                                </ButtonContainer>
                             </IngredientFields>
                         ))}
                     </InfoBox>

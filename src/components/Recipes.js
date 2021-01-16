@@ -44,6 +44,10 @@ const SearchNav = styled.div`
     align-items: flex-end;
     flex-flow: row wrap;
     margin-bottom: 6%;
+
+    button {
+        margin-bottom: 0;
+    }
     
     div {
         width: 40%;
@@ -62,7 +66,7 @@ const RadioToggle = styled.div`
     flex-wrap: wrap;
     margin-bottom: 6%;
     input, label {
-        margin: 0;
+        margin-right: 2px;
         width: 20px;
     }
 `;
@@ -158,14 +162,14 @@ function Recipes(props) {
                     <RadioToggle>
                         <div>
                             <label>
-                                <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                                Title
+                                <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                Ingredient
                             </label>
                         </div>
                         <div>
                             <label>
-                                <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                                Ingredient
+                                <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                Title
                             </label>
                         </div>
                     </RadioToggle>

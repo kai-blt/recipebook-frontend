@@ -188,6 +188,8 @@ export default createGlobalStyle`
 
     button.addBtn {
         width: 100%;
+        font-weight: 700;
+        font-size: 2.5rem;
         background-color: #5bc0de;
     }
 
@@ -198,6 +200,8 @@ export default createGlobalStyle`
 
     button.deleteBtn2 {
         width: 100%;
+        font-weight: 700;
+        font-size: 2.5rem;
         background-color: #d9534f;
     }
 
