@@ -97,10 +97,14 @@ const ButtonContainer = styled.div`
 
 const StepContainer = styled.div`
     display: flex;
-    padding: 1.5%;
     line-height: 2.25rem;
+    margin-bottom: 2%;
     div {
-        padding-right: 2%;
+        margin-right: 4%;
+    }
+
+    @media (max-width: 500px) {
+        margin-bottom: 6%;
     }
 `;
 
@@ -291,7 +295,7 @@ function RecipeCard(props) {
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
-                        {recipe.steps.map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div> {stp.instructions}</div></StepContainer>)}
+                        {recipe.steps.map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
                     </InfoBox>
                     </>
                 )
