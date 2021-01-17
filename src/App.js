@@ -12,6 +12,14 @@ const AppContainer = styled.div`
   align-items: center;
   width: 80%;
   margin: auto;  
+
+  @media(max-width: 700px) {
+    width: 95%;
+  }
+
+  @media(max-width: 500px) {
+    width: 95%;
+  }
 `;
 
 
