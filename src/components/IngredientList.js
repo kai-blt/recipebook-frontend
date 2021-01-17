@@ -16,7 +16,7 @@ function IngredientList(props) {
     return (
         <IngredientContainer>
         {group === "" || group === null ? null : <h4>{`${group}`}</h4>}
-        {ingredients.map(ing => ing.ingredientgroup === group ? <div key={uuidv4()}><strong>{ing.quantity > 0 ? ing.quantity : null} {ing.measurement}</strong> {ing.name}</div> : null)}
+        {ingredients.map(ing => ing.ingredientgroup === group ? <div key={uuidv4()}><strong>{ing.quantity !== "" ? ing.quantity : null} {ing.measurement}</strong> {ing.name}</div> : null)}
         </IngredientContainer>
     )
 }
