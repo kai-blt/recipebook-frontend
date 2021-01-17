@@ -21,8 +21,11 @@ const ImageContainer = styled.div`
     color: #fff;
     font-weight: 700;
     font-size: 3rem;
+    line-height: 3.5rem;
+    text-align: center;
     text-shadow: 4px 2px 4px #000;
     transition: all 0.5s;
+    
     &:hover {
         opacity: 0.2;
         transition: all 0.5s;

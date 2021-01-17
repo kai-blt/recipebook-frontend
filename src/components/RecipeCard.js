@@ -26,8 +26,7 @@ const ImageContainer = styled.div`
     background-size: cover;
     border-radius: 8px;
     color: #fff;
-    margin-bottom: 6%;
-
+    margin: 6% 0;
     @media (max-width: 1000px) {
       height: 20vh;
     }
@@ -51,15 +50,19 @@ const EditInfoBox = styled.div`
 const RecipeTitle = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    flex-flow: row wrap;
+    align-items: flex-start;
+    flex-flow: column wrap;
     .edit {
-        width: 20%;
+        width: 100%;
     }
 
     h2 {
         margin: 0;
         padding: 0;
+    }
+
+    h4 {
+        font-weight: 500;
     }
 
     @media (max-width: 1200px) {
@@ -100,7 +103,7 @@ const StepContainer = styled.div`
     line-height: 2.25rem;
     margin-bottom: 2%;
     div {
-        margin-right: 4%;
+        margin-right: 3%;
     }
 
     @media (max-width: 500px) {
@@ -133,7 +136,7 @@ function RecipeCard(props) {
     }, [formValues]);
 
     useEffect(() => {
-       console.log(groups)
+       setGroups((Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup)))).sort());
     }, []);
     
     //Edit Handler
@@ -221,14 +224,16 @@ function RecipeCard(props) {
 
    
     //Button Handlers
-    const addIngredient = () => {
-        setFormValues({ ...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: ""}] });
+    const addIngredient = (e, index) => {
+        e.preventDefault();
+        formValues.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
+        setFormValues({ ...formValues, formValues });
     }
 
-    const delIngredient = (e, ingredientName) => {
+    const delIngredient = (e, ingIndex) => {
         e.preventDefault();
         if (formValues.ingredients.length !== 1) {
-            const newList = formValues.ingredients.filter(ing => ing.name !== ingredientName);    
+            const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex);    
             setFormValues({ ...formValues, ingredients: newList });
         }
     }
@@ -278,6 +283,7 @@ function RecipeCard(props) {
             <RecipeTitle>
                 <div>
                     <h2>{recipe.name}</h2>
+                    {recipe.type ? <h4>{recipe.type}</h4> : null}
                 </div>
                 <div className="edit">
                     {!isEditing
@@ -289,8 +295,9 @@ function RecipeCard(props) {
             {!isEditing
                 ? (
                     <>
+                    <ImageContainer background={recipe.imageURL}/>
                     <InfoBox>
-                        <h3>Ingredients</h3>
+                        <h3>Ingredients</h3>                        
                        {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
                     </InfoBox>
                     <InfoBox>
@@ -378,10 +385,10 @@ function RecipeCard(props) {
                                 </div> 
                                 <ButtonContainer className="btns">
                                     <div>
-                                        <button className="deleteBtn2" onClick={e => delIngredient(e, ing.name)}>-</button>
+                                        <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
                                     </div>
                                     <div>
-                                        <button className="addBtn" onClick={addIngredient}>+</button>
+                                        <button className="addBtn" onClick={e => addIngredient(e, index)}>+</button>
                                     </div>
                                 </ButtonContainer>                               
                             </IngredientFields>

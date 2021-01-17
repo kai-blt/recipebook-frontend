@@ -198,27 +198,34 @@ function Recipes(props) {
                 <RecipeListPane  className="mobiletoggle">
                     <SearchNav>
                         <div>
-                        <label>Search&nbsp;
-                            <input
-                                type="text"
-                                name="search"
-                                onChange={onChange}
-                            />
-                        </label>
-                        <RadioToggle>
-                            <div>
-                                <label>
-                                    <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                                    Ingredient
+                        {isViewing
+                            ?
+                                null
+                            :
+                                <>
+                                <label>Search&nbsp;
+                                    <input
+                                        type="text"
+                                        name="search"
+                                        onChange={onChange}
+                                    />
                                 </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                                    Title
-                                </label>
-                            </div>
-                        </RadioToggle>
+                                <RadioToggle>
+                                    <div>
+                                        <label>
+                                            <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                            Ingredient
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                                            Title
+                                        </label>
+                                    </div>
+                                </RadioToggle>
+                                </>
+                        }
                         </div>
                         <ButtonContainer>
                             <div>
