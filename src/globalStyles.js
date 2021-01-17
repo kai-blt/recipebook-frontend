@@ -120,7 +120,7 @@ export default createGlobalStyle`
         font-weight: 700;
         color: #5bc0de;        
         margin-top: 2%;
-        margin-bottom: 4%;
+        margin-bottom: 2%;
         text-shadow: 2px 2px 6px #222;
     }
 
@@ -139,7 +139,9 @@ export default createGlobalStyle`
     }
 
     h4 {
-        font-size: 1.6rem;
+        font-size: 1.75rem;
+        color: #888;
+        margin: 0;
     }
 
 
@@ -233,7 +235,7 @@ export default createGlobalStyle`
         }
 
         h4 {
-            font-size: 1rem;
+            font-size: 1.75rem;
         }
 
         button {
@@ -257,7 +259,7 @@ export default createGlobalStyle`
         }
 
         h4 {
-            font-size: 0.5rem;
+            font-size: 1.5rem;
         }
 
         button {
@@ -280,7 +282,7 @@ export default createGlobalStyle`
         }
 
         h4 {
-            font-size: 0.5rem;
+            font-size: 1.5rem;
         }
 
         label {

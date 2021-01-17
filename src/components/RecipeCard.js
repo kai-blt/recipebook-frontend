@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import  { v4 as uuidv4 } from "uuid";
+import IngredientList from './IngredientList';
 import * as yup from 'yup';
 import schema from '../validation/schema';
 import axiosWithAuth from '../axios/axiosWithAuth';
@@ -10,8 +11,12 @@ const RecipeCardContainer = styled.div`
 `;
 
 const InfoBox = styled.div`
-    margin: 10% 0;
-   
+    margin: 10% 0; 
+
+    .group {
+        color: red;
+        font-size: 1rem;
+    }
 `;
 
 const ImageContainer = styled.div`
@@ -92,7 +97,8 @@ const ButtonContainer = styled.div`
 
 const StepContainer = styled.div`
     display: flex;
-    padding: 2%;
+    padding: 1.5%;
+    line-height: 2.25rem;
     div {
         padding-right: 2%;
     }
@@ -114,7 +120,7 @@ function RecipeCard(props) {
     const [isEditing, setIsEditing] = useState(false);
     const [enableSubmit, setEnableSubmit] = useState(true);
     const [errors, setErrors] = useState(true);
-
+    const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))))
     
     useEffect(() => {
         schema.isValid(formValues).then(valid => {
@@ -122,6 +128,10 @@ function RecipeCard(props) {
         });
     }, [formValues]);
 
+    useEffect(() => {
+       console.log(groups)
+    }, []);
+    
     //Edit Handler
     const handleEdit = (e) => {
         e.preventDefault();   
@@ -135,13 +145,13 @@ function RecipeCard(props) {
 
         yup.reach(schema, e.target.name)
         .validate(e.target.value)
-        .then(() => {
+        .then(() => { 
             setErrors({...errors, [e.target.name]: ""})
         })
         .catch(err => {
             setErrors({...errors, [e.target.name]: err.errors[0] })
         })
-
+             
         console.log(formValues.imageURL)
         const newRecipe = {
             name: formValues.name,
@@ -190,10 +200,8 @@ function RecipeCard(props) {
                 setFormValues({ ...formValues, ingredients: newIngMeasurement });
                 break;
             case "group":
-                let group = "";
-                (e.target.value === "") ? group = "Ingredient" : group = e.target.value;
                 const newGroup = [ ...formValues.ingredients ]
-                newGroup[index].group = group;    
+                newGroup[index].ingredientgroup = e.target.value;    
                 setFormValues({ ...formValues, ingredients: newGroup });
                 break;
             case "instructions":
@@ -278,9 +286,8 @@ function RecipeCard(props) {
                 ? (
                     <>
                     <InfoBox>
-                        {recipe.imageURL.match(/http/i) ? <ImageContainer background={recipe.imageURL} /> : null } 
                         <h3>Ingredients</h3>
-                        {recipe.ingredients.map(ing => <div key={uuidv4()}><strong>{ing.quantity > 0 ? ing.quantity : null} {ing.measurement}</strong> {ing.name}</div>)}
+                       {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
                     </InfoBox>
                     <InfoBox>
                         <h3>Steps</h3>
@@ -360,7 +367,7 @@ function RecipeCard(props) {
                                         <input 
                                             type="text"
                                             name="group"
-                                            value={formValues.ingredients[index].group}
+                                            value={formValues.ingredients[index].ingredientgroup}
                                             onChange={e => handleChange(e, index)}
                                         />
                                     </label>

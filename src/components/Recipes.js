@@ -127,8 +127,8 @@ function Recipes(props) {
             .catch(err => {
                 console.log(err);
             });
-    }, []);    
-
+    }, []);       
+   
 
     const onChange = (e) => {
         setSearch(e.target.value.toLowerCase());
