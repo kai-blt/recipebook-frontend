@@ -204,9 +204,7 @@ function Recipes(props) {
                                 :
                                 isCreating 
                                     ?
-                                    <div>
-                                        <button className="cancelBtn" onClick={createNewRecipe}>Cancel</button>
-                                    </div>
+                                    null
                                     :
                                     <div>
                                         <button onClick={createNewRecipe}>New Recipe</button>
@@ -247,7 +245,7 @@ function Recipes(props) {
                     </SearchNav>
                     
                     {isCreating
-                        ? <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                        ? <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes}/>
                         : isViewing
                             ? clicked
                                 ? recipes
@@ -270,7 +268,7 @@ function Recipes(props) {
                 {isCreating
                     ?
                         <RecipeDirectionsPane  className="desktoptoggle">
-                            <AddRecipeForm setIsCreating={setIsCreating} setRecipes={setRecipes}/>
+                            <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes}/>
                         </RecipeDirectionsPane>
                     : 
                         <RecipeDirectionsPane  className="desktoptoggle">

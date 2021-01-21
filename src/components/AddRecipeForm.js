@@ -81,8 +81,8 @@ const ErrorMessages = styled.div`
 
 
 const initialFormValues = {
-    name: "",
-    type: "",
+    name: "(Enter Title)",
+    type: "(Enter Type)",
     imageURL: "",
     ingredients: [{ quantity: "", measurement: "", name: "", group: "" }],
     steps: [{stepnumber: 1, instructions: ""}]
@@ -100,7 +100,7 @@ const initialErrors = {
 }
 
 const AddRecipeForm = (props) => {
-    const { setIsCreating, setRecipes } = props;
+    const { isCreating, setIsCreating, setRecipes } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [errors, setErrors] = useState(initialErrors);
     const [enableSubmit, setEnableSubmit] = useState(true);
@@ -228,9 +228,10 @@ const AddRecipeForm = (props) => {
         <FormContainer>
             <RecipeTitle>
                 <div>
-                    <h2>{formValues.name}</h2>
-                    <h4>{formValues.type}</h4>                    
+                    <h2>{formValues.name || <br/>}</h2>
+                    <h4>{formValues.type || <br/>}</h4>                    
                 </div>
+                <button className="cancelBtn" onClick={setIsCreating}>Cancel</button>
             </RecipeTitle>
             <InfoBox>
                 <EditInfoBox>
