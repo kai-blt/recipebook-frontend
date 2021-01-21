@@ -11,18 +11,27 @@ const FormContainer = styled.div`
 
 const RecipeTitle = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     .edit {
-        width: 20%;
+        width: 100%;
     }
 
-    @media (max-width: 1000px) {
+    h2 {
+        margin: 0;
+        padding: 0;
+    }
+
+    h4 {
+        font-weight: 500;
+    }
+
+    @media (max-width: 1200px) {
         .edit {
             width: 100%;
         }
-    }   
+    }
 `;
 
 const InfoBox = styled.div`
@@ -133,6 +142,7 @@ const AddRecipeForm = (props) => {
                     });
             })
             .catch(err => console.log(err))  
+        setFormValues(initialFormValues)
         setIsCreating();
     }
 
@@ -178,44 +188,48 @@ const AddRecipeForm = (props) => {
         }
     }
 
-    const addIngredient = () => {
-        setFormValues({ ...formValues, ingredients: [...formValues.ingredients, {quantity: "", measurement: "", name: "", group: ""}] });
+    const addIngredient = (e, index) => {
+        e.preventDefault();
+        formValues.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
+        setFormValues({ ...formValues, formValues });
     }
 
     const delIngredient = (e, ingIndex) => {
         e.preventDefault();
         if (formValues.ingredients.length !== 1) {
-            const newList = formValues.ingredients.filter((ing, index) => index !== ingIndex);    
+            const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex);    
             setFormValues({ ...formValues, ingredients: newList });
         }
     }
-
+    
     const addStep = (e, index) => {
         e.preventDefault();
         if (formValues.steps.length === 1) {
             formValues.steps.push({stepnumber: index + 2, instructions: ""});
             setFormValues({ ...formValues, formValues });
         } else {
-            formValues.steps.splice(index + 1, 0, {stepnumber: index + 2, instructions: ""});
+            formValues.steps.splice(index, 0, {stepnumber: index + 2, instructions: ""});
             formValues.steps.map((step, index) => step.stepnumber = index + 1);
             setFormValues({ ...formValues, formValues });
         }
     }
 
-    const delStep = (e, stpIndex) => {
+    const delStep = (e, stepInstructions) => {
         e.preventDefault();
         if (formValues.steps.length !== 1) {
-            const newList = formValues.steps.filter((stp, index) => index !== stpIndex);  
+            const newList = formValues.steps.filter(stp => stp.instructions !== stepInstructions);  
             newList.map((step, index) => step.stepnumber = index + 1);
             setFormValues({ ...formValues, steps: newList });    
         }
     }
 
+
     return (
         <FormContainer>
-              <RecipeTitle>
+            <RecipeTitle>
                 <div>
-                    <h2>{formValues.name}</h2>                    
+                    <h2>{formValues.name}</h2>
+                    <h4>{formValues.type}</h4>                    
                 </div>
             </RecipeTitle>
             <InfoBox>
@@ -304,7 +318,7 @@ const AddRecipeForm = (props) => {
                                 <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
                             </div>
                             <div>
-                                <button className="addBtn" onClick={addIngredient}>+</button>
+                                <button className="addBtn" onClick={e => addIngredient(e, index)}>+</button>
                             </div>
                         </ButtonContainer>
                     </IngredientFields>

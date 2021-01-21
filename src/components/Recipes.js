@@ -100,9 +100,7 @@ const RecipeDirectionsPane = styled.div`
 const ButtonContainer = styled.div`
     display: flex;   
     justify-content: space-between;
-    div {
-        width: 45%;
-    } 
+    margin-bottom: 4%;
 `;
 
 const Spinner = styled.img`
@@ -196,9 +194,28 @@ function Recipes(props) {
                     }
                 </RecipeListPane>
                 <RecipeListPane  className="mobiletoggle">
-                    <SearchNav>
+                    <SearchNav>                        
+                        <ButtonContainer>
+                            {isViewing 
+                                ? 
+                                <div>
+                                    <button onClick={handleBack}>Back to List</button>
+                                </div>
+                                :
+                                isCreating 
+                                    ?
+                                    <div>
+                                        <button className="cancelBtn" onClick={createNewRecipe}>Cancel</button>
+                                    </div>
+                                    :
+                                    <div>
+                                        <button onClick={createNewRecipe}>New Recipe</button>
+                                    </div>
+                                
+                            }
+                        </ButtonContainer>
                         <div>
-                        {isViewing
+                        {isViewing || isCreating
                             ?
                                 null
                             :
@@ -227,14 +244,6 @@ function Recipes(props) {
                                 </>
                         }
                         </div>
-                        <ButtonContainer>
-                            <div>
-                                <button onClick={handleBack}>Back to List</button>
-                            </div>
-                            <div>
-                                <button onClick={createNewRecipe}>New Recipe</button>
-                            </div>
-                        </ButtonContainer>
                     </SearchNav>
                     
                     {isCreating

@@ -10,7 +10,7 @@ export default yup.object().shape({
     imageURL: yup
         .string(),   
     quantity: yup
-        .number().typeError("Please enter a number for qty"),
+        .string(),
     measurement: yup
         .string(),
     ingredientname: yup
