@@ -101,9 +101,10 @@ const ButtonContainer = styled.div`
 const StepContainer = styled.div`
     display: flex;
     line-height: 2.25rem;
-    margin-bottom: 2%;
+    margin-bottom: 2.5%;
+    margin-left: 6%;
     div {
-        margin-right: 3%;
+        margin-right: 2%;
     }
 
     @media (max-width: 500px) {
