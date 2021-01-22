@@ -136,6 +136,10 @@ function Recipes(props) {
         e.preventDefault();
         setClicked(e.target.innerHTML);
         setIsViewing(!isViewing);
+        // Scroll to top for Safari
+        document.body.scrollTop = 0;
+        // Scroll to top for Chrome, Firefox, IE, Opera
+        document.documentElement.scrollTop = 0;
     }
 
     const handleBack = (e) => {
