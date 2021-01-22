@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import schema from '../validation/schema';
 import styled from 'styled-components';
 
-
 const FormContainer = styled.div`
     margin-bottom: 4%;
 `;

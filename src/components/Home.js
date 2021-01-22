@@ -3,6 +3,7 @@ import Login from './Login';
 
 function Home(props) {
     const {setIsLoggedIn} = props;
+
     return(
         <div>            
             <div>

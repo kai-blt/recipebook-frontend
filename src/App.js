@@ -34,10 +34,7 @@ function App() {
       <Switch>
         <ProtectedRoute path="/recipes" component={Recipes}/>
         <Route path="/">
-          {localStorage.getItem('token') !== ''
-            ? <Recipes />
-            : <Home setIsLoggedIn={setIsLoggedIn} />
-          }
+          <Home setIsLoggedIn={setIsLoggedIn} />
         </Route>
       </Switch>
     </ AppContainer>
