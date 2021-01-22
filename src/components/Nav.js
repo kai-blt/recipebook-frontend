@@ -33,6 +33,7 @@ function Nav(props) {
     return(
         <nav>
             <h1>RECIPE BOOK</h1>
+            {localStorage.getItem('token') !== '' ? setIsLoggedIn(true) : null}
             {isLoggedIn ?  <LogOut onClick={handleLogOut}>Logout</LogOut> : null}
         </nav>
     );

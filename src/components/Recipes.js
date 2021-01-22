@@ -162,6 +162,7 @@ function Recipes(props) {
                                 <input
                                     type="text"
                                     name="search"
+                                    value={search}
                                     onChange={onChange}
                                 />
                             </label>
@@ -203,7 +204,7 @@ function Recipes(props) {
                             {isViewing 
                                 ? 
                                 <div>
-                                    <button onClick={handleBack}>Back to List</button>
+                                    <button onClick={handleBack}>Back</button>
                                 </div>
                                 :
                                 isCreating 
@@ -226,6 +227,7 @@ function Recipes(props) {
                                     <input
                                         type="text"
                                         name="search"
+                                        value={search}
                                         onChange={onChange}
                                     />
                                 </label>

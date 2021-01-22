@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import Recipes from './components/Recipes';
 import styled from 'styled-components';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 const AppContainer = styled.div`
   display: flex;
@@ -31,11 +32,12 @@ function App() {
     <AppContainer>      
       <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Switch>
-        <Route path="/recipes">
-          <Recipes />
-        </Route>
+        <ProtectedRoute path="/recipes" component={Recipes}/>
         <Route path="/">
-          <Home setIsLoggedIn={setIsLoggedIn} />
+          {localStorage.getItem('token') !== ''
+            ? <Redirect to="/recipes" />
+            : <Home setIsLoggedIn={setIsLoggedIn} />
+          }
         </Route>
       </Switch>
     </ AppContainer>
