@@ -83,7 +83,7 @@ const initialFormValues = {
     name: "(Enter Title)",
     type: "(Enter Type)",
     imageURL: "",
-    ingredients: [{ quantity: "", measurement: "", name: "", group: "" }],
+    ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
     steps: [{stepnumber: 1, instructions: ""}]
 }
 
@@ -99,7 +99,7 @@ const initialErrors = {
 }
 
 const AddRecipeForm = (props) => {
-    const { isCreating, setIsCreating, setRecipes } = props;
+    const { setIsCreating, setRecipes } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [errors, setErrors] = useState(initialErrors);
     const [enableSubmit, setEnableSubmit] = useState(true);
@@ -196,7 +196,8 @@ const AddRecipeForm = (props) => {
     const delIngredient = (e, ingIndex) => {
         e.preventDefault();
         if (formValues.ingredients.length !== 1) {
-            const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex);    
+            const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex); 
+            console.log(newList)   
             setFormValues({ ...formValues, ingredients: newList });
         }
     }

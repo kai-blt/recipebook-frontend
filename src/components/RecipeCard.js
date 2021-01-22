@@ -384,9 +384,14 @@ function RecipeCard(props) {
                                     </label>
                                 </div> 
                                 <ButtonContainer className="btns">
-                                    <div>
-                                        <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
-                                    </div>
+                                    {formValues.ingredients.length == 1
+                                    ?
+                                        <div></div>
+                                    :
+                                        <div>
+                                            <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
+                                        </div>
+                                    }
                                     <div>
                                         <button className="addBtn" onClick={e => addIngredient(e, index)}>+</button>
                                     </div>
@@ -411,9 +416,14 @@ function RecipeCard(props) {
                                     </label>
                                 </div>
                                 <ButtonContainer className="btns">
-                                    <div>
-                                        <button className="deleteBtn2" onClick={e => delStep(e, index)}>-</button>
-                                    </div>
+                                    {formValues.steps.length == 1
+                                    ?
+                                        <div></div>
+                                    :
+                                        <div>
+                                            <button className="deleteBtn2" onClick={e => delStep(e, index)}>-</button>
+                                        </div>
+                                    }
                                     <div>
                                         <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
                                     </div>
