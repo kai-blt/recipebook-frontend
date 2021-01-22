@@ -35,7 +35,7 @@ function App() {
         <ProtectedRoute path="/recipes" component={Recipes}/>
         <Route path="/">
           {localStorage.getItem('token') !== ''
-            ? <Redirect to="/recipes" />
+            ? <Recipes />
             : <Home setIsLoggedIn={setIsLoggedIn} />
           }
         </Route>
