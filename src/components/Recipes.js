@@ -79,7 +79,7 @@ const RecipeListPane = styled.div`
     padding-right: 8%;
     padding-bottom: 50%;
     padding-bottom: 50%;
-
+    border-right: 1px dashed #888;
     @media (max-width: 600px) {
       width: 100%;
     }
@@ -91,7 +91,7 @@ const RecipeDirectionsPane = styled.div`
     padding-left: 8%;
     padding-right: 8%;
     padding-bottom: 50%;
-    border-left: 1px dashed #888;
+    /* border-left: 1px dashed #888; */
     @media (max-width: 600px) {
       width: 0;
     }
@@ -251,7 +251,7 @@ function Recipes(props) {
                     </SearchNav>
                     
                     {isCreating
-                        ? <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes}/>
+                        ? <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
                         : isViewing
                             ? clicked
                                 ? recipes
@@ -274,7 +274,7 @@ function Recipes(props) {
                 {isCreating
                     ?
                         <RecipeDirectionsPane  className="desktoptoggle">
-                            <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes}/>
+                            <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
                         </RecipeDirectionsPane>
                     : 
                         <RecipeDirectionsPane  className="desktoptoggle">

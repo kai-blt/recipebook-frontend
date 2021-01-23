@@ -178,15 +178,15 @@ function RecipeCard(props) {
                     .then(res => {
                         console.log(res.data.recipes);
                         setRecipes(res.data.recipes);
+                        setFormValues(initialFormValues);
+                        setClicked(formValues.name);
+                        setIsEditing(!isEditing);
                     })
                     .catch(err => {
                         console.log(err);
                     });
             })
             .catch(err => console.log(err))  
-        setFormValues(initialFormValues);
-        setClicked(formValues.name);
-        setIsEditing(!isEditing);
     }
 
     //Change Handler
@@ -264,6 +264,10 @@ function RecipeCard(props) {
                 .then(res => {
                     console.log(res.data.recipes);
                     setRecipes(res.data.recipes);
+                    // Scroll to top for Safari
+                    document.body.scrollTop = 0;
+                    // Scroll to top for Chrome, Firefox, IE, Opera
+                    document.documentElement.scrollTop = 0;
                 })
                 .catch(err => {
                     console.log(err);

@@ -99,12 +99,12 @@ const initialErrors = {
 }
 
 const AddRecipeForm = (props) => {
-    const { setIsCreating, setRecipes } = props;
+    const { setIsCreating, setRecipes, setClicked } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [errors, setErrors] = useState(initialErrors);
     const [enableSubmit, setEnableSubmit] = useState(true);
 
- 
+  
     useEffect(() => {
         schema.isValid(formValues)
             .then(valid => {
@@ -131,18 +131,24 @@ const AddRecipeForm = (props) => {
         axiosWithAuth().post('/recipes/recipe', newRecipe)
             .then(res => {
                 console.log(res)
+                
                 axiosWithAuth().get('/users/getuserinfo')
                     .then(res => {
                         console.log(res.data.recipes);
                         setRecipes(res.data.recipes);
+                        setFormValues(initialFormValues)
+                        setClicked(formValues.name)
+                        setIsCreating(e);
+                        // Scroll to top for Safari
+                        document.body.scrollTop = 0;
+                        // Scroll to top for Chrome, Firefox, IE, Opera
+                        document.documentElement.scrollTop = 0;
                     })
                     .catch(err => {
                         console.log(err);
                     });
             })
             .catch(err => console.log(err))  
-        setFormValues(initialFormValues)
-        setIsCreating();
     }
 
     const handleChange = (e, index) => {
@@ -364,7 +370,7 @@ const AddRecipeForm = (props) => {
             <ErrorMessages>
                 {errors.instructions}
             </ErrorMessages>
-            {enableSubmit ? <button className="disabled">Submit</button> :  <button className="addBtn" onClick={handleSubmit}>Submit</button>}
+            {enableSubmit ? <button className="disabled">Submit</button> :  <button className="addBtn" onClick={e => handleSubmit(e)}>Submit</button>}
         </FormContainer>
     )
 }
