@@ -259,15 +259,13 @@ function RecipeCard(props) {
         e.preventDefault();
         axiosWithAuth().delete(`/recipes/recipe/${recipe.recipeid}`)
         .then(res => {
-            console.log(res)
+            // Scroll to top for Safari
+            document.body.scrollTop = 0;
+            // Scroll to top for Chrome, Firefox, IE, Opera
+            document.documentElement.scrollTop = 0;
             axiosWithAuth().get('/users/getuserinfo')
                 .then(res => {
-                    console.log(res.data.recipes);
                     setRecipes(res.data.recipes);
-                    // Scroll to top for Safari
-                    document.body.scrollTop = 0;
-                    // Scroll to top for Chrome, Firefox, IE, Opera
-                    document.documentElement.scrollTop = 0;
                 })
                 .catch(err => {
                     console.log(err);
