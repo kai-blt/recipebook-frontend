@@ -104,7 +104,7 @@ const AddRecipeForm = (props) => {
     const [errors, setErrors] = useState(initialErrors);
     const [enableSubmit, setEnableSubmit] = useState(true);
 
-
+ 
     useEffect(() => {
         schema.isValid(formValues)
             .then(valid => {
@@ -260,9 +260,9 @@ const AddRecipeForm = (props) => {
                     />
                 </label>
                 <ErrorMessages>
-                    {errors.name}
-                    {errors.type}
-                    {errors.imageURL}
+                    <div>{errors.name}</div>
+                    <div>{errors.type}</div>
+                    <div>{errors.imageURL}</div>
                 </ErrorMessages>
             </InfoBox>
             <InfoBox>

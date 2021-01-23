@@ -117,7 +117,7 @@ const initialFormValues = {
     name: "",
     type: "",
     imageURL: "",
-    ingredients: [{ quantity: "", measurement: "", name: "", group: "" }],
+    ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
     steps: [{stepnumber: 1, instructions: ""}]
 }
 
@@ -160,7 +160,6 @@ function RecipeCard(props) {
             setErrors({...errors, [e.target.name]: err.errors[0] })
         })
              
-        console.log(formValues.imageURL)
         const newRecipe = {
             name: formValues.name,
             type: formValues.type,
@@ -185,6 +184,7 @@ function RecipeCard(props) {
                     });
             })
             .catch(err => console.log(err))  
+        setFormValues(initialFormValues);
         setClicked(formValues.name);
         setIsEditing(!isEditing);
     }
