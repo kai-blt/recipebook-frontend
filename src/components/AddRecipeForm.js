@@ -104,7 +104,7 @@ const AddRecipeForm = (props) => {
     const [errors, setErrors] = useState(initialErrors);
     const [enableSubmit, setEnableSubmit] = useState(true);
 
-  
+   
     useEffect(() => {
         schema.isValid(formValues)
             .then(valid => {
@@ -177,7 +177,7 @@ const AddRecipeForm = (props) => {
                 break;
             case "group":
                 const newGroup = [ ...formValues.ingredients ]
-                newGroup[index].group = e.target.value;    
+                newGroup[index].ingredientgroup = e.target.value;    
                 setFormValues({ ...formValues, ingredients: newGroup });
                 break;
             case "instructions":
