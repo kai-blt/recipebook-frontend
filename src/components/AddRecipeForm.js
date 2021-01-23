@@ -130,17 +130,8 @@ const AddRecipeForm = (props) => {
         
         axiosWithAuth().post('/recipes/recipe', newRecipe)
             .then(res => {
-                console.log(res)
-                setFormValues(initialFormValues)
-                setClicked(formValues.name)
-                setIsCreating(e);
-                // Scroll to top for Safari
-                document.body.scrollTop = 0;
-                // Scroll to top for Chrome, Firefox, IE, Opera
-                document.documentElement.scrollTop = 0;
                 axiosWithAuth().get('/users/getuserinfo')
                     .then(res => {
-                        console.log(res.data.recipes);
                         setRecipes(res.data.recipes);
                     })
                     .catch(err => {
@@ -148,6 +139,14 @@ const AddRecipeForm = (props) => {
                     });
             })
             .catch(err => console.log(err))  
+        
+        setFormValues(initialFormValues)
+        setClicked(formValues.name)
+        setIsCreating(e);
+        // Scroll to top for Safari
+        document.body.scrollTop = 0;
+        // Scroll to top for Chrome, Firefox, IE, Opera
+        document.documentElement.scrollTop = 0;
     }
 
     const handleChange = (e, index) => {
