@@ -241,14 +241,9 @@ function RecipeCard(props) {
     
     const addStep = (e, index) => {
         e.preventDefault();
-        if (formValues.steps.length === 1) {
-            formValues.steps.push({stepnumber: index + 2, instructions: ""});
-            setFormValues({ ...formValues, formValues });
-        } else {
-            formValues.steps.splice(index, 0, {stepnumber: index + 2, instructions: ""});
-            formValues.steps.map((step, index) => step.stepnumber = index + 1);
-            setFormValues({ ...formValues, formValues });
-        }
+        formValues.steps.splice(index + 1, 0, {stepnumber: index + 1, instructions: ""});
+        formValues.steps.map((step, index) => step.stepnumber = index + 1);
+        setFormValues({ ...formValues, formValues });
     }
 
     const delStep = (e, stpIndex) => {
