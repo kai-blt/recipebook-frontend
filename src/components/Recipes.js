@@ -154,8 +154,10 @@ function Recipes(props) {
     }
 
     return(
-            <RecipeContainer>                         
-                <RecipeListPane  className="desktoptoggle">
+            <RecipeContainer>   
+
+                {/* Desktop Recipe List View */}
+                <RecipeListPane className="desktoptoggle">
                     <SearchNav>
                         <div>
                             <label>Search&nbsp;
@@ -198,6 +200,25 @@ function Recipes(props) {
                             : <div><Spinner src={spinner} alt="spinner"/></div>
                     }
                 </RecipeListPane>
+
+                {/* Desktop Create Recipe OR Recipe Details View */}
+                {isCreating
+                    ?
+                        <RecipeDirectionsPane  className="desktoptoggle">
+                            <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
+                        </RecipeDirectionsPane>
+                    : 
+                        <RecipeDirectionsPane  className="desktoptoggle">
+                            {clicked
+                                ? recipes
+                                    .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
+                                    .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
+                                : null
+                            }     
+                        </RecipeDirectionsPane>                
+                }        
+
+                {/* Mobile Recipe List View */}
                 <RecipeListPane  className="mobiletoggle">
                     <SearchNav>                        
                         <ButtonContainer>
@@ -248,14 +269,15 @@ function Recipes(props) {
                                 </>
                         }
                         </div>
-                    </SearchNav>
-                    
+                    </SearchNav>  
+
+                    {/* Mobile Recipe Creation View */}                  
                     {isCreating
                         ? <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
                         : isViewing
                             ? clicked
                                 ? recipes
-                                    .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
+                                    .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
                                     .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
                                 :  null
                             : searchToggle
@@ -270,22 +292,7 @@ function Recipes(props) {
                                         .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
                                     : <div><Spinner src={spinner} alt="spinner"/></div>
                     }
-                </RecipeListPane>
-                {isCreating
-                    ?
-                        <RecipeDirectionsPane  className="desktoptoggle">
-                            <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
-                        </RecipeDirectionsPane>
-                    : 
-                        <RecipeDirectionsPane  className="desktoptoggle">
-                            {clicked
-                                ? recipes
-                                    .filter(recipe => recipe.name.match(new RegExp(`${clicked}`, "i")))
-                                    .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
-                                : null
-                            }     
-                        </RecipeDirectionsPane>                
-                }                 
+                </RecipeListPane>         
             </RecipeContainer>
     );
 }

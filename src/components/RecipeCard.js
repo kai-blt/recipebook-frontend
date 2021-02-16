@@ -277,7 +277,9 @@ function RecipeCard(props) {
 
 
     return(
-        <RecipeCardContainer>            
+        <RecipeCardContainer>    
+            
+            {/* Recipe Title Information */}                    
             <RecipeTitle>
                 <div>
                     <h2>{recipe.name}</h2>
@@ -290,42 +292,45 @@ function RecipeCard(props) {
                     }
                 </div>
             </RecipeTitle>
+
+            {/* Show Recipe Info (Ingredients & Steps) OR Edit form if editing */}
             {!isEditing
                 ? (
                     <>
-                    <ImageContainer background={recipe.imageURL}/>
-                    <InfoBox>
-                        <h3>Ingredients</h3>                        
-                       {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
-                    </InfoBox>
-                    <InfoBox>
-                        <h3>Steps</h3>
-                        {recipe.steps.map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
-                    </InfoBox>
+                        <ImageContainer background={recipe.imageURL}/>
+                        <InfoBox>
+                            <h3>Ingredients</h3>                        
+                            {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
+                        </InfoBox>
+                        <InfoBox>
+                            <h3>Steps</h3>
+                            {recipe.steps.map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
+                        </InfoBox>
                     </>
                 )
                 : (
                     <>
+                        {/* Recipe Title Forms */}
                         <EditInfoBox>
                             <div className="title">
-                            <label>Title
-                                <input 
-                                    type="text"
-                                    name="name"
-                                    value={formValues.name}
-                                    onChange={handleChange}
-                                />
-                            </label>  
+                                <label>Title
+                                    <input 
+                                        type="text"
+                                        name="name"
+                                        value={formValues.name}
+                                        onChange={handleChange}
+                                    />
+                                </label>  
                             </div>
                             <div className="type">
-                            <label>Type
-                                <input 
-                                    type="text"
-                                    name="type"
-                                    value={formValues.type}
-                                    onChange={handleChange}
-                                />
-                            </label>  
+                                <label>Type
+                                    <input 
+                                        type="text"
+                                        name="type"
+                                        value={formValues.type}
+                                        onChange={handleChange}
+                                    />
+                                </label>  
                             </div>
                         </EditInfoBox>                       
                         <label>Image URL
@@ -336,7 +341,9 @@ function RecipeCard(props) {
                                 onChange={handleChange}
                             />
                         </label>
-                    <InfoBox>
+
+                        {/* Ingredients Forms */}
+                        <InfoBox>
                         <h3>Ingredients</h3>
                         {formValues.ingredients.map((ing, index) => (
                             <>
@@ -395,11 +402,12 @@ function RecipeCard(props) {
                                     </div>
                                 </ButtonContainer>                               
                             </IngredientFields>
-                            
                             </>
                         ))}
-                    </InfoBox>
-                    <InfoBox>
+                        </InfoBox>
+
+                        {/* Step Forms */}
+                        <InfoBox>
                         <h3>Steps</h3>
                         {formValues.steps.map((stp, index) => (
                             <IngredientFields>
@@ -428,11 +436,11 @@ function RecipeCard(props) {
                                 </ButtonContainer>
                             </IngredientFields>
                         ))}
-                    </InfoBox>
-                    <ButtonContainer>
-                        <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
-                        {enableSubmit ? <button className="disabled">Submit</button> :  <button className="submitBtn" onClick={handleSubmit}>Submit</button>}
-                    </ButtonContainer>
+                        </InfoBox>
+                        <ButtonContainer>
+                            <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
+                            {enableSubmit ? <button className="disabled">Submit</button> :  <button className="submitBtn" onClick={handleSubmit}>Submit</button>}
+                        </ButtonContainer>
                     </>
                 )
             }

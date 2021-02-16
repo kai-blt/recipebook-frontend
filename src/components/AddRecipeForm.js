@@ -232,6 +232,8 @@ const AddRecipeForm = (props) => {
                 </div>
                 <button className="cancelBtn" onClick={setIsCreating}>Cancel</button>
             </RecipeTitle>
+
+            {/* Recipe Title/Image Form Fields */}
             <InfoBox>
                 <EditInfoBox>
                     <div className="title">
@@ -269,6 +271,8 @@ const AddRecipeForm = (props) => {
                     <div>{errors.imageURL}</div>
                 </ErrorMessages>
             </InfoBox>
+
+            {/* Ingredient Form Fields */}
             <InfoBox>
                 <h3>Ingredients</h3>
                 {formValues.ingredients.map((ing, index) => (
@@ -335,6 +339,8 @@ const AddRecipeForm = (props) => {
                     {errors.group}
                 </ErrorMessages>
             </InfoBox>
+
+            {/* Step Form Fields */}
             <InfoBox>
                 <h3>Steps</h3>
                 {formValues.steps.map((stp, index) => (
