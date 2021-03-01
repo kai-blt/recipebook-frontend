@@ -3,8 +3,8 @@
 A project born out the love of cooking and eating great food! My wife and I needed a place to store our favorite recipes and have them available anywhere in the world and this is the front-end portion of  the project. 
 
 ## Tech
-Build with React and Styled-Components
-
+Build with React, Styled-Components and Axios
+ 
 ## Features
 * Mobile friendly
 * Create, Read, Update and Delete recipes, steps and ingredients.
