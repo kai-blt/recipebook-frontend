@@ -4,80 +4,6 @@ import * as yup from 'yup';
 import schema from '../../validation/schema';
 import styled from 'styled-components';
 
-const FormContainer = styled.div`
-  margin-bottom: 4%;
-`;
-
-const RecipeTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-flow: column wrap;
-  .edit {
-    width: 100%;
-  }
-
-  h2 {
-    margin: 0;
-    padding: 0;
-  }
-
-  h4 {
-    font-weight: 500;
-  }
-
-  @media (max-width: 1200px) {
-    .edit {
-      width: 100%;
-    }
-  }
-`;
-
-const InfoBox = styled.div`
-  margin: 10% 0;
-`;
-
-
-const EditInfoBox = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  .title {
-    width: 65%;
-  }
-
-  .type {
-    width: 30%;
-  }
-`;
-
-const IngredientFields = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-flow: column wrap;
-  align-items: center;
-  padding-bottom: 15%;
-
-  div {
-    width: 100%;
-  }
-`;
-
-const ButtonContainer = styled.div`
-   display: flex;
-   justify-content: space-between;
-   flex-flow: row nowrap;
-   margin-top: 2%;
-
-   div {
-     width: 20%;
-   }
-`;
-
-const ErrorMessages = styled.div`
-  color: #d9534f;
-`;
-
 
 const initialFormValues = {
   name: "(Enter Title)",
@@ -378,6 +304,81 @@ const AddRecipeForm = (props) => {
     </FormContainer>
   )
 }
+
+//Component Styles
+const FormContainer = styled.div`
+  margin-bottom: 4%;
+`;
+
+const RecipeTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-flow: column wrap;
+  .edit {
+    width: 100%;
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    font-weight: 500;
+  }
+
+  @media (max-width: 1200px) {
+    .edit {
+      width: 100%;
+    }
+  }
+`;
+
+const InfoBox = styled.div`
+  margin: 10% 0;
+`;
+
+
+const EditInfoBox = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  .title {
+    width: 65%;
+  }
+
+  .type {
+    width: 30%;
+  }
+`;
+
+const IngredientFields = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column wrap;
+  align-items: center;
+  padding-bottom: 15%;
+
+  div {
+    width: 100%;
+  }
+`;
+
+const ButtonContainer = styled.div`
+   display: flex;
+   justify-content: space-between;
+   flex-flow: row nowrap;
+   margin-top: 2%;
+
+   div {
+     width: 20%;
+   }
+`;
+
+const ErrorMessages = styled.div`
+  color: #d9534f;
+`;
 
 export default AddRecipeForm;
 
