@@ -1,22 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../state/ducks';
+
 import spinner from '../assets/spinner.gif';
 import styled from 'styled-components';
-import axios from 'axios';
 
-
-
-const SignUp = styled.div`
-    text-decoration: underline;
-    transition: all 0.5s;
-    &:hover {
-        color: #555;
-    }
-`;
-
-const Spinner = styled.img`
-    width: 10%;
-`;
 
 const initialFormValues = {
     username: '',
@@ -24,80 +13,45 @@ const initialFormValues = {
     password: ''
 }
 
-const ErrorMessages = styled.div`
-    color: #d9534f;
-`;
-
 function Login(props) {
-    const { setIsLoggedIn } = props;
     const [formValues, setFormValues] = useState(initialFormValues);
     const [isCreatingAccount, setIsCreatingAccount] = useState(false);
-    const [errors, setErrors] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     
-    const history = useHistory();
-
+    const { push } = useHistory();
+    
+    //Redux State Managers
+    const dispatch = useDispatch();
+    const { status, error } = useSelector(state => state.user);
+    
+    useEffect(() => {
+        if (status === 'login/success') {
+            push('/recipes');
+        };
+    }, [status, error, push])
+    
     const onChange = (e) => {
         setFormValues({
             ...formValues,
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
-    const handleClick = () => {
-        setIsCreatingAccount(!isCreatingAccount)
-    }
+    const createAccount = () => {
+        setIsCreatingAccount(!isCreatingAccount);
+    };
 
     const signIn = (e) => {
         e.preventDefault();
-
-        setIsLoading(true);
-
-        axios.post(
-                'https://kaiblt-recipebook.herokuapp.com/login',
-                `grant_type=password&username=${formValues.username}&password=${formValues.password}`,
-                {
-                    headers: {
-                        // btoa is converting our client id/client secret into base64
-                        Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                },
-            )
-            .then(res => {
-                console.log(res.data);
-                localStorage.setItem("token", res.data.access_token);
-                localStorage.setItem("username", formValues.username)
-                setIsLoading(false);
-                setIsLoggedIn(true);
-                history.push("/recipes");
-            })
-            .catch(err => {
-                console.log(JSON.parse(JSON.stringify(err.response.data.error_description)));
-                setErrors(JSON.parse(JSON.stringify(err.response.data.error_description)));
-                setIsLoading(false);
-            });
-    }
+        const { username, password } = formValues;
+        dispatch(userActions.login(username, password));
+    };
 
 
     const signUp = (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        axios.post(
-                'https://kaiblt-recipebook.herokuapp.com/createnewuser', formValues)
-            .then(res => {
-                localStorage.setItem("token", res.data.access_token);
-                setIsLoading(false);
-                setIsLoggedIn(true);
-                setIsCreatingAccount(!isCreatingAccount);
-            })
-            .catch(err => {
-                console.log(JSON.parse(JSON.stringify(err.response.data.error_description)));
-                setErrors(JSON.parse(JSON.stringify(err.response.data.error_description)));
-                setIsLoading(false);
-            });
-    }
+        e.preventDefault();        
+        dispatch(userActions.signup(formValues));
+        setIsCreatingAccount(!isCreatingAccount);
+    };
 
     return(
         <div>
@@ -119,9 +73,9 @@ function Login(props) {
                             onChange={onChange}
                         />
                     </label>                
-                    <div>{isLoading ? <Spinner src={spinner} alt="spinner"/>: <button>Log In</button>}</div>
+                    <div>{status === 'login/pending' ? <Spinner src={spinner} alt="spinner"/>: <button>Log In</button>}</div>
                 </form>
-                <SignUp onClick={handleClick}>Don't have an account? Sign Up!</SignUp>
+                <SignUp onClick={createAccount}>Don't have an account? Sign Up!</SignUp>
                 </>
             )
             : (
@@ -147,14 +101,32 @@ function Login(props) {
                             onChange={onChange}
                         />
                     </label> 
-                    <div>{isLoading ? <Spinner src={spinner} alt="spinner"/> : <button>Sign Up</button>}</div>
+                    <div>{status === 'login/pending' ? <Spinner src={spinner} alt="spinner"/> : <button>Sign Up</button>}</div>
                 </form>
             )}
             <ErrorMessages>
-                {errors}
+                {error}
             </ErrorMessages>            
         </div>
     );
 }
+
+//Component Styles
+const SignUp = styled.div`
+    text-decoration: underline;
+    transition: all 0.5s;
+    &:hover {
+        color: #555;
+    }
+`;
+
+const Spinner = styled.img`
+    width: 10%;
+`;
+
+const ErrorMessages = styled.div`
+    color: #d9534f;
+`;
+
 
 export default Login;

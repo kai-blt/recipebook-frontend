@@ -1,13 +1,17 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import {} from './ducks';
+//Import Ducks
+import { userReducer } from './ducks';
 
 export const middlewares = [thunk];
 
 export const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
 
-export const rootReducer = combineReducers({});
+//Combine Slices of State
+export const rootReducer = combineReducers({
+  user: userReducer,
+});
 
 export const store = createStoreWithMiddleware(
   rootReducer,
