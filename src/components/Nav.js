@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../state/ducks';
-
-import axiosWithAuth from '../axios/axiosWithAuth';
 import styled from 'styled-components';
 
 
