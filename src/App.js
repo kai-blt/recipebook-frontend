@@ -13,7 +13,7 @@ function App() {
     <Switch>
       <ProtectedRoute path="/recipes" component={RecipeView}/>
       <Route path="/">
-        <Home setIsLoggedIn={setIsLoggedIn} />
+        <Home />
       </Route>
     </Switch>
   </ AppContainer>
