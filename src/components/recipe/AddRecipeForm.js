@@ -43,15 +43,17 @@ const AddRecipeForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();   
 
+    //Create New Recipe Object
+    const { name, type, imageURL, ingredients, steps } = formValues;
     const newRecipe = {
-      name: formValues.name,
-      type: formValues.type,
+      name,
+      type,
       user: {
           username: localStorage.getItem("username")
         },
-      imageURL: formValues.imageURL,
-      ingredients: formValues.ingredients,
-      steps: formValues.steps
+      imageURL,
+      ingredients,
+      steps
     };
     
     axiosWithAuth().post('/recipes/recipe', newRecipe)

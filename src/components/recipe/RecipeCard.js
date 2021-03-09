@@ -52,15 +52,17 @@ function RecipeCard(props) {
       setErrors({...errors, [e.target.name]: err.errors[0] })
     })
        
+    //Create New Recipe Object
+    const { name, type, imageURL, ingredients, steps } = formValues;
     const newRecipe = {
-      name: formValues.name,
-      type: formValues.type,
+      name,
+      type,
       user: {
           username: localStorage.getItem("username")
         },
-      imageURL: formValues.imageURL,
-      ingredients: formValues.ingredients,
-      steps: formValues.steps
+      imageURL,
+      ingredients,
+      steps
     };
      
     axiosWithAuth().put(`/recipes/recipe/${recipe.recipeid}`, newRecipe)
