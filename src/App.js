@@ -15,11 +15,11 @@ const AppContainer = styled.div`
   margin: auto;  
 
   @media(max-width: 700px) {
-    width: 95%;
+  width: 95%;
   }
 
   @media(max-width: 500px) {
-    width: 95%;
+  width: 95%;
   }
 `;
 
@@ -28,17 +28,17 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <>
-    <AppContainer>      
-      <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-      <Switch>
-        <ProtectedRoute path="/recipes" component={RecipeView}/>
-        <Route path="/">
-          <Home setIsLoggedIn={setIsLoggedIn} />
-        </Route>
-      </Switch>
-    </ AppContainer>
-    </>
+  <>
+  <AppContainer>    
+    <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+    <Switch>
+    <ProtectedRoute path="/recipes" component={RecipeView}/>
+    <Route path="/">
+      <Home setIsLoggedIn={setIsLoggedIn} />
+    </Route>
+    </Switch>
+  </ AppContainer>
+  </>
   );
 }
 
