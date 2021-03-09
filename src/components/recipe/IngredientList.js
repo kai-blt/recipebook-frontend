@@ -2,13 +2,6 @@ import React from 'react';
 import  { v4 as uuidv4 } from "uuid";
 import styled from 'styled-components';
 
-const IngredientContainer = styled.div`
-  margin-bottom: 6%;
-  div {
-    margin-left: 6%;
-  }
-`;
-
 
 function IngredientList(props) {
   const {ingredients, group} = props;  
@@ -20,5 +13,13 @@ function IngredientList(props) {
     </IngredientContainer>
   )
 }
+
+//Component Styles
+const IngredientContainer = styled.div`
+  margin-bottom: 6%;
+  div {
+    margin-left: 6%;
+  }
+`;
 
 export default IngredientList;
