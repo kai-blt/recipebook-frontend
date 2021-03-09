@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axiosWithAuth from '../../axios/axiosWithAuth';
+import { useDispatch } from 'react-redux';
+import { recipeActions } from '../../state/ducks';
+
 import * as yup from 'yup';
 import schema from '../../validation/schema';
 import styled from 'styled-components';
@@ -25,16 +27,17 @@ const initialErrors = {
 };
 
 const AddRecipeForm = (props) => {
-  const { setIsCreating, setRecipes, setClicked } = props;
+  const { setIsCreating, setClicked } = props;
   const [formValues, setFormValues] = useState(initialFormValues);
   const [errors, setErrors] = useState(initialErrors);
   const [enableSubmit, setEnableSubmit] = useState(true);
 
-   
+  //Redux State Managers
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     schema.isValid(formValues)
       .then(valid => {
-        console.log(valid);
         setEnableSubmit(!valid);
       });
   }, [formValues]);
@@ -43,7 +46,7 @@ const AddRecipeForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();   
 
-    //Create New Recipe Object
+    //Create new recipe object
     const { name, type, imageURL, ingredients, steps } = formValues;
     const newRecipe = {
       name,
@@ -55,22 +58,16 @@ const AddRecipeForm = (props) => {
       ingredients,
       steps
     };
+
+    //Dispatch action to add recipe
+    dispatch(recipeActions.addRecipe(newRecipe));   
     
-    axiosWithAuth().post('/recipes/recipe', newRecipe)
-      .then(res => {
-        axiosWithAuth().get('/users/getuserinfo')
-          .then(res => {
-            setRecipes(res.data.recipes);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch(err => console.log(err)) ; 
-    
-    setFormValues(initialFormValues)
-    setClicked(formValues.name)
+    console.log(name)
+    //Reinitialize form state
+    setFormValues(initialFormValues);
+    setClicked(name);
     setIsCreating(e);
+
     // Scroll to top for Safari
     document.body.scrollTop = 0;
     // Scroll to top for Chrome, Firefox, IE, Opera

@@ -77,11 +77,11 @@ export const userActions = {
   axiosWithAuth()
     .get('/logout')
     .then(res => {
-    dispatch({ type: LOGOUT_SUCCESS });
-    localStorage.setItem("token", '');
+      dispatch({ type: LOGOUT_SUCCESS });
+      localStorage.setItem("token", '');
     })
     .catch(err => {
-    dispatch({ type: LOGOUT_FAIL, payload: JSON.parse(JSON.stringify(err.response.data.error_description)) });
+      dispatch({ type: LOGOUT_FAIL, payload: JSON.parse(JSON.stringify(err.response.data.error_description)) });
     })
     .finally(() => dispatch({ type: LOGOUT_RESOLVE }));  
   },

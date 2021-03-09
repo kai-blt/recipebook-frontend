@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import axiosWithAuth from '../../axios/axiosWithAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { recipeActions } from '../../state/ducks';
+
 import RecipeThumbnail from './RecipeThumbnail';
 import RecipeCard from './RecipeCard';
+import AddRecipeForm from './AddRecipeForm';
 import { v4 as uuidv4 } from 'uuid';
 import spinner from '../../assets/spinner.gif'
 import styled from 'styled-components';
-import AddRecipeForm from './AddRecipeForm';
 
 
 function RecipeView(props) {
-  const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState('');
   const [clicked, setClicked] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [isViewing, setIsViewing] = useState(false);
   const [searchToggle, setSearchToggle] = useState(true);
 
+  //Redux State Managers
+  const dispatch = useDispatch();
+  const { recipes } = useSelector(state => state.recipes);
+
   useEffect(() => {
-    axiosWithAuth().get('/users/getuserinfo')
-      .then(res => {
-        setRecipes(res.data.recipes);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);     
+    dispatch(recipeActions.getRecipes());
+  }, [dispatch]);     
    
 
   const onChange = (e) => {
@@ -104,14 +103,14 @@ function RecipeView(props) {
         {isCreating
           ?
             <RecipeDirectionsPane  className="desktoptoggle">
-              <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
+              <AddRecipeForm setIsCreating={createNewRecipe} setClicked={setClicked}/>
             </RecipeDirectionsPane>
           : 
             <RecipeDirectionsPane  className="desktoptoggle">
               {clicked
                 ? recipes
                   .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                  .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
+                  .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
                 : null
               }   
             </RecipeDirectionsPane>        
@@ -172,12 +171,12 @@ function RecipeView(props) {
 
           {/* Mobile Recipe Creation View */}          
           {isCreating
-            ? <AddRecipeForm setIsCreating={createNewRecipe} setRecipes={setRecipes} setClicked={setClicked}/>
+            ? <AddRecipeForm setIsCreating={createNewRecipe} setClicked={setClicked}/>
             : isViewing
               ? clicked
                 ? recipes
                   .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                  .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setRecipes={setRecipes} setClicked={setClicked} />)
+                  .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
                 :  null
               : searchToggle
                 ? recipes 

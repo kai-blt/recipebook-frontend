@@ -1,152 +1,103 @@
-import axios from 'axios';
 import axiosWithAuth from '../../axios/axiosWithAuth';
 
 /******************************************************
  * USER ACTION TYPES
  ******************************************************/
-export const LOGIN_START = 'LOGIN_START';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const LOGIN_RESOLVE = 'LOGIN_RESOLVE';
+export const GET_RECIPE_START = 'GET_RECIPE_START';
+export const GET_RECIPE_SUCCESS = 'GET_RECIPE_SUCCESS';
+export const GET_RECIPE_FAIL = 'GET_RECIPE_FAIL';
+export const GET_RECIPE_RESOLVE = 'GET_RECIPE_RESOLVE';
 
-export const SIGNUP_START = 'SIGNUP_START';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_FAIL = 'SIGNUP_FAIL';
-export const SIGNUP_RESOLVE = 'SIGNUP_RESOLVE';
+export const ADD_RECIPE_START = 'ADD_RECIPE_START';
+export const ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS';
+export const ADD_RECIPE_FAIL = 'ADD_RECIPE_FAIL';
+export const ADD_RECIPE_RESOLVE = 'ADD_RECIPE_RESOLVE';
 
-export const LOGOUT_START = 'LOGOUT_START';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAIL = 'LOGOUT_FAIL';
-export const LOGOUT_RESOLVE = 'LOGOUT_RESOLVE';
 
 
 /******************************************************
  * USER ACTIONS
  ******************************************************/
 
-export const userActions = {
+export const recipeActions = {
 
-  // LOGIN USER
-  login: (username, password) => dispatch => {
-  dispatch({ type: LOGIN_START });
+  // GET RECIPES
+  getRecipes: () => dispatch => {
+    dispatch({ type: GET_RECIPE_START });
 
-  axios
-    .post(
-    'https://kaiblt-recipebook.herokuapp.com/login',
-    `grant_type=password&username=${username}&password=${password}`,
-      {
-      headers: {
-        // btoa is converting our client id/client secret into base64
-        Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      },
-    )
+    axiosWithAuth().get('/users/getuserinfo')
+      .then(res => {
+        dispatch({ type: GET_RECIPE_SUCCESS, payload: res.data.recipes })
+      })
+      .catch(err => {
+        dispatch({ type: GET_RECIPE_FAIL });
+      })
+      .finally(() => dispatch({ type: GET_RECIPE_RESOLVE }));
+  },
+
+  // ADD RECIPE
+  addRecipe: (newRecipe) => dispatch => {
+    dispatch({ type: ADD_RECIPE_START });
+
+    axiosWithAuth()
+    .post('/recipes/recipe', newRecipe)
     .then(res => {
-      dispatch({ type: LOGIN_SUCCESS });
-      localStorage.setItem("token", res.data.access_token);
-      localStorage.setItem("username", username);
-    })
-    .catch(err => {
-      dispatch({ type: LOGIN_FAIL, payload: JSON.parse(JSON.stringify(err.response.data.error_description))});
-    })
-    .finally(() => dispatch({ type: LOGIN_RESOLVE }));
-  },
+      dispatch({ type: GET_RECIPE_START });
 
-  // SIGNUP USER
-  signup: (formValues) => dispatch => {
-  dispatch({ type: SIGNUP_START });
-
-  axios.post(
-    'https://kaiblt-recipebook.herokuapp.com/createnewuser', formValues)
-  .then(res => {
-    dispatch({ type: SIGNUP_SUCCESS });
-    localStorage.setItem("token", res.data.access_token);
-    localStorage.setItem("username", formValues.username);
-  })
-  .catch(err => {
-    dispatch({ type: SIGNUP_FAIL, payload: JSON.parse(JSON.stringify(err.response.data.error_description)) });
-  })
-  .finally(() => dispatch({ type: SIGNUP_RESOLVE }));  
-  },
-
-   // LOGOUT USER
-   logout: (formValues) => dispatch => {
-  dispatch({ type: LOGOUT_START });
-
-  axiosWithAuth()
-    .get('/logout')
-    .then(res => {
-    dispatch({ type: LOGOUT_SUCCESS });
-    localStorage.setItem("token", '');
+      axiosWithAuth().get('/users/getuserinfo')
+        .then(res => {
+          dispatch({ type: GET_RECIPE_SUCCESS, payload: res.data.recipes })
+        })
+        .catch(err => {
+          dispatch({ type: GET_RECIPE_FAIL });
+        });
     })
-    .catch(err => {
-    dispatch({ type: LOGOUT_FAIL, payload: JSON.parse(JSON.stringify(err.response.data.error_description)) });
-    })
-    .finally(() => dispatch({ type: LOGOUT_RESOLVE }));  
-  },
+    .catch(err => dispatch({ type: ADD_RECIPE_FAIL }))
+    .finally(() => dispatch({ type: ADD_RECIPE_RESOLVE }));
+  }, 
 
 };
 
 /******************************************************
  * USER INITIAL STATE
  ******************************************************/
-export const userInitialState = {
-  user: null,
-  role: null,
-  isLoggedIn: false,
-  isCreatingAccount: false,
-  status: 'idle',
-  error: '',
+export const recipeInitialState = {
+  recipes: []
 };
 
 /******************************************************
  * USER REDUCER
  ******************************************************/
-const userReducer = (state = userInitialState, action) => {
+const recipeReducer = (state = recipeInitialState, action) => {
   switch (action.type) {
-  // LOGIN
-  case LOGIN_START:
-    return { ...state, status: 'login/pending' };
-  case LOGIN_SUCCESS:
+
+  // GET RECIPE
+  case GET_RECIPE_START:
+    return { ...state, status: 'get-recipe/pending' };
+  case GET_RECIPE_SUCCESS:
     return {
     ...state,
-    isLoggedIn: true,
-    status: 'login/success',
+    recipes: action.payload,
+    status: 'get-recipe/success',
     error: ''
     };
-  case LOGIN_FAIL:
-    return { ...state, status: 'login/error', error: action.payload };
-  case LOGIN_RESOLVE:
+  case GET_RECIPE_FAIL:
+    return { ...state, status: 'get-recipe/error', error: action.payload };
+  case GET_RECIPE_RESOLVE:
     return { ...state, status: 'idle' };
 
-   // LOGOUT
-  case LOGOUT_START:
-    return { ...state, status: 'logout/pending' };
-  case LOGOUT_SUCCESS:
+  // ADD RECIPE
+  case ADD_RECIPE_START:
+    return { ...state, status: 'get-recipe/pending' };
+  case ADD_RECIPE_SUCCESS:
     return {
     ...state,
-    isLoggedIn: false,
-    status: 'logout/success',
+    status: 'add-recipe/success',
     error: ''
     };
-  case LOGOUT_FAIL:
-    return { ...state, status: 'logout/error', error: action.payload };
-  case LOGOUT_RESOLVE:
-    return { ...state, status: 'idle' };
-
-  // SIGNUP
-  case SIGNUP_START:
-    return { ...state, status: 'signup/pending' };
-  case SIGNUP_SUCCESS:
-    return {
-    ...state,
-    status: 'signup/success',
-    error: ''
-    };
-  case SIGNUP_FAIL:
-    return { ...state, status: 'signup/error', error: action.payload };
-  case SIGNUP_RESOLVE:
+  case ADD_RECIPE_FAIL:
+    return { ...state, status: 'add-recipe/error', error: action.payload };
+  case ADD_RECIPE_RESOLVE:
     return { ...state, status: 'idle' };
 
   // DEFAULT
@@ -155,4 +106,4 @@ const userReducer = (state = userInitialState, action) => {
   }
 };
 
-export default userReducer;
+export default recipeReducer;
