@@ -1,6 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
+function RecipeThumbnail(props) {
+  const { recipe, onClick } = props;
+
+  return(
+    <RecipeListContainer >     
+      <ImageContainer background={recipe.imageURL} onClick={onClick}>
+        {recipe.name}
+      </ImageContainer>
+    </RecipeListContainer>
+  );
+}
+
+//Component Styles
 const RecipeListContainer = styled.div`
   margin-bottom: 8%;
   background-color: #eee;
@@ -43,18 +56,5 @@ const ImageContainer = styled.div`
     font-size: 2.5rem;
   }
 `;
-
-
-function RecipeThumbnail(props) {
-  const { recipe, onClick } = props;
-
-  return(
-    <RecipeListContainer >     
-      <ImageContainer background={recipe.imageURL} onClick={onClick}>
-        {recipe.name}
-      </ImageContainer>
-    </RecipeListContainer>
-  );
-}
 
 export default RecipeThumbnail;
