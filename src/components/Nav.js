@@ -16,11 +16,11 @@ function Nav(props) {
     if (status === 'logout/success') {
       push('/');
     }
-  }, [status, push])
+  }, [status, push]);
 
   const logOut = () => {
     dispatch(userActions.logout());
-  }
+  };
 
   return(
     <nav>

@@ -11,7 +11,7 @@ const initialFormValues = {
   imageURL: "",
   ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
   steps: [{stepnumber: 1, instructions: ""}]
-}
+};
 
 const initialErrors = {
   name: "",
@@ -22,7 +22,7 @@ const initialErrors = {
   measurement: "",
   group: "",
   instructions: ""
-}
+};
 
 const AddRecipeForm = (props) => {
   const { setIsCreating, setRecipes, setClicked } = props;
@@ -52,7 +52,7 @@ const AddRecipeForm = (props) => {
       imageURL: formValues.imageURL,
       ingredients: formValues.ingredients,
       steps: formValues.steps
-    } 
+    };
     
     axiosWithAuth().post('/recipes/recipe', newRecipe)
       .then(res => {
@@ -64,7 +64,7 @@ const AddRecipeForm = (props) => {
             console.log(err);
           });
       })
-      .catch(err => console.log(err))  
+      .catch(err => console.log(err)) ; 
     
     setFormValues(initialFormValues)
     setClicked(formValues.name)
@@ -83,7 +83,7 @@ const AddRecipeForm = (props) => {
       })
       .catch(err => {
         setErrors({...errors, [e.target.name]: err.errors[0] })
-      })
+      });
 
     switch(e.target.name) {
       case "ingredientname":
@@ -92,22 +92,22 @@ const AddRecipeForm = (props) => {
         setFormValues({...formValues, ingredients: newIngName });
         break;
       case "quantity":
-        const newIngQuantity = [ ...formValues.ingredients ]
+        const newIngQuantity = [ ...formValues.ingredients ];
         newIngQuantity[index].quantity = e.target.value;  
         setFormValues({ ...formValues, ingredients: newIngQuantity });
         break;
       case "measurement":
-        const newIngMeasurement = [ ...formValues.ingredients ]
+        const newIngMeasurement = [ ...formValues.ingredients ];
         newIngMeasurement[index].measurement = e.target.value;  
         setFormValues({ ...formValues, ingredients: newIngMeasurement });
         break;
       case "group":
-        const newGroup = [ ...formValues.ingredients ]
+        const newGroup = [ ...formValues.ingredients ];
         newGroup[index].ingredientgroup = e.target.value;  
         setFormValues({ ...formValues, ingredients: newGroup });
         break;
       case "instructions":
-        const newSteps = [ ...formValues.steps ]
+        const newSteps = [ ...formValues.steps ];
         newSteps[index].instructions = e.target.value;        
         setFormValues({ ...formValues, steps: newSteps });
         break;
@@ -127,7 +127,6 @@ const AddRecipeForm = (props) => {
     e.preventDefault();
     if (formValues.ingredients.length !== 1) {
       const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex); 
-      console.log(newList)   
       setFormValues({ ...formValues, ingredients: newList });
     }
   }

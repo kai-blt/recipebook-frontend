@@ -27,7 +27,7 @@ function Login(props) {
     if (status === 'login/success') {
       push('/recipes');
     };
-  }, [status, error, push])
+  }, [status, error, push]);
   
   const onChange = (e) => {
     setFormValues({

@@ -12,7 +12,7 @@ const initialFormValues = {
   imageURL: "",
   ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
   steps: [{stepnumber: 1, instructions: ""}]
-}
+};
 
 function RecipeCard(props) {
   const { recipe, setRecipes, setClicked } = props;
@@ -20,7 +20,7 @@ function RecipeCard(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [errors, setErrors] = useState(true);
-  const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))))
+  const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
   
   useEffect(() => {
     schema.isValid(formValues).then(valid => {
@@ -36,7 +36,7 @@ function RecipeCard(props) {
   const handleEdit = (e) => {
     e.preventDefault();   
     setIsEditing(!isEditing);
-    setFormValues({ ...formValues, ...recipe })
+    setFormValues({ ...formValues, ...recipe });
   }
 
   //Submit Handler
@@ -61,7 +61,7 @@ function RecipeCard(props) {
       imageURL: formValues.imageURL,
       ingredients: formValues.ingredients,
       steps: formValues.steps
-    } 
+    };
      
     axiosWithAuth().put(`/recipes/recipe/${recipe.recipeid}`, newRecipe)
       .then(res => {
@@ -78,7 +78,7 @@ function RecipeCard(props) {
             console.log(err);
           });
       })
-      .catch(err => console.log(err))  
+      .catch(err => console.log(err));  
   }
 
   //Change Handler
@@ -90,22 +90,22 @@ function RecipeCard(props) {
         setFormValues({...formValues, ingredients: newIngName });
         break;
       case "quantity":
-        const newIngQuantity = [ ...formValues.ingredients ]
+        const newIngQuantity = [ ...formValues.ingredients ];
         newIngQuantity[index].quantity = e.target.value;  
         setFormValues({ ...formValues, ingredients: newIngQuantity });
         break;
       case "measurement":
-        const newIngMeasurement = [ ...formValues.ingredients ]
+        const newIngMeasurement = [ ...formValues.ingredients ];
         newIngMeasurement[index].measurement = e.target.value;  
         setFormValues({ ...formValues, ingredients: newIngMeasurement });
         break;
       case "group":
-        const newGroup = [ ...formValues.ingredients ]
+        const newGroup = [ ...formValues.ingredients ];
         newGroup[index].ingredientgroup = e.target.value;  
         setFormValues({ ...formValues, ingredients: newGroup });
         break;
       case "instructions":
-        const newSteps = [ ...formValues.steps ]
+        const newSteps = [ ...formValues.steps ];
         newSteps[index].instructions = e.target.value;        
         setFormValues({ ...formValues, steps: newSteps });
         break;
@@ -159,7 +159,7 @@ function RecipeCard(props) {
           console.log(err);
         });
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
     
      // Scroll to top for Safari
      document.body.scrollTop = 0;
