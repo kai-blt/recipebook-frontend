@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import  { v4 as uuidv4 } from "uuid";
 import IngredientList from './IngredientList';
 import * as yup from 'yup';
-import schema from '../validation/schema';
-import axiosWithAuth from '../axios/axiosWithAuth';
+import schema from '../../validation/schema';
+import axiosWithAuth from '../../axios/axiosWithAuth';
 import styled from 'styled-components';
 
 const RecipeCardContainer = styled.div`
@@ -138,7 +138,7 @@ function RecipeCard(props) {
 
     useEffect(() => {
        setGroups((Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup)))).sort());
-    }, []);
+    }, [recipe.ingredients]);
     
     //Edit Handler
     const handleEdit = (e) => {
@@ -389,7 +389,7 @@ function RecipeCard(props) {
                                     </label>
                                 </div> 
                                 <ButtonContainer className="btns">
-                                    {formValues.ingredients.length == 1
+                                    {formValues.ingredients.length === 1
                                     ?
                                         <div></div>
                                     :
@@ -422,7 +422,7 @@ function RecipeCard(props) {
                                     </label>
                                 </div>
                                 <ButtonContainer className="btns">
-                                    {formValues.steps.length == 1
+                                    {formValues.steps.length === 1
                                     ?
                                         <div></div>
                                     :

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axiosWithAuth from '../axios/axiosWithAuth';
+import axiosWithAuth from '../../axios/axiosWithAuth';
 import * as yup from 'yup';
-import schema from '../validation/schema';
+import schema from '../../validation/schema';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
@@ -318,7 +318,7 @@ const AddRecipeForm = (props) => {
                             </label>
                         </div> 
                         <ButtonContainer>
-                            {formValues.ingredients.length == 1
+                            {formValues.ingredients.length === 1
                             ?
                                 <div></div>
                             :
@@ -356,7 +356,7 @@ const AddRecipeForm = (props) => {
                             </label>
                         </div>
                         <ButtonContainer>
-                            {formValues.steps.length == 1
+                            {formValues.steps.length === 1
                             ?
                                 <div></div>
                             :

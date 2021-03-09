@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axiosWithAuth from '../axios/axiosWithAuth';
+import axiosWithAuth from '../../axios/axiosWithAuth';
 import RecipeThumbnail from './RecipeThumbnail';
 import RecipeCard from './RecipeCard';
 import { v4 as uuidv4 } from 'uuid';
-import spinner from '../assets/spinner.gif'
+import spinner from '../../assets/spinner.gif'
 import styled from 'styled-components';
 import AddRecipeForm from './AddRecipeForm';
 
@@ -109,7 +109,7 @@ const Spinner = styled.img`
 
 
 
-function Recipes(props) {
+function RecipeView(props) {
     const [recipes, setRecipes] = useState([]);
     const [search, setSearch] = useState('');
     const [clicked, setClicked] = useState('');
@@ -297,4 +297,4 @@ function Recipes(props) {
     );
 }
 
-export default Recipes;
+export default RecipeView;

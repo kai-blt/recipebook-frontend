@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import Nav from './components/Nav';
 import Home from './components/Home';
-import Recipes from './components/Recipes';
+import { RecipeView } from './components/recipe/';
 import styled from 'styled-components';
 import ProtectedRoute from './routes/ProtectedRoute';
 
@@ -32,7 +32,7 @@ function App() {
     <AppContainer>      
       <Nav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Switch>
-        <ProtectedRoute path="/recipes" component={Recipes}/>
+        <ProtectedRoute path="/recipes" component={RecipeView}/>
         <Route path="/">
           <Home setIsLoggedIn={setIsLoggedIn} />
         </Route>
