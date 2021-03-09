@@ -6,113 +6,6 @@ import schema from '../../validation/schema';
 import axiosWithAuth from '../../axios/axiosWithAuth';
 import styled from 'styled-components';
 
-const RecipeCardContainer = styled.div`
-  margin-bottom: 4%;
-`;
-
-const InfoBox = styled.div`
-  margin: 10% 0; 
-
-  .group {
-    color: red;
-    font-size: 1rem;
-  }
-`;
-
-const ImageContainer = styled.div`
-  height: 30vh;
-  background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 8px;
-  color: #fff;
-  margin: 6% 0;
-  @media (max-width: 1000px) {
-    height: 20vh;
-  }
-`;
-
-
-const EditInfoBox = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  .title {
-    width: 65%;
-  }
-
-  .type {
-    width: 30%;
-  }
-`;
-
-
-const RecipeTitle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-flow: column wrap;
-  .edit {
-    width: 100%;
-  }
-
-  h2 {
-    margin: 0;
-    padding: 0;
-  }
-
-  h4 {
-    font-weight: 500;
-  }
-
-  @media (max-width: 1200px) {
-    .edit {
-      width: 100%;
-    }
-  }
-`;
-
-const IngredientFields = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-flow: column wrap;
-  align-items: center;
-  padding-bottom: 15%;
-
-  div {
-    width: 100%;
-  }
-`;
-
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row nowrap;
-  margin-top: 2%;
-  background: 1px solid red;
-
-  div {
-    width: 20%;
-  }
-`;
-
-
-const StepContainer = styled.div`
-  display: flex;
-  line-height: 2.25rem;
-  margin-bottom: 2.5%;
-  margin-left: 6%;
-  div {
-    margin-right: 2%;
-  }
-
-  @media (max-width: 500px) {
-    margin-bottom: 6%;
-  }
-`;
-
-
 const initialFormValues = {
   name: "",
   type: "",
@@ -120,7 +13,6 @@ const initialFormValues = {
   ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
   steps: [{stepnumber: 1, instructions: ""}]
 }
-
 
 function RecipeCard(props) {
   const { recipe, setRecipes, setClicked } = props;
@@ -447,5 +339,112 @@ function RecipeCard(props) {
     </RecipeCardContainer>
   );
 }
+
+//Component Styles
+const RecipeCardContainer = styled.div`
+  margin-bottom: 4%;
+`;
+
+const InfoBox = styled.div`
+  margin: 10% 0; 
+
+  .group {
+    color: red;
+    font-size: 1rem;
+  }
+`;
+
+const ImageContainer = styled.div`
+  height: 30vh;
+  background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  color: #fff;
+  margin: 6% 0;
+  @media (max-width: 1000px) {
+    height: 20vh;
+  }
+`;
+
+
+const EditInfoBox = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  .title {
+    width: 65%;
+  }
+
+  .type {
+    width: 30%;
+  }
+`;
+
+
+const RecipeTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-flow: column wrap;
+  .edit {
+    width: 100%;
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    font-weight: 500;
+  }
+
+  @media (max-width: 1200px) {
+    .edit {
+      width: 100%;
+    }
+  }
+`;
+
+const IngredientFields = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column wrap;
+  align-items: center;
+  padding-bottom: 15%;
+
+  div {
+    width: 100%;
+  }
+`;
+
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  margin-top: 2%;
+  background: 1px solid red;
+
+  div {
+    width: 20%;
+  }
+`;
+
+
+const StepContainer = styled.div`
+  display: flex;
+  line-height: 2.25rem;
+  margin-bottom: 2.5%;
+  margin-left: 6%;
+  div {
+    margin-right: 2%;
+  }
+
+  @media (max-width: 500px) {
+    margin-bottom: 6%;
+  }
+`;
 
 export default RecipeCard;
