@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import IngredientList from './IngredientList';
 import axiosWithAuth from '../../axios/axiosWithAuth';
@@ -13,10 +13,12 @@ import styled from 'styled-components';
 
 
 function RecipeCard(props) {
-  const { recipe, setRecipes, setClicked } = props;
+  const { recipe, setClicked } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
+
+  console.log("RECIPCARD", recipe)
 
   //Form Helper Utils
   const { 
@@ -35,6 +37,7 @@ function RecipeCard(props) {
 
   //Redux State Managers
   const dispatch = useDispatch();
+  const { status } = useSelector(state => state.recipes);
   
   useEffect(() => {
     schema.isValid(formValues).then(valid => {
@@ -82,10 +85,17 @@ function RecipeCard(props) {
     //Dispatch action to edit/update recipe
     dispatch(recipeActions.editRecipe(recipe.recipeid, updatedRecipe));
 
-    //Reinitialize form state
-    setFormValues(initialFormValues);
-    setClicked(name);
-    setIsEditing(!isEditing);
+    if (status === "edit-recipe/success") {        
+      //Reinitialize form state
+      setFormValues(initialFormValues);
+      setClicked(name);
+      setIsEditing(!isEditing);      
+    };
+    
+    // Scroll to top for Safari
+    document.body.scrollTop = 0;
+    // Scroll to top for Chrome, Firefox, IE, Opera
+    document.documentElement.scrollTop = 0; 
   };
 
 
