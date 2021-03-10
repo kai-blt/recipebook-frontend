@@ -15,7 +15,7 @@ function RecipeThumbnailGrid(props) {
 
 //Component Styles
 const RecipeListContainer = styled.div`
-  margin-bottom: 8%;
+  margin-bottom: 2%;
   background-color: #eee;
   border-radius: 10px;
   padding: 2%;
@@ -35,7 +35,7 @@ const ImageContainer = styled.div`
   border-radius: 8px;
   color: #fff;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2.5rem;
   line-height: 3.5rem;
   text-align: center;
   text-shadow: 4px 2px 4px #000;

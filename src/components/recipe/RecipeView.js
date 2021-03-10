@@ -8,7 +8,7 @@ import RecipeCard from './RecipeCard';
 import AddRecipeForm from './AddRecipeForm';
 import { v4 as uuidv4 } from 'uuid';
 import spinner from '../../assets/spinner.gif'
-import { CgMenuGridR, CgArrowsExpandDownLeft } from "react-icons/cg";
+import { CgArrowsExpandDownRight, CgArrowsExpandDownLeft, CgArrowsExpandUpLeft } from "react-icons/cg";
 import styled from 'styled-components';
 
 
@@ -42,12 +42,12 @@ function RecipeView(props) {
       break;
     default:
       break;
-  }
+  };
   
 
   const onChange = (e) => {
     setSearch(e.target.value.toLowerCase());
-  }
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -57,78 +57,87 @@ function RecipeView(props) {
     document.body.scrollTop = 0;
     // Scroll to top for Chrome, Firefox, IE, Opera
     document.documentElement.scrollTop = 0;
-  }
+  };
+
+  const gridViewClick = (e) => {
+    e.preventDefault();
+    setClicked(e.target.innerHTML);
+    setGridExpanded(!gridExpanded);
+
+    // Scroll to top for Safari
+    document.body.scrollTop = 0;
+    // Scroll to top for Chrome, Firefox, IE, Opera
+    document.documentElement.scrollTop = 0;
+  };
 
   const handleBack = (e) => {
     e.preventDefault();
     setIsViewing(false);
     setIsCreating(false);
-  }
+  };
 
   const createNewRecipe = (e) => {
     e.preventDefault();
     setIsCreating(!isCreating);
-  }
+  };
 
   return(
       <RecipeContainer>   
         {/* View Control Buttons */}
-        <ExpandButtonLeft onClick={() => setGridExpanded(!gridExpanded)}>
-          <CgMenuGridR />
+        <ExpandButtonLeft onClick={() => setGridExpanded(!gridExpanded)}  className="desktoptoggle">
+          {gridExpanded ? <CgArrowsExpandUpLeft /> : <CgArrowsExpandDownRight />}
         </ExpandButtonLeft>        
-        <ExpandButtonRight  onClick={() => setGridExpanded(!gridExpanded)}>
+        <ExpandButtonRight  onClick={() => setRecipeExpanded(!recipeExpanded)}  className="desktoptoggle">
           <CgArrowsExpandDownLeft />
         </ExpandButtonRight>
 
         {gridExpanded
-          ? <>
-            {/* <GridView>
+          ? <GridViewContainer>
               <SearchNav>
-              <div>
-                <label>Search&nbsp;
-                  <input
-                    type="text"
-                    name="search"
-                    value={search}
-                    onChange={onChange}
-                  />
-                </label>
-              </div>
-              <div className="add">              
-                <button onClick={createNewRecipe}>New Recipe</button>
-              </div>
-            </SearchNav>
-            <RadioToggle>
-              <div>
-                <label>
-                  <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                  Ingredient
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                  Title
-                </label>
-              </div>
-            </RadioToggle>
-            </GridView>
-             */}
-            <GridView>
-            { searchToggle
-              ? recipes 
-                ? recipes
-                  .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                  .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
-                : <div><Spinner src={spinner} alt="spinner"/></div>
-              : recipes 
-                ? recipes
-                  .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
-                  .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
-                : <div><Spinner src={spinner} alt="spinner"/></div>
-            }  
-            </GridView>
-            </>
+                <div>
+                  <label>Search&nbsp;
+                    <input
+                      type="text"
+                      name="search"
+                      value={search}
+                      onChange={onChange}
+                    />
+                  </label>
+                </div>                
+                <div className="add">              
+                  <button onClick={createNewRecipe}>New Recipe</button>
+                </div>
+                <RadioToggle>
+                  <div>
+                    <label>
+                      <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                      Ingredient
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                      Title
+                    </label>
+                  </div>
+                </RadioToggle>
+              </SearchNav>
+              
+              <GridView>
+              { searchToggle
+                ? recipes 
+                  ? recipes
+                    .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                    .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={gridViewClick}/>) 
+                  : <div><Spinner src={spinner} alt="spinner"/></div>
+                : recipes 
+                  ? recipes
+                    .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
+                    .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={gridViewClick}/>) 
+                  : <div><Spinner src={spinner} alt="spinner"/></div>
+              }  
+              </GridView>
+            </GridViewContainer>
           : 
             <>
             {/* Non Expanded Desktop View */}
@@ -305,16 +314,31 @@ const RecipeContainer = styled.div`
   }
 `;
 
+const GridViewContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  padding: 0 2%;
+  margin: 4%;
+  width: 100%;
+  div {
+    margin: 0.5%;
+  }
+`;
+
 const GridView = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;   
+  justify-content: space-evenly;   
   align-items: flex-start;
   width: 100%;
-  margin: 8% 0;
-  padding: 2%;
+  padding: 0;
   div {
     width: 22%;
+  }  
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -369,8 +393,10 @@ const RadioToggle = styled.div`
   display: inline-flex;
   flex-direction: row-reverse;
   flex-wrap: nowrap;
-  margin-top: 1%;
+  justify-content: flex-end;
+  margin-top: 0;
   margin-bottom: 4%;
+  
   input, label {
     margin-right: 2px;
     width: 20px;
