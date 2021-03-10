@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import { useFormHelpers } from '../utils/useFormHelpers';
 
@@ -10,6 +10,7 @@ const AddRecipeForm = (props) => {
   const { setIsCreating, setClicked } = props;
   const [enableSubmit, setEnableSubmit] = useState(true);
 
+  //Form Helper Utils
   const { 
     initialFormValues,
     errors,
@@ -24,13 +25,14 @@ const AddRecipeForm = (props) => {
 
   //Redux State Managers
   const dispatch = useDispatch();
+  const { status } = useSelector(state => state.recipes);
   
   useEffect(() => {
     schema.isValid(formValues)
       .then(valid => {
         setEnableSubmit(!valid);
       });
-  }, [formValues]);
+  }, [formValues]); 
 
   
   const handleSubmit = (e) => {

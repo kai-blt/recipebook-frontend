@@ -19,12 +19,20 @@ function RecipeView(props) {
 
   //Redux State Managers
   const dispatch = useDispatch();
-  const { recipes } = useSelector(state => state.recipes);
+  const { recipes, status } = useSelector(state => state.recipes);
 
   useEffect(() => {
     dispatch(recipeActions.getRecipes());
   }, [dispatch]);     
-   
+
+  
+  switch(status) {
+    case "add-recipe/success":
+      dispatch(recipeActions.getRecipes())
+    case "delete-recipe/success":
+      dispatch(recipeActions.getRecipes())
+  }
+  
 
   const onChange = (e) => {
     setSearch(e.target.value.toLowerCase());

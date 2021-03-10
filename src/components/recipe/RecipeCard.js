@@ -18,7 +18,7 @@ function RecipeCard(props) {
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
 
-  console.log("INSIDE CARD", recipe)
+  //Form Helper Utils
   const { 
     initialFormValues,
     errors,
@@ -91,22 +91,13 @@ function RecipeCard(props) {
 
   const deleteRecipe = (e) => {
     e.preventDefault();
-    axiosWithAuth().delete(`/recipes/recipe/${recipe.recipeid}`)
-    .then(res => {
-      axiosWithAuth().get('/users/getuserinfo')
-        .then(res => {
-          setRecipes(res.data.recipes);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    })
-    .catch(err => console.log(err));
+
+    dispatch(recipeActions.deleteRecipe(recipe.recipeid));    
     
-     // Scroll to top for Safari
-     document.body.scrollTop = 0;
-     // Scroll to top for Chrome, Firefox, IE, Opera
-     document.documentElement.scrollTop = 0;  
+    // Scroll to top for Safari
+    document.body.scrollTop = 0;
+    // Scroll to top for Chrome, Firefox, IE, Opera
+    document.documentElement.scrollTop = 0;  
   }
 
 

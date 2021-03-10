@@ -18,6 +18,11 @@ export const EDIT_RECIPE_SUCCESS = 'EDIT_RECIPE_SUCCESS';
 export const EDIT_RECIPE_FAIL = 'EDIT_RECIPE_FAIL';
 export const EDIT_RECIPE_RESOLVE = 'EDIT_RECIPE_RESOLVE';
 
+export const DELETE_RECIPE_START = 'DELETE_RECIPE_START';
+export const DELETE_RECIPE_SUCCESS = 'DELETE_RECIPE_SUCCESS';
+export const DELETE_RECIPE_FAIL = 'DELETE_RECIPE_FAIL';
+export const DELETE_RECIPE_RESOLVE = 'DELETE_RECIPE_RESOLVE';
+
 
 
 /******************************************************
@@ -47,8 +52,7 @@ export const recipeActions = {
     axiosWithAuth()
     .post('/recipes/recipe', newRecipe)
     .then(res => {
-      dispatch({ type: GET_RECIPE_START });
-      recipeActions.getRecipes();
+      dispatch({ type: ADD_RECIPE_SUCCESS });
     })
     .catch(err => dispatch({ type: ADD_RECIPE_FAIL }))
     .finally(() => dispatch({ type: ADD_RECIPE_RESOLVE }));
@@ -62,11 +66,25 @@ export const recipeActions = {
       .put(`/recipes/recipe/${recipeId}`, updatedRecipe)
       .then(res => {
         dispatch({ type: EDIT_RECIPE_SUCCESS });
-        recipeActions.getRecipes();
       })
       .catch(err => dispatch({ type: EDIT_RECIPE_FAIL }))
       .finally(() => dispatch({ type: EDIT_RECIPE_RESOLVE }));
   }, 
+
+  // DELETE RECIPE
+  deleteRecipe: (recipeId) => dispatch => {
+    dispatch({ type: DELETE_RECIPE_START });
+
+    axiosWithAuth()
+    .delete(`/recipes/recipe/${recipeId}`)
+    .then(res => {
+      dispatch({ type: DELETE_RECIPE_SUCCESS });
+    })
+    .catch(err => dispatch({ type: DELETE_RECIPE_FAIL }))
+    .finally(() => dispatch({ type: DELETE_RECIPE_RESOLVE }));
+  },
+
+  
 
 };
 
@@ -74,7 +92,8 @@ export const recipeActions = {
  * USER INITIAL STATE
  ******************************************************/
 export const recipeInitialState = {
-  recipes: []
+  recipes: [],
+  status: 'idle',
 };
 
 /******************************************************
@@ -124,6 +143,20 @@ const recipeReducer = (state = recipeInitialState, action) => {
   case EDIT_RECIPE_FAIL:
     return { ...state, status: 'edit-recipe/error', error: action.payload };
   case EDIT_RECIPE_RESOLVE:
+    return { ...state, status: 'idle' };
+
+  // DELETE RECIPE
+  case DELETE_RECIPE_START:
+    return { ...state, status: 'delete-recipe/pending' };
+  case DELETE_RECIPE_SUCCESS:
+    return {
+    ...state,
+    status: 'delete-recipe/success',
+    error: ''
+    };
+  case DELETE_RECIPE_FAIL:
+    return { ...state, status: 'delete-recipe/error', error: action.payload };
+  case DELETE_RECIPE_RESOLVE:
     return { ...state, status: 'idle' };
 
   // DEFAULT
