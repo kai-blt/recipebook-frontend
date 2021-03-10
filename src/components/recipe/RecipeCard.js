@@ -17,8 +17,6 @@ function RecipeCard(props) {
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
 
-  console.log("RECIPCARD", recipe)
-
   //Form Helper Utils
   const { 
     initialFormValues,
