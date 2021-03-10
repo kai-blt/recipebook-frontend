@@ -54,13 +54,11 @@ const AddRecipeForm = (props) => {
     //Dispatch action to add recipe
     dispatch(recipeActions.addRecipe(newRecipe));   
     
-    if (status === "add-recipe/success") {     
-      //Reinitialize form state
-      setFormValues(initialFormValues);
-      setClicked(name);
-      setIsCreating(e);
-    };
-    
+    //Reinitialize form state
+    setFormValues(initialFormValues);
+    setClicked(name);
+    setIsCreating(e);
+  
     // Scroll to top for Safari
     document.body.scrollTop = 0;
     // Scroll to top for Chrome, Firefox, IE, Opera
