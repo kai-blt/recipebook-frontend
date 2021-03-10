@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import  { v4 as uuidv4 } from "uuid";
+import { useDispatch } from 'react-redux';
+import { recipeActions } from '../../state/ducks';
 import IngredientList from './IngredientList';
+import axiosWithAuth from '../../axios/axiosWithAuth';
+import { useFormHelpers } from '../utils/useFormHelpers';
+
+
+import  { v4 as uuidv4 } from "uuid";
 import * as yup from 'yup';
 import schema from '../../validation/schema';
-import axiosWithAuth from '../../axios/axiosWithAuth';
 import styled from 'styled-components';
 
-const initialFormValues = {
-  name: "",
-  type: "",
-  imageURL: "",
-  ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
-  steps: [{stepnumber: 1, instructions: ""}]
-};
 
 function RecipeCard(props) {
   const { recipe, setRecipes, setClicked } = props;
-  const [formValues, setFormValues] = useState(initialFormValues);
   const [isEditing, setIsEditing] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(true);
-  const [errors, setErrors] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
+
+  console.log("INSIDE CARD", recipe)
+  const { 
+    initialFormValues,
+    errors,
+    setErrors,
+    formValues,
+    setFormValues,
+    addIngredient,
+    delIngredient,
+    addStep,
+    delStep,
+    handleChange
+  } = useFormHelpers();
+
+
+  //Redux State Managers
+  const dispatch = useDispatch();
   
   useEffect(() => {
     schema.isValid(formValues).then(valid => {
@@ -37,7 +51,7 @@ function RecipeCard(props) {
     e.preventDefault();   
     setIsEditing(!isEditing);
     setFormValues({ ...formValues, ...recipe });
-  }
+  };
 
   //Submit Handler
   const handleSubmit = (e) => {
@@ -50,11 +64,11 @@ function RecipeCard(props) {
     })
     .catch(err => {
       setErrors({...errors, [e.target.name]: err.errors[0] })
-    })
+    });
        
     //Create New Recipe Object
     const { name, type, imageURL, ingredients, steps } = formValues;
-    const newRecipe = {
+    const updatedRecipe = {
       name,
       type,
       user: {
@@ -64,90 +78,16 @@ function RecipeCard(props) {
       ingredients,
       steps
     };
-     
-    axiosWithAuth().put(`/recipes/recipe/${recipe.recipeid}`, newRecipe)
-      .then(res => {
-        console.log(res)
-        axiosWithAuth().get('/users/getuserinfo')
-          .then(res => {
-            console.log(res.data.recipes);
-            setRecipes(res.data.recipes);
-            setFormValues(initialFormValues);
-            setClicked(formValues.name);
-            setIsEditing(!isEditing);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      })
-      .catch(err => console.log(err));  
-  }
 
-  //Change Handler
-  const handleChange = (e, index) => {
-    switch(e.target.name) {
-      case "ingredientname":
-        const newIngName = [ ...formValues.ingredients ];
-        newIngName[index].name = e.target.value;
-        setFormValues({...formValues, ingredients: newIngName });
-        break;
-      case "quantity":
-        const newIngQuantity = [ ...formValues.ingredients ];
-        newIngQuantity[index].quantity = e.target.value;  
-        setFormValues({ ...formValues, ingredients: newIngQuantity });
-        break;
-      case "measurement":
-        const newIngMeasurement = [ ...formValues.ingredients ];
-        newIngMeasurement[index].measurement = e.target.value;  
-        setFormValues({ ...formValues, ingredients: newIngMeasurement });
-        break;
-      case "group":
-        const newGroup = [ ...formValues.ingredients ];
-        newGroup[index].ingredientgroup = e.target.value;  
-        setFormValues({ ...formValues, ingredients: newGroup });
-        break;
-      case "instructions":
-        const newSteps = [ ...formValues.steps ];
-        newSteps[index].instructions = e.target.value;        
-        setFormValues({ ...formValues, steps: newSteps });
-        break;
-      default:
-        setFormValues({ ...formValues, [e.target.name]: e.target.value });
-        break;
-    }
-  }
+    //Dispatch action to edit/update recipe
+    dispatch(recipeActions.editRecipe(recipe.recipeid, updatedRecipe));
 
-   
-  //Button Handlers
-  const addIngredient = (e, index) => {
-    e.preventDefault();
-    formValues.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
-    setFormValues({ ...formValues, formValues });
-  }
+    //Reinitialize form state
+    setFormValues(initialFormValues);
+    setClicked(name);
+    setIsEditing(!isEditing);
+  };
 
-  const delIngredient = (e, ingIndex) => {
-    e.preventDefault();
-    if (formValues.ingredients.length !== 1) {
-      const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex);  
-      setFormValues({ ...formValues, ingredients: newList });
-    }
-  }
-  
-  const addStep = (e, index) => {
-    e.preventDefault();
-    formValues.steps.splice(index + 1, 0, {stepnumber: index + 1, instructions: ""});
-    formValues.steps.map((step, index) => step.stepnumber = index + 1);
-    setFormValues({ ...formValues, formValues });
-  }
-
-  const delStep = (e, stpIndex) => {
-    e.preventDefault();
-    if (formValues.steps.length !== 1) {
-      const newList = formValues.steps.filter((stp, index) => index !== stpIndex);  
-      newList.map((step, index) => step.stepnumber = index + 1);
-      setFormValues({ ...formValues, steps: newList });  
-    }
-  }
 
   const deleteRecipe = (e) => {
     e.preventDefault();

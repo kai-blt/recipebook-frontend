@@ -13,6 +13,11 @@ export const ADD_RECIPE_SUCCESS = 'ADD_RECIPE_SUCCESS';
 export const ADD_RECIPE_FAIL = 'ADD_RECIPE_FAIL';
 export const ADD_RECIPE_RESOLVE = 'ADD_RECIPE_RESOLVE';
 
+export const EDIT_RECIPE_START = 'EDIT_RECIPE_START';
+export const EDIT_RECIPE_SUCCESS = 'EDIT_RECIPE_SUCCESS';
+export const EDIT_RECIPE_FAIL = 'EDIT_RECIPE_FAIL';
+export const EDIT_RECIPE_RESOLVE = 'EDIT_RECIPE_RESOLVE';
+
 
 
 /******************************************************
@@ -43,17 +48,24 @@ export const recipeActions = {
     .post('/recipes/recipe', newRecipe)
     .then(res => {
       dispatch({ type: GET_RECIPE_START });
-
-      axiosWithAuth().get('/users/getuserinfo')
-        .then(res => {
-          dispatch({ type: GET_RECIPE_SUCCESS, payload: res.data.recipes })
-        })
-        .catch(err => {
-          dispatch({ type: GET_RECIPE_FAIL });
-        });
+      recipeActions.getRecipes();
     })
     .catch(err => dispatch({ type: ADD_RECIPE_FAIL }))
     .finally(() => dispatch({ type: ADD_RECIPE_RESOLVE }));
+  }, 
+
+  // EDIT RECIPE
+  editRecipe: (recipeId, updatedRecipe) => dispatch => {
+    dispatch({ type: EDIT_RECIPE_START });
+
+    axiosWithAuth()
+      .put(`/recipes/recipe/${recipeId}`, updatedRecipe)
+      .then(res => {
+        dispatch({ type: EDIT_RECIPE_SUCCESS });
+        recipeActions.getRecipes();
+      })
+      .catch(err => dispatch({ type: EDIT_RECIPE_FAIL }))
+      .finally(() => dispatch({ type: EDIT_RECIPE_RESOLVE }));
   }, 
 
 };
@@ -88,7 +100,7 @@ const recipeReducer = (state = recipeInitialState, action) => {
 
   // ADD RECIPE
   case ADD_RECIPE_START:
-    return { ...state, status: 'get-recipe/pending' };
+    return { ...state, status: 'add-recipe/pending' };
   case ADD_RECIPE_SUCCESS:
     return {
     ...state,
@@ -98,6 +110,20 @@ const recipeReducer = (state = recipeInitialState, action) => {
   case ADD_RECIPE_FAIL:
     return { ...state, status: 'add-recipe/error', error: action.payload };
   case ADD_RECIPE_RESOLVE:
+    return { ...state, status: 'idle' };
+
+  // EDIT RECIPE
+  case EDIT_RECIPE_START:
+    return { ...state, status: 'edit-recipe/pending' };
+  case EDIT_RECIPE_SUCCESS:
+    return {
+    ...state,
+    status: 'edit-recipe/success',
+    error: ''
+    };
+  case EDIT_RECIPE_FAIL:
+    return { ...state, status: 'edit-recipe/error', error: action.payload };
+  case EDIT_RECIPE_RESOLVE:
     return { ...state, status: 'idle' };
 
   // DEFAULT
