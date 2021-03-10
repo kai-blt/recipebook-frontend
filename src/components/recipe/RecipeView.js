@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 
 import RecipeThumbnail from './RecipeThumbnail';
+import RecipeThumbnailGrid from './RecipeThumbnailGrid';
 import RecipeCard from './RecipeCard';
 import AddRecipeForm from './AddRecipeForm';
 import { v4 as uuidv4 } from 'uuid';
 import spinner from '../../assets/spinner.gif'
+import { CgMenuGridR, CgArrowsExpandDownLeft } from "react-icons/cg";
 import styled from 'styled-components';
 
 
@@ -16,6 +18,8 @@ function RecipeView(props) {
   const [isCreating, setIsCreating] = useState(false);
   const [isViewing, setIsViewing] = useState(false);
   const [searchToggle, setSearchToggle] = useState(true);
+  const [gridExpanded, setGridExpanded] = useState(false);
+  const [recipeExpanded, setRecipeExpanded] = useState(false);
 
   //Redux State Managers
   const dispatch = useDispatch();
@@ -68,68 +72,129 @@ function RecipeView(props) {
 
   return(
       <RecipeContainer>   
+        {/* View Control Buttons */}
+        <ExpandButtonLeft onClick={() => setGridExpanded(!gridExpanded)}>
+          <CgMenuGridR />
+        </ExpandButtonLeft>        
+        <ExpandButtonRight  onClick={() => setGridExpanded(!gridExpanded)}>
+          <CgArrowsExpandDownLeft />
+        </ExpandButtonRight>
 
-        {/* Desktop Recipe List View */}
-        <RecipeListPane className="desktoptoggle">
-          <SearchNav>
-            <div>
-              <label>Search&nbsp;
-                <input
-                  type="text"
-                  name="search"
-                  value={search}
-                  onChange={onChange}
-                />
-              </label>
-            </div>
-            <div className="add">              
-              <button onClick={createNewRecipe}>New Recipe</button>
-            </div>
-          </SearchNav>
-          <RadioToggle>
-            <div>
-              <label>
-                <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                Ingredient
-              </label>
-            </div>
-            <div>
-              <label>
-                <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
-                Title
-              </label>
-            </div>
-          </RadioToggle>
-          { searchToggle
-            ? recipes 
-              ? recipes
-                .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
-              : <div><Spinner src={spinner} alt="spinner"/></div>
-            : recipes 
-              ? recipes
-                .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
-                .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
-              : <div><Spinner src={spinner} alt="spinner"/></div>
-          }
-        </RecipeListPane>
-
-        {/* Desktop Create Recipe OR Recipe Details View */}
-        {isCreating
-          ?
-            <RecipeDirectionsPane  className="desktoptoggle">
-              <AddRecipeForm setIsCreating={createNewRecipe} setClicked={setClicked}/>
-            </RecipeDirectionsPane>
-          : 
-            <RecipeDirectionsPane  className="desktoptoggle">
-              {clicked
+        {gridExpanded
+          ? <>
+            {/* <GridView>
+              <SearchNav>
+              <div>
+                <label>Search&nbsp;
+                  <input
+                    type="text"
+                    name="search"
+                    value={search}
+                    onChange={onChange}
+                  />
+                </label>
+              </div>
+              <div className="add">              
+                <button onClick={createNewRecipe}>New Recipe</button>
+              </div>
+            </SearchNav>
+            <RadioToggle>
+              <div>
+                <label>
+                  <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                  Ingredient
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                  Title
+                </label>
+              </div>
+            </RadioToggle>
+            </GridView>
+             */}
+            <GridView>
+            { searchToggle
+              ? recipes 
                 ? recipes
-                  .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                  .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
-                : null
-              }   
-            </RecipeDirectionsPane>        
-        }    
+                  .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                  .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                : <div><Spinner src={spinner} alt="spinner"/></div>
+              : recipes 
+                ? recipes
+                  .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
+                  .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                : <div><Spinner src={spinner} alt="spinner"/></div>
+            }  
+            </GridView>
+            </>
+          : 
+            <>
+            {/* Non Expanded Desktop View */}
+              <RecipeListPane className="desktoptoggle">          
+              <SearchNav>
+                <div>
+                  <label>Search&nbsp;
+                    <input
+                      type="text"
+                      name="search"
+                      value={search}
+                      onChange={onChange}
+                    />
+                  </label>
+                </div>
+                <div className="add">              
+                  <button onClick={createNewRecipe}>New Recipe</button>
+                </div>
+              </SearchNav>
+              <RadioToggle>
+                <div>
+                  <label>
+                    <input type="radio" checked={!searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                    Ingredient
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input type="radio" checked={searchToggle} onChange={() => setSearchToggle(!searchToggle)}></input>
+                    Title
+                  </label>
+                </div>
+              </RadioToggle>
+              { searchToggle
+                ? recipes 
+                  ? recipes
+                    .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
+                    .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                  : <div><Spinner src={spinner} alt="spinner"/></div>
+                : recipes 
+                  ? recipes
+                    .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
+                    .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                  : <div><Spinner src={spinner} alt="spinner"/></div>
+              }  
+            </RecipeListPane>   
+            
+            {/* Desktop Create Recipe OR Recipe Details View */}
+            {isCreating
+              ?
+                <RecipeDirectionsPane  className="desktoptoggle">
+                  <AddRecipeForm setIsCreating={createNewRecipe} setClicked={setClicked}/>
+                </RecipeDirectionsPane>
+              : 
+                <RecipeDirectionsPane  className="desktoptoggle">
+                  {clicked
+                    ? recipes
+                      .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
+                      .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
+                    : null
+                  }   
+                </RecipeDirectionsPane>        
+            }      
+          </>     
+        }
+        
 
         {/* Mobile Recipe List View */}
         <RecipeListPane  className="mobiletoggle">
@@ -240,6 +305,44 @@ const RecipeContainer = styled.div`
   }
 `;
 
+const GridView = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;   
+  align-items: flex-start;
+  width: 100%;
+  margin: 8% 0;
+  padding: 2%;
+  div {
+    width: 22%;
+  }
+`;
+
+const RecipeListPane = styled.div`
+  width: 50%;
+  padding-top: 4%;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-bottom: 50%;
+  padding-bottom: 50%;
+  border-right: 1px dashed #888;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
+const RecipeDirectionsPane = styled.div`
+  width: 50%;
+  padding-top: 4%;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-bottom: 50%;
+  /* border-left: 1px dashed #888; */
+  @media (max-width: 600px) {
+    width: 0;
+  }
+`;
+
 const SearchNav = styled.div`
   display: flex;
   justify-content: space-between;
@@ -274,31 +377,6 @@ const RadioToggle = styled.div`
   }
 `;
 
-const RecipeListPane = styled.div`
-  width: 50%;
-  padding-top: 4%;
-  padding-left: 8%;
-  padding-right: 8%;
-  padding-bottom: 50%;
-  padding-bottom: 50%;
-  border-right: 1px dashed #888;
-  @media (max-width: 600px) {
-    width: 100%;
-  }
-`;
-
-const RecipeDirectionsPane = styled.div`
-  width: 50%;
-  padding-top: 4%;
-  padding-left: 8%;
-  padding-right: 8%;
-  padding-bottom: 50%;
-  /* border-left: 1px dashed #888; */
-  @media (max-width: 600px) {
-    width: 0;
-  }
-`;
-
 const ButtonContainer = styled.div`
   display: flex;   
   justify-content: space-between;
@@ -308,5 +386,31 @@ const ButtonContainer = styled.div`
 const Spinner = styled.img`
   width: 10%;
 `;
+
+const ExpandButtonLeft = styled.div`  
+    position: absolute;
+    transition: all 0.5s;
+    font-size: 3rem;
+    margin: 1% 1%;
+
+    &:hover {
+      font-size: 4rem;
+      transition: all 0.5s;
+    }
+`;
+
+const ExpandButtonRight = styled.div`  
+  position: absolute;
+  right: 10%;
+  transition: all 0.5s;
+  font-size: 3rem;
+  margin: 1% 1%;
+
+  &:hover {
+    font-size: 4rem;
+    transition: all 0.5s;
+  }
+`;
+
 
 export default RecipeView;
