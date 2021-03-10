@@ -28,9 +28,11 @@ function RecipeView(props) {
   
   switch(status) {
     case "add-recipe/success":
-      dispatch(recipeActions.getRecipes())
+      dispatch(recipeActions.getRecipes());
     case "delete-recipe/success":
-      dispatch(recipeActions.getRecipes())
+      dispatch(recipeActions.getRecipes());
+    case "edit-recipe/success":
+      dispatch(recipeActions.getRecipes());
   }
   
 
