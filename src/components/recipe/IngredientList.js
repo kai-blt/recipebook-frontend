@@ -8,11 +8,22 @@ function IngredientList(props) {
   
   return (
     <IngredientContainer>
-    {group === "" || group === null ? null : <h4>{`${group}`}</h4>}
-    {ingredients.map(ing => ing.ingredientgroup === group ? <div key={uuidv4()}><strong>{ing.quantity !== "" ? ing.quantity : null} {ing.measurement}</strong> {ing.name}</div> : null)}
+      {/* If there is a recipe group, display a title for it*/}
+      { group === "" || group === null 
+        ? null 
+        : <h4>{`${group}`}</h4>
+      }
+     
+      {ingredients.map(ing => ing.ingredientgroup === group
+          ? 
+           (<div key={uuidv4()}>
+              <strong>{ing.quantity !== "" ? ing.quantity : null} {ing.measurement}</strong> {ing.name}
+            </div>)
+          : null)
+      }
     </IngredientContainer>
   )
-}
+};
 
 //Component Styles
 const IngredientContainer = styled.div`

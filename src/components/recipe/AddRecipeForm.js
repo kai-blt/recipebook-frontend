@@ -63,7 +63,7 @@ const AddRecipeForm = (props) => {
     document.body.scrollTop = 0;
     // Scroll to top for Chrome, Firefox, IE, Opera
     document.documentElement.scrollTop = 0;
-  }
+  };
 
   
 
