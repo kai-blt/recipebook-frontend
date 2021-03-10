@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import IngredientList from './IngredientList';
-import axiosWithAuth from '../../axios/axiosWithAuth';
 import { useFormHelpers } from '../utils/useFormHelpers';
 
 
@@ -91,7 +90,7 @@ function RecipeCard(props) {
       setClicked(name);
       setIsEditing(!isEditing);      
     };
-    
+
     // Scroll to top for Safari
     document.body.scrollTop = 0;
     // Scroll to top for Chrome, Firefox, IE, Opera

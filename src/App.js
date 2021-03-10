@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route } from 'react-router';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import { RecipeView } from './components/recipe/';
@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
+
   return (
   <>
   <AppContainer>    

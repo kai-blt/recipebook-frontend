@@ -29,10 +29,15 @@ function RecipeView(props) {
   switch(status) {
     case "add-recipe/success":
       dispatch(recipeActions.getRecipes());
+      break;
     case "delete-recipe/success":
       dispatch(recipeActions.getRecipes());
+      break;
     case "edit-recipe/success":
       dispatch(recipeActions.getRecipes());
+      break;
+    default:
+      break;
   }
   
 
