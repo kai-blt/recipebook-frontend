@@ -18,7 +18,7 @@ const RecipeListContainer = styled.div`
   margin-bottom: 2%;
   background-color: #eee;
   border-radius: 10px;
-  padding: 2%;
+  padding: 0.5%;
   box-shadow: 4px 4px 10px #222;
 `;
 
@@ -26,9 +26,9 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5vh;
+  height: 2vh;
   padding: 50%;
-  width: 100%;
+  max-width: 100%;
   background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
   background-repeat: no-repeat;
   background-size: cover;
@@ -36,7 +36,7 @@ const ImageContainer = styled.div`
   color: #fff;
   font-weight: 700;
   font-size: 2.5rem;
-  line-height: 3.5rem;
+  line-height: 2.5rem;
   text-align: center;
   text-shadow: 4px 2px 4px #000;
   transition: all 0.5s;

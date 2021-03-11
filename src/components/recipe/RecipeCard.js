@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 
 function RecipeCard(props) {
-  const { recipe, setClicked } = props;
+  const { recipe, setClicked, recipeExpanded } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
@@ -122,14 +122,15 @@ function RecipeCard(props) {
             ? <button className="editBtn" onClick={handleEdit}>Edit</button>
             : <button className="cancelBtn" onClick={handleEdit}>Cancel</button>
           }
-        </div>
+        </div>        
       </RecipeTitle>
 
       {/* Show Recipe Info (Ingredients & Steps) OR Edit form if editing */}
       {!isEditing
         ? (
           <>
-            <ImageContainer background={recipe.imageURL}/>
+            {/* If recipe expanded view, don't show image here */}
+            {!recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
             <InfoBox>
               <h3>Ingredients</h3>            
               {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
@@ -164,15 +165,17 @@ function RecipeCard(props) {
                   />
                 </label>  
               </div>
-            </EditInfoBox>             
-            <label>Image URL
-              <input 
-                type="text"
-                name="imageURL"
-                value={formValues.imageURL}
-                onChange={handleChange}
-              />
-            </label>
+              <div>
+                <label>Image URL
+                  <input 
+                    type="text"
+                    name="imageURL"
+                    value={formValues.imageURL}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div> 
+            </EditInfoBox>     
 
             {/* Ingredients Forms */}
             <InfoBox>
@@ -276,6 +279,9 @@ function RecipeCard(props) {
           </>
         )
       }
+      <div>
+        {recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
+      </div>
     </RecipeCardContainer>
   );
 }
@@ -312,6 +318,11 @@ const EditInfoBox = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+
+  div {
+    width: 100%;
+  }
+
   .title {
     width: 65%;
   }
@@ -327,8 +338,17 @@ const RecipeTitle = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   flex-flow: column wrap;
+  
+  div{
+    margin: 0;
+    /* border: 2px solid red; */
+  }
+  
   .edit {
-    width: 100%;
+    width: 100%;    
+    .editBtn, .cancelBtn {
+      margin: 0.5% 0;
+    }
   }
 
   h2 {

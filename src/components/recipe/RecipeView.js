@@ -5,7 +5,6 @@ import {
   RecipeThumbnail,
   RecipeThumbnailGrid,
   RecipeCard,
-  RecipeCardExpanded,
   AddRecipeForm 
 } from './';
 import { v4 as uuidv4 } from 'uuid';
@@ -175,7 +174,7 @@ function RecipeView(props) {
                       {clicked
                         ? recipes
                           .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                          .map(recipe => <RecipeCardExpanded key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
+                          .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} recipeExpanded={recipeExpanded} />)
                         : null
                       }   
                     </RecipeDirectionsExpanded>        
@@ -239,7 +238,7 @@ function RecipeView(props) {
                     {clicked
                       ? recipes
                         .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
+                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} recipeExpanded={recipeExpanded} />)
                       : null
                     }   
                   </RecipeDirectionsPane>        
