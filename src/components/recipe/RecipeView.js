@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
-
-import RecipeThumbnail from './RecipeThumbnail';
-import RecipeThumbnailGrid from './RecipeThumbnailGrid';
-import RecipeCard from './RecipeCard';
-import AddRecipeForm from './AddRecipeForm';
+import {
+  RecipeThumbnail,
+  RecipeThumbnailGrid,
+  RecipeCard,
+  RecipeCardExpanded,
+  AddRecipeForm 
+} from './';
 import { v4 as uuidv4 } from 'uuid';
-import spinner from '../../assets/spinner.gif'
-import { CgArrowsExpandDownRight, CgArrowsExpandDownLeft, CgArrowsExpandUpLeft, CgArrowsExpandUpRight } from "react-icons/cg";
+import spinner from '../../assets/spinner.gif';
+import { 
+  CgArrowsExpandDownRight,
+  CgArrowsExpandDownLeft,
+  CgArrowsExpandUpLeft,
+  CgArrowsExpandUpRight
+} from "react-icons/cg";
 import styled from 'styled-components';
 
 
@@ -168,7 +175,7 @@ function RecipeView(props) {
                       {clicked
                         ? recipes
                           .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                          .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
+                          .map(recipe => <RecipeCardExpanded key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
                         : null
                       }   
                     </RecipeDirectionsExpanded>        
