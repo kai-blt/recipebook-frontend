@@ -80,34 +80,37 @@ const AddRecipeForm = (props) => {
       <InfoBox>
         <EditInfoBox>
           <div className="title">
-          <label>Title
-            <input 
-              type="text"
-              name="name"
-              value={formValues.name}
-              onChange={handleChange}
-            />
-          </label>  
+            <label>Title
+              <input 
+                type="text"
+                name="name"
+                value={formValues.name}
+                onChange={handleChange}
+              />
+            </label>  
           </div>
           <div className="type">
-          <label>Type
-            <input 
-              type="text"
-              name="type"
-              value={formValues.type}
-              onChange={handleChange}
-            />
-          </label>  
+            <label>Type
+              <input 
+                type="text"
+                name="type"
+                value={formValues.type}
+                onChange={handleChange}
+              />
+            </label>  
+          </div>
+          <div>
+            <label>Image URL
+              <input 
+                type="text"
+                name="imageURL"
+                value={formValues.imageURL}
+                onChange={handleChange}
+              />
+            </label>
           </div>
         </EditInfoBox>             
-        <label>Image URL
-          <input 
-            type="text"
-            name="imageURL"
-            value={formValues.imageURL}
-            onChange={handleChange}
-          />
-        </label>
+        
         <ErrorMessages>
           <div>{errors.name}</div>
           <div>{errors.type}</div>
@@ -254,6 +257,17 @@ const RecipeTitle = styled.div`
 
 const InfoBox = styled.div`
   margin: 10% 0;
+  div {
+    width: 100%;
+  }
+
+  .title {
+    width: 65%;
+  }
+
+  .type {
+    width: 30%;
+  }
 `;
 
 

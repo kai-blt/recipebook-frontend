@@ -84,6 +84,10 @@ function RecipeView(props) {
 
   const createNewRecipe = (e) => {
     e.preventDefault();
+    if (gridExpanded || recipeExpanded) {
+      setGridExpanded(!gridExpanded);
+      setRecipeExpanded(!recipeExpanded);
+    }
     setIsCreating(!isCreating);
   };
 
@@ -126,7 +130,7 @@ function RecipeView(props) {
                     />
                   </label>
                 </div>                
-                <div className="add">              
+                <div className="add">       
                   <button onClick={createNewRecipe}>New Recipe</button>
                 </div>
                 <RadioToggle>
