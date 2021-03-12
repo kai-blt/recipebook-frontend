@@ -69,7 +69,6 @@ function RecipeView(props) {
     e.preventDefault();
     setClicked(e.target.innerHTML);
     setGridExpanded(!gridExpanded);
-
     // Scroll to top for Safari
     document.body.scrollTop = 0;
     // Scroll to top for Chrome, Firefox, IE, Opera
@@ -91,6 +90,7 @@ function RecipeView(props) {
     setIsCreating(!isCreating);
   };
 
+ 
   return(
       <RecipeContainer>   
 
@@ -113,12 +113,12 @@ function RecipeView(props) {
             ? null
             : recipeExpanded 
               ? <CgArrowsExpandUpRight />
-              : clicked === '' ? null : <CgArrowsExpandDownLeft />
+              : <CgArrowsExpandDownLeft />
           }
         </ExpandButtonRight>
 
         {gridExpanded 
-          ? <GridViewContainer>
+          ? <GridViewContainer className="grid">
               <SearchNav>
                 <div>
                   <label>Search&nbsp;
@@ -369,6 +369,18 @@ const GridViewContainer = styled.div`
   padding: 0 2%;
   margin: 4%;
   width: 100%;
+
+  animation: fade-in 0.75s ease-in-out forwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   div {
     margin: 0.5%;
   }
@@ -408,7 +420,8 @@ const RecipeDirectionsExpanded = styled.div`
   padding-top: 4%;
   padding-left: 8%;
   padding-right: 8%;
-  padding-bottom: 50%;
+  padding-bottom: 50%;    
+
   div {
     padding: 0;
     margin: 0.5%;

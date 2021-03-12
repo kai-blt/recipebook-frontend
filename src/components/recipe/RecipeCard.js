@@ -289,6 +289,15 @@ function RecipeCard(props) {
 //Component Styles
 const RecipeCardContainer = styled.div`
   margin-bottom: 4%;
+  animation: fade-in 0.5s ease-in-out forwards;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 const InfoBox = styled.div`
