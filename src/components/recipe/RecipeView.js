@@ -112,8 +112,8 @@ function RecipeView(props) {
           {gridExpanded 
             ? null
             : recipeExpanded 
-              ? <CgArrowsExpandUpRight />
-              : <CgArrowsExpandDownLeft />
+              ? clicked === '' ? null : <CgArrowsExpandUpRight />
+              : clicked === '' ? null : <CgArrowsExpandDownLeft />
           }
         </ExpandButtonRight>
 
