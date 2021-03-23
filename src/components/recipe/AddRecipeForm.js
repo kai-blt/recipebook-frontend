@@ -128,7 +128,7 @@ const AddRecipeForm = (props) => {
                 <input 
                   type="text"
                   name="quantity"
-                  value={formValues.ingredients[index].quantity}
+                  value={ing.quantity}
                   onChange={e => handleChange(e, index)}
                 />
               </label>
@@ -138,7 +138,7 @@ const AddRecipeForm = (props) => {
                 <input 
                   type="text"
                   name="measurement"
-                  value={formValues.ingredients[index].measurement}
+                  value={ing.measurement}
                   onChange={e => handleChange(e, index)}
                 />
               </label>
@@ -148,7 +148,7 @@ const AddRecipeForm = (props) => {
                 <input 
                   type="text"
                   name="ingredientname"
-                  value={formValues.ingredients[index].name}
+                  value={ing.name}
                   onChange={e => handleChange(e, index)}
                 />
               </label>
@@ -158,7 +158,7 @@ const AddRecipeForm = (props) => {
                 <input 
                   type="text"
                   name="group"
-                  value={formValues.ingredients[index].group}
+                  value={ing.group}
                   onChange={e => handleChange(e, index)}
                 />
               </label>
@@ -192,11 +192,11 @@ const AddRecipeForm = (props) => {
         {formValues.steps.map((stp, index) => (
           <IngredientFields>
             <div className="step">
-              <label>Step {formValues.steps[index].stepnumber}
+              <label>Step {stp.stepnumber}
                 <input 
                   type="text"
                   name="instructions"
-                  value={formValues.steps[index].instructions}
+                  value={stp.instructions}
                   onChange={e => handleChange(e, index)}
                 />
               </label>
