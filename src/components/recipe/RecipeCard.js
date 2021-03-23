@@ -137,7 +137,8 @@ function RecipeCard(props) {
             </InfoBox>
             <InfoBox>
               <h3>Steps</h3>
-              {recipe.steps.map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
+              {console.log(recipe)}
+              {recipe.steps.sort((a, b) => a.stepnumber - b.stepnumber).map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
             </InfoBox>
           </>
         )
@@ -188,7 +189,7 @@ function RecipeCard(props) {
                     <input 
                       type="text"
                       name="quantity"
-                      value={formValues.ingredients[index].quantity}
+                      value={ing.quantity}
                       onChange={e => handleChange(e, index)}                      
                     />
                     </label>
@@ -198,7 +199,7 @@ function RecipeCard(props) {
                     <input 
                       type="text"
                       name="measurement"
-                      value={formValues.ingredients[index].measurement}
+                      value={ing.measurement}
                       onChange={e => handleChange(e, index)}
                     />
                   </label>
@@ -208,7 +209,7 @@ function RecipeCard(props) {
                     <input 
                       type="text"
                       name="ingredientname"
-                      value={formValues.ingredients[index].name}
+                      value={ing.name}
                       onChange={e => handleChange(e, index)}
                     />
                   </label>
@@ -218,7 +219,7 @@ function RecipeCard(props) {
                     <input 
                       type="text"
                       name="group"
-                      value={formValues.ingredients[index].ingredientgroup}
+                      value={ing.ingredientgroup}
                       onChange={e => handleChange(e, index)}
                     />
                   </label>
@@ -247,11 +248,11 @@ function RecipeCard(props) {
             {formValues.steps.map((stp, index) => (
               <IngredientFields>
                 <div className="step">
-                  <label>Step {formValues.steps[index].stepnumber}
+                  <label>Step {stp.stepnumber}
                     <input 
                       type="text"
                       name="instructions"
-                      value={formValues.steps[index].instructions}
+                      value={stp.instructions}
                       onChange={e => handleChange(e, index)}
                     />
                   </label>
