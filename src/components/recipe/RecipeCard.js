@@ -280,7 +280,7 @@ function RecipeCard(props) {
         )
       }
       <div>
-        {recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
+        {recipeExpanded && <ImageContainerExtended className="extended" background={recipe.imageURL}/>}
       </div>
     </RecipeCardContainer>
   );
@@ -302,11 +302,6 @@ const RecipeCardContainer = styled.div`
 
 const InfoBox = styled.div`
   margin: 10% 0; 
-
-  .group {
-    color: red;
-    font-size: 1rem;
-  }
 `;
 
 const ImageContainer = styled.div`
@@ -316,9 +311,24 @@ const ImageContainer = styled.div`
   background-size: cover;
   border-radius: 8px;
   color: #fff;
-  margin: 6% 0;
+  margin: 6% 0;  
+  
   @media (max-width: 1000px) {
     height: 20vh;
+  }
+`;
+
+const ImageContainerExtended = styled.div`
+  height: 50vh;
+  background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  color: #fff;
+  margin: 6% 0%;  
+  
+  @media (max-width: 1000px) {
+    height: 50vh;
   }
 `;
 
@@ -382,7 +392,6 @@ const IngredientFields = styled.div`
   flex-flow: column wrap;
   align-items: center;
   padding-bottom: 15%;
-
   div {
     width: 100%;
   }
