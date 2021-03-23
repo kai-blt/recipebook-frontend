@@ -137,7 +137,6 @@ function RecipeCard(props) {
             </InfoBox>
             <InfoBox>
               <h3>Steps</h3>
-              {console.log(recipe)}
               {recipe.steps.sort((a, b) => a.stepnumber - b.stepnumber).map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
             </InfoBox>
           </>
