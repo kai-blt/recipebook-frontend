@@ -133,7 +133,7 @@ function RecipeCard(props) {
             {!recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
             <InfoBox>
               <h3>Ingredients</h3>            
-              {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
+              {groups.map(grp => <IngredientList key={uuidv4()} group={grp} ingredients={recipe.ingredients} /> )}
             </InfoBox>
             <InfoBox>
               <h3>Steps</h3>
@@ -182,7 +182,7 @@ function RecipeCard(props) {
             <h3>Ingredients</h3>
             {formValues.ingredients.map((ing, index) => (
               <>
-              <IngredientFields>
+              <IngredientFields key={uuidv4()}>
                 <div className="qty">
                   <label>Qty<br/>
                     <input 
@@ -245,7 +245,7 @@ function RecipeCard(props) {
             <InfoBox>
             <h3>Steps</h3>
             {formValues.steps.map((stp, index) => (
-              <IngredientFields>
+              <IngredientFields key={uuidv4()}>
                 <div className="step">
                   <label>Step {stp.stepnumber}
                     <input 
