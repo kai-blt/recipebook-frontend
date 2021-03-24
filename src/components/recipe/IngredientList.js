@@ -30,7 +30,15 @@ const IngredientContainer = styled.div`
   margin-bottom: 6%;
   div {
     margin-left: 6%;
-  }
+  };
+
+  @media (min-width: 1600px) {
+    margin-bottom: 10%;
+    div {
+      margin-left: 4%;
+      line-height: 3rem;
+    }
+  };
 `;
 
 export default IngredientList;

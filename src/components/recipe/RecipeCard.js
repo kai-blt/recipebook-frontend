@@ -301,7 +301,7 @@ const RecipeCardContainer = styled.div`
 `;
 
 const InfoBox = styled.div`
-  margin: 10% 0; 
+  margin: 10% 0;
 `;
 
 const ImageContainer = styled.div`
@@ -415,14 +415,19 @@ const StepContainer = styled.div`
   display: flex;
   line-height: 2.25rem;
   margin-bottom: 2.5%;
-  margin-left: 6%;
+
   div {
     margin-right: 2%;
-  }
+  };
 
-  @media (max-width: 500px) {
-    margin-bottom: 6%;
-  }
+  @media (min-width: 500px) {
+    div {
+      margin-left: 4%;
+      margin-right: 0;
+      margin-bottom: 1%;
+      line-height: 2.5rem;
+    };
+  };
 `;
 
 export default RecipeCard;
