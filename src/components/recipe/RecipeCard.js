@@ -133,7 +133,7 @@ function RecipeCard(props) {
             {!recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
             <InfoBox>
               <h3>Ingredients</h3>            
-              {groups.map(grp => <IngredientList group={grp} ingredients={recipe.ingredients} /> )}
+              {groups.map(grp => <IngredientList key={uuidv4()} group={grp} ingredients={recipe.ingredients} /> )}
             </InfoBox>
             <InfoBox>
               <h3>Steps</h3>
@@ -182,7 +182,7 @@ function RecipeCard(props) {
             <h3>Ingredients</h3>
             {formValues.ingredients.map((ing, index) => (
               <>
-              <IngredientFields>
+              <IngredientFields key={uuidv4()}>
                 <div className="qty">
                   <label>Qty<br/>
                     <input 
@@ -245,7 +245,7 @@ function RecipeCard(props) {
             <InfoBox>
             <h3>Steps</h3>
             {formValues.steps.map((stp, index) => (
-              <IngredientFields>
+              <IngredientFields key={uuidv4()}>
                 <div className="step">
                   <label>Step {stp.stepnumber}
                     <input 
@@ -280,7 +280,7 @@ function RecipeCard(props) {
         )
       }
       <div>
-        {recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
+        {recipeExpanded && <ImageContainerExtended className="extended" background={recipe.imageURL}/>}
       </div>
     </RecipeCardContainer>
   );
@@ -301,12 +301,7 @@ const RecipeCardContainer = styled.div`
 `;
 
 const InfoBox = styled.div`
-  margin: 10% 0; 
-
-  .group {
-    color: red;
-    font-size: 1rem;
-  }
+  margin: 10% 0;
 `;
 
 const ImageContainer = styled.div`
@@ -316,9 +311,24 @@ const ImageContainer = styled.div`
   background-size: cover;
   border-radius: 8px;
   color: #fff;
-  margin: 6% 0;
+  margin: 6% 0;  
+  
   @media (max-width: 1000px) {
     height: 20vh;
+  }
+`;
+
+const ImageContainerExtended = styled.div`
+  height: 50vh;
+  background: ${({background}) => background.match(/http/i) ? 'url(' + background + ')': '#555' };
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  color: #fff;
+  margin: 6% 0%;  
+  
+  @media (max-width: 1000px) {
+    height: 50vh;
   }
 `;
 
@@ -382,7 +392,6 @@ const IngredientFields = styled.div`
   flex-flow: column wrap;
   align-items: center;
   padding-bottom: 15%;
-
   div {
     width: 100%;
   }
@@ -406,14 +415,19 @@ const StepContainer = styled.div`
   display: flex;
   line-height: 2.25rem;
   margin-bottom: 2.5%;
-  margin-left: 6%;
+
   div {
     margin-right: 2%;
-  }
+  };
 
-  @media (max-width: 500px) {
-    margin-bottom: 6%;
-  }
+  @media (min-width: 500px) {
+    div {
+      margin-left: 4%;
+      margin-right: 0;
+      margin-bottom: 1%;
+      line-height: 2.5rem;
+    };
+  };
 `;
 
 export default RecipeCard;
