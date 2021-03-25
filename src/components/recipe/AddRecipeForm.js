@@ -122,7 +122,7 @@ const AddRecipeForm = (props) => {
       <InfoBox>
         <h3>Ingredients</h3>
         {formValues.ingredients.map((ing, index) => (
-          <IngredientFields>
+          <IngredientFields key={ing}>
             <div className="qty">
               <label>Qty
                 <input 
@@ -190,7 +190,7 @@ const AddRecipeForm = (props) => {
       <InfoBox>
         <h3>Steps</h3>
         {formValues.steps.map((stp, index) => (
-          <IngredientFields>
+          <IngredientFields key={stp}>
             <div className="step">
               <label>Step {stp.stepnumber}
                 <input 
