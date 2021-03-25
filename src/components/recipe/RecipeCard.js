@@ -182,7 +182,7 @@ function RecipeCard(props) {
             <h3>Ingredients</h3>
             {formValues.ingredients.map((ing, index) => (
               <>
-              <IngredientFields key={uuidv4()}>
+              <IngredientFields key={ing}>
                 <div className="qty">
                   <label>Qty<br/>
                     <input 
@@ -245,7 +245,7 @@ function RecipeCard(props) {
             <InfoBox>
             <h3>Steps</h3>
             {formValues.steps.map((stp, index) => (
-              <IngredientFields key={uuidv4()}>
+              <IngredientFields key={stp}>
                 <div className="step">
                   <label>Step {stp.stepnumber}
                     <input 
