@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import IngredientList from './IngredientList';
 import { useFormHelpers } from '../utils/useFormHelpers';
@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 function RecipeCard(props) {
   const { recipe, setClicked, recipeExpanded } = props;
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); 
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
 
@@ -32,7 +32,6 @@ function RecipeCard(props) {
 
   //Redux State Managers
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.recipes);
   
   useEffect(() => {
     schema.isValid(formValues).then(valid => {
@@ -44,6 +43,8 @@ function RecipeCard(props) {
      setGroups((Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup)))).sort());
   }, [recipe.ingredients]);
   
+
+ 
   //Edit Handler
   const handleEdit = (e) => {
     e.preventDefault();   
@@ -80,12 +81,11 @@ function RecipeCard(props) {
     //Dispatch action to edit/update recipe
     dispatch(recipeActions.editRecipe(recipe.recipeid, updatedRecipe));
 
-    if (status === "edit-recipe/success") {        
-      //Reinitialize form state
-      setFormValues(initialFormValues);
-      setIsEditing(!isEditing); 
-      setClicked(name);
-    };
+    //Reset forms and view
+    setFormValues(initialFormValues);
+    setIsEditing(!isEditing); 
+    setClicked(name);
+    
 
     // Scroll to top for Safari
     document.body.scrollTop = 0;
