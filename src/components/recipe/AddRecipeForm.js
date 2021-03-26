@@ -109,8 +109,7 @@ const AddRecipeForm = (props) => {
               />
             </label>
           </div>
-        </EditInfoBox>             
-        
+        </EditInfoBox>
         <ErrorMessages>
           <div>{errors.name}</div>
           <div>{errors.type}</div>
@@ -122,7 +121,7 @@ const AddRecipeForm = (props) => {
       <InfoBox>
         <h3>Ingredients</h3>
         {formValues.ingredients.map((ing, index) => (
-          <IngredientFields key={ing.name + index}>
+          <IngredientFields key={index}>
             <div className="qty">
               <label>Qty
                 <input 
@@ -190,7 +189,7 @@ const AddRecipeForm = (props) => {
       <InfoBox>
         <h3>Steps</h3>
         {formValues.steps.map((stp, index) => (
-          <IngredientFields key={stp.stepnumber + index}>
+          <IngredientFields key={index}>
             <div className="step">
               <label>Step {stp.stepnumber}
                 <input 
@@ -214,12 +213,12 @@ const AddRecipeForm = (props) => {
                 <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
               </div>
             </ButtonContainer>
+            <ErrorMessages>
+              {errors.instructions}
+            </ErrorMessages>
           </IngredientFields>
         ))}
-      </InfoBox>   
-      <ErrorMessages>
-        {errors.instructions}
-      </ErrorMessages>
+      </InfoBox>
       {enableSubmit ? <button className="disabled">Submit</button> :  <button className="addBtn" onClick={e => handleSubmit(e)}>Submit</button>}
     </FormContainer>
   )

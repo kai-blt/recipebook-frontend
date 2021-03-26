@@ -142,133 +142,149 @@ function RecipeCard(props) {
         : (
           <>
             {/* Recipe Title Forms */}
-            <EditInfoBox>
-              <div className="title">
-                <label>Title
-                  <input 
-                    type="text"
-                    name="name"
-                    value={formValues.name}
-                    onChange={handleChange}
-                  />
-                </label>  
-              </div>
-              <div className="type">
-                <label>Type
-                  <input 
-                    type="text"
-                    name="type"
-                    value={formValues.type}
-                    onChange={handleChange}
-                  />
-                </label>  
-              </div>
-              <div>
-                <label>Image URL
-                  <input 
-                    type="text"
-                    name="imageURL"
-                    value={formValues.imageURL}
-                    onChange={handleChange}
-                  />
-                </label>
-              </div> 
-            </EditInfoBox>     
-
-            {/* Ingredients Forms */}
             <InfoBox>
-            <h3>Ingredients</h3>
-            {formValues.ingredients.map((ing, index) => (
-              <>
-              <IngredientFields key={ing.name + index}>
-                <div className="qty">
-                  <label>Qty<br/>
+              <EditInfoBox>
+                <div className="title">
+                  <label>Title
                     <input 
                       type="text"
-                      name="quantity"
-                      value={ing.quantity}
-                      onChange={e => handleChange(e, index)}                      
+                      name="name"
+                      value={formValues.name}
+                      onChange={handleChange}
                     />
-                    </label>
+                  </label>  
                 </div>
-                <div className="msr">
-                  <label>Measure
+                <div className="type">
+                  <label>Type
                     <input 
                       type="text"
-                      name="measurement"
-                      value={ing.measurement}
-                      onChange={e => handleChange(e, index)}
+                      name="type"
+                      value={formValues.type}
+                      onChange={handleChange}
                     />
-                  </label>
+                  </label>  
                 </div>
-                <div className="ing">
-                  <label>Ingredient
+                <div>
+                  <label>Image URL
                     <input 
                       type="text"
-                      name="ingredientname"
-                      value={ing.name}
-                      onChange={e => handleChange(e, index)}
-                    />
-                  </label>
-                </div>       
-                <div className="grp">
-                  <label>Group
-                    <input 
-                      type="text"
-                      name="group"
-                      value={ing.ingredientgroup}
-                      onChange={e => handleChange(e, index)}
+                      name="imageURL"
+                      value={formValues.imageURL}
+                      onChange={handleChange}
                     />
                   </label>
                 </div> 
-                <ButtonContainer className="btns">
-                  {formValues.ingredients.length === 1
-                  ?
-                    <div></div>
-                  :
-                    <div>
-                      <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
-                    </div>
-                  }
-                  <div>
-                    <button className="addBtn" onClick={e => addIngredient(e, index)}>+</button>
+              </EditInfoBox>
+              <ErrorMessages>
+                <div>{errors.name}</div>
+                <div>{errors.type}</div>
+                <div>{errors.imageURL}</div>
+              </ErrorMessages>
+            </InfoBox>     
+
+            {/* Ingredients Forms */}
+            <InfoBox>
+              <h3>Ingredients</h3>
+              {formValues.ingredients.map((ing, index) => (
+                <>
+                <IngredientFields key={index}>
+                  <div className="qty">
+                    <label>Qty<br/>
+                      <input 
+                        type="text"
+                        name="quantity"
+                        value={ing.quantity}
+                        onChange={e => handleChange(e, index)}                      
+                      />
+                      </label>
                   </div>
-                </ButtonContainer>                 
-              </IngredientFields>
-              </>
-            ))}
+                  <div className="msr">
+                    <label>Measure
+                      <input 
+                        type="text"
+                        name="measurement"
+                        value={ing.measurement}
+                        onChange={e => handleChange(e, index)}
+                      />
+                    </label>
+                  </div>
+                  <div className="ing">
+                    <label>Ingredient
+                      <input 
+                        type="text"
+                        name="ingredientname"
+                        value={ing.name}
+                        onChange={e => handleChange(e, index)}
+                      />
+                    </label>
+                  </div>       
+                  <div className="grp">
+                    <label>Group
+                      <input 
+                        type="text"
+                        name="group"
+                        value={ing.ingredientgroup}
+                        onChange={e => handleChange(e, index)}
+                      />
+                    </label>
+                  </div> 
+                  <ButtonContainer className="btns">
+                    {formValues.ingredients.length === 1
+                    ?
+                      <div></div>
+                    :
+                      <div>
+                        <button className="deleteBtn2" onClick={e => delIngredient(e, index)}>-</button>
+                      </div>
+                    }
+                    <div>
+                      <button className="addBtn" onClick={e => addIngredient(e, index)}>+</button>
+                    </div>
+                  </ButtonContainer>                 
+                </IngredientFields>
+                </>
+              ))}
+              <ErrorMessages>
+                {errors.quantity}
+                {errors.measurement}
+                {errors.ingredientname}
+                {errors.group}
+              </ErrorMessages>
             </InfoBox>
 
             {/* Step Forms */}
             <InfoBox>
-            <h3>Steps</h3>
-            {formValues.steps.map((stp, index) => (
-              <IngredientFields key={stp.stepnumber + index}>
-                <div className="step">
-                  <label>Step {stp.stepnumber}
-                    <input 
-                      type="text"
-                      name="instructions"
-                      value={stp.instructions}
-                      onChange={e => handleChange(e, index)}
-                    />
-                  </label>
-                </div>
-                <ButtonContainer className="btns">
-                  {formValues.steps.length === 1
-                  ?
-                    <div></div>
-                  :
-                    <div>
-                      <button className="deleteBtn2" onClick={e => delStep(e, index)}>-</button>
-                    </div>
-                  }
-                  <div>
-                    <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
+              <h3>Steps</h3>
+              {formValues.steps.map((stp, index) => (
+                <IngredientFields key={index}>
+                  <div className="step">
+                    <label>Step {stp.stepnumber}
+                      <input 
+                        type="text"
+                        name="instructions"
+                        value={stp.instructions}
+                        onChange={e => handleChange(e, index)}
+                      />
+                    </label>
                   </div>
-                </ButtonContainer>
-              </IngredientFields>
-            ))}
+                  <ButtonContainer className="btns">
+                    {formValues.steps.length === 1
+                    ?
+                      <div></div>
+                    :
+                      <div>
+                        <button className="deleteBtn2" onClick={e => delStep(e, index)}>-</button>
+                      </div>
+                    }
+                    <div>
+                      <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
+                    </div>
+                  </ButtonContainer>
+                  <ErrorMessages>
+                    {errors.instructions}
+                  </ErrorMessages>
+                </IngredientFields>
+              ))}
             </InfoBox>
             <ButtonContainer>
               <button className="deleteBtn" onClick={deleteRecipe}>Delete</button>
@@ -426,6 +442,10 @@ const StepContainer = styled.div`
       line-height: 2.5rem;
     };
   };
+`;
+
+const ErrorMessages = styled.div`
+  color: #d9534f;
 `;
 
 export default RecipeCard;

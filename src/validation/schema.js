@@ -21,5 +21,5 @@ export default yup.object().shape({
     .string(),
   instructions: yup
     .string()
-    
+    .max(2000, "Instructions must be under 2000 characters")
 });
