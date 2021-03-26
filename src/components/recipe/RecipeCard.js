@@ -98,6 +98,7 @@ function RecipeCard(props) {
     e.preventDefault();
 
     dispatch(recipeActions.deleteRecipe(recipe.recipeid));    
+    setClicked("");
     
     // Scroll to top for Safari
     document.body.scrollTop = 0;
