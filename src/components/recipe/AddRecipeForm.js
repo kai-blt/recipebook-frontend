@@ -109,8 +109,7 @@ const AddRecipeForm = (props) => {
               />
             </label>
           </div>
-        </EditInfoBox>             
-        
+        </EditInfoBox>
         <ErrorMessages>
           <div>{errors.name}</div>
           <div>{errors.type}</div>
@@ -214,12 +213,12 @@ const AddRecipeForm = (props) => {
                 <button className="addBtn" onClick={e => addStep(e, index)}>+</button>
               </div>
             </ButtonContainer>
+            <ErrorMessages>
+              {errors.instructions}
+            </ErrorMessages>
           </IngredientFields>
         ))}
-      </InfoBox>   
-      <ErrorMessages>
-        {errors.instructions}
-      </ErrorMessages>
+      </InfoBox>
       {enableSubmit ? <button className="disabled">Submit</button> :  <button className="addBtn" onClick={e => handleSubmit(e)}>Submit</button>}
     </FormContainer>
   )
