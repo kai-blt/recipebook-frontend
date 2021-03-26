@@ -69,9 +69,12 @@ export const useFormHelpers = () => {
         setErrors({...errors, [e.target.name]: err.errors[0] })
       });
 
+    console.log(e.target)
+
     switch(e.target.name) {
       case "ingredientname":
         const newIngName = [ ...formValues.ingredients ];
+        console.log(newIngName)
         newIngName[index].name = e.target.value;
         setFormValues({...formValues, ingredients: newIngName });
         break;
