@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import IngredientList from './IngredientList';
 import { useFormHelpers } from '../utils/useFormHelpers';
 
-
-import  { v4 as uuidv4 } from "uuid";
 import * as yup from 'yup';
 import schema from '../../validation/schema';
 import styled from 'styled-components';
@@ -13,7 +11,7 @@ import styled from 'styled-components';
 
 function RecipeCard(props) {
   const { recipe, setClicked, recipeExpanded } = props;
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); 
   const [enableSubmit, setEnableSubmit] = useState(true);
   const [groups, setGroups] = useState(Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup))));
 
@@ -34,7 +32,6 @@ function RecipeCard(props) {
 
   //Redux State Managers
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.recipes);
   
   useEffect(() => {
     schema.isValid(formValues).then(valid => {
@@ -46,6 +43,8 @@ function RecipeCard(props) {
      setGroups((Array.from(new Set(recipe.ingredients.map(ing => ing.ingredientgroup)))).sort());
   }, [recipe.ingredients]);
   
+
+ 
   //Edit Handler
   const handleEdit = (e) => {
     e.preventDefault();   
@@ -82,12 +81,11 @@ function RecipeCard(props) {
     //Dispatch action to edit/update recipe
     dispatch(recipeActions.editRecipe(recipe.recipeid, updatedRecipe));
 
-    if (status === "edit-recipe/success") {        
-      //Reinitialize form state
-      setFormValues(initialFormValues);
-      setClicked(name);
-      setIsEditing(!isEditing);      
-    };
+    //Reset forms and view
+    setFormValues(initialFormValues);
+    setIsEditing(!isEditing); 
+    setClicked(name);
+    
 
     // Scroll to top for Safari
     document.body.scrollTop = 0;
@@ -133,11 +131,11 @@ function RecipeCard(props) {
             {!recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
             <InfoBox>
               <h3>Ingredients</h3>            
-              {groups.map(grp => <IngredientList key={uuidv4()} group={grp} ingredients={recipe.ingredients} /> )}
+              {groups.map((grp, index) => <IngredientList key={grp + index} group={grp} ingredients={recipe.ingredients} /> )}
             </InfoBox>
             <InfoBox>
               <h3>Steps</h3>
-              {recipe.steps.sort((a, b) => a.stepnumber - b.stepnumber).map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
+              {recipe.steps.sort((a, b) => a.stepnumber - b.stepnumber).map((stp, index) => <StepContainer key={stp.stepnumber + index}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
             </InfoBox>
           </>
         )
@@ -182,7 +180,7 @@ function RecipeCard(props) {
             <h3>Ingredients</h3>
             {formValues.ingredients.map((ing, index) => (
               <>
-              <IngredientFields key={ing}>
+              <IngredientFields key={ing.name + index}>
                 <div className="qty">
                   <label>Qty<br/>
                     <input 
@@ -245,7 +243,7 @@ function RecipeCard(props) {
             <InfoBox>
             <h3>Steps</h3>
             {formValues.steps.map((stp, index) => (
-              <IngredientFields key={stp}>
+              <IngredientFields key={stp.stepnumber + index}>
                 <div className="step">
                   <label>Step {stp.stepnumber}
                     <input 

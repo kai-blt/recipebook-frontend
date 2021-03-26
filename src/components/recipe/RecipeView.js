@@ -35,20 +35,21 @@ function RecipeView(props) {
     dispatch(recipeActions.getRecipes());
   }, [dispatch]);     
 
-  
-  switch(status) {
-    case "add-recipe/success":
-      dispatch(recipeActions.getRecipes());
-      break;
-    case "delete-recipe/success":
-      dispatch(recipeActions.getRecipes());
-      break;
-    case "edit-recipe/success":
-      dispatch(recipeActions.getRecipes());
-      break;
-    default:
-      break;
-  };
+  useEffect(() => {
+    switch(status) {
+      case "add-recipe/success":
+        dispatch(recipeActions.getRecipes());
+        break;
+      case "delete-recipe/success":
+        dispatch(recipeActions.getRecipes());
+        break;
+      case "edit-recipe/success":
+        dispatch(recipeActions.getRecipes());
+        break;
+      default:
+        break;
+    };
+  },[dispatch, status]);
   
 
   const onChange = (e) => {

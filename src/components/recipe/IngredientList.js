@@ -1,5 +1,4 @@
 import React from 'react';
-import  { v4 as uuidv4 } from "uuid";
 import styled from 'styled-components';
 
 
@@ -14,9 +13,9 @@ function IngredientList(props) {
         : <h4>{`${group}`}</h4>
       }
      
-      {ingredients.map(ing => ing.ingredientgroup === group
+      {ingredients.map((ing, index) => ing.ingredientgroup === group
           ? 
-           (<div key={uuidv4()}>
+           (<div key={ing.name + index}>
               <strong>{ing.quantity !== "" ? ing.quantity : null} {ing.measurement}</strong> {ing.name}
             </div>)
           : null)
