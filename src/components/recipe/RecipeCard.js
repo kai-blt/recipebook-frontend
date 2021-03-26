@@ -4,8 +4,6 @@ import { recipeActions } from '../../state/ducks';
 import IngredientList from './IngredientList';
 import { useFormHelpers } from '../utils/useFormHelpers';
 
-
-import  { v4 as uuidv4 } from "uuid";
 import * as yup from 'yup';
 import schema from '../../validation/schema';
 import styled from 'styled-components';
@@ -85,8 +83,8 @@ function RecipeCard(props) {
     if (status === "edit-recipe/success") {        
       //Reinitialize form state
       setFormValues(initialFormValues);
+      setIsEditing(!isEditing); 
       setClicked(name);
-      setIsEditing(!isEditing);      
     };
 
     // Scroll to top for Safari
@@ -133,11 +131,11 @@ function RecipeCard(props) {
             {!recipeExpanded && <ImageContainer background={recipe.imageURL}/>}
             <InfoBox>
               <h3>Ingredients</h3>            
-              {groups.map(grp => <IngredientList key={uuidv4()} group={grp} ingredients={recipe.ingredients} /> )}
+              {groups.map((grp, index) => <IngredientList key={grp + index} group={grp} ingredients={recipe.ingredients} /> )}
             </InfoBox>
             <InfoBox>
               <h3>Steps</h3>
-              {recipe.steps.sort((a, b) => a.stepnumber - b.stepnumber).map(stp => <StepContainer key={uuidv4()}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
+              {recipe.steps.sort((a, b) => a.stepnumber - b.stepnumber).map((stp, index) => <StepContainer key={stp.stepnumber + index}><div><strong>{stp.stepnumber}.</strong></div><div>{stp.instructions}</div></StepContainer>)}
             </InfoBox>
           </>
         )
@@ -182,7 +180,7 @@ function RecipeCard(props) {
             <h3>Ingredients</h3>
             {formValues.ingredients.map((ing, index) => (
               <>
-              <IngredientFields key={ing}>
+              <IngredientFields key={ing.name + index}>
                 <div className="qty">
                   <label>Qty<br/>
                     <input 
@@ -245,7 +243,7 @@ function RecipeCard(props) {
             <InfoBox>
             <h3>Steps</h3>
             {formValues.steps.map((stp, index) => (
-              <IngredientFields key={stp}>
+              <IngredientFields key={stp.stepnumber + index}>
                 <div className="step">
                   <label>Step {stp.stepnumber}
                     <input 
