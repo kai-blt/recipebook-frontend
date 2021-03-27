@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import { useFormHelpers } from '../utils/useFormHelpers';
@@ -28,7 +28,7 @@ const AddRecipeForm = (props) => {
   
   useEffect(() => {
     schema.isValid(formValues)
-      .then(valid => {
+      .then(valid => {        
         setEnableSubmit(!valid);
       });
   }, [formValues]); 
@@ -65,7 +65,7 @@ const AddRecipeForm = (props) => {
   };
 
   
-
+  const form = useRef();
   return (
     <FormContainer>
       <RecipeTitle>
@@ -86,6 +86,8 @@ const AddRecipeForm = (props) => {
                 name="name"
                 value={formValues.name}
                 onChange={handleChange}
+                minLength="3"
+                required
               />
             </label>  
           </div>
