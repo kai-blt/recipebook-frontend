@@ -153,6 +153,10 @@ export default createGlobalStyle`
     width: 100%;
     border: 1px solid #999;
     border-radius: 6px;
+    
+    &:invalid {
+      border: 2px solid red;
+    }
   }
 
   form {
