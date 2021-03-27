@@ -36,7 +36,6 @@ const AddRecipeForm = (props) => {
   
   const handleSubmit = (e) => {
     e.preventDefault();   
-    form.current.reportValidity()
 
     //Create new recipe object
     const { name, type, imageURL, ingredients, steps } = formValues;
@@ -69,7 +68,6 @@ const AddRecipeForm = (props) => {
   const form = useRef();
   return (
     <FormContainer>
-      <form ref={form}>
       <RecipeTitle>
         <div>
           <h2>{formValues.name || <br/>}</h2>
@@ -224,7 +222,6 @@ const AddRecipeForm = (props) => {
         ))}
       </InfoBox>
       {enableSubmit ? <button className="disabled">Submit</button> :  <button className="addBtn" onClick={e => handleSubmit(e)}>Submit</button>}
-      </form>
     </FormContainer>
   )
 }
