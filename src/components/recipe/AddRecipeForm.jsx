@@ -27,12 +27,9 @@ const AddRecipeForm = (props) => {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    console.log(formValues)
     schema.isValid(formValues)
-      .then(valid => {
-        console.log(valid, enableSubmit)
-        
-        setEnableSubmit(valid);
+      .then(valid => {        
+        setEnableSubmit(!valid);
       });
   }, [formValues]); 
 
