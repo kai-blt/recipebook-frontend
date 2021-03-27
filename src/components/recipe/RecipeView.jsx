@@ -7,7 +7,6 @@ import {
   RecipeCard,
   AddRecipeForm 
 } from '.';
-import { v4 as uuidv4 } from 'uuid';
 import spinner from '../../assets/spinner.gif';
 import { 
   CgArrowsExpandDownRight,
@@ -155,12 +154,12 @@ function RecipeView(props) {
                 ? recipes 
                   ? recipes
                     .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                    .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={gridViewClick}/>) 
+                    .map(recipe => <RecipeThumbnailGrid key={recipe.recipeid} recipe={recipe} onClick={gridViewClick}/>) 
                   : <div><Spinner src={spinner} alt="spinner"/></div>
                 : recipes 
                   ? recipes
                     .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
-                    .map(recipe => <RecipeThumbnailGrid key={uuidv4()} recipe={recipe} onClick={gridViewClick}/>) 
+                    .map(recipe => <RecipeThumbnailGrid key={recipe.recipeid} recipe={recipe} onClick={gridViewClick}/>) 
                   : <div><Spinner src={spinner} alt="spinner"/></div>
               }  
               </GridView>
@@ -179,7 +178,7 @@ function RecipeView(props) {
                       {clicked
                         ? recipes
                           .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                          .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} recipeExpanded={recipeExpanded} />)
+                          .map(recipe => <RecipeCard key={recipe.recipeid} recipe={recipe} setClicked={setClicked} recipeExpanded={recipeExpanded} />)
                         : null
                       }   
                     </RecipeDirectionsExpanded>        
@@ -222,12 +221,12 @@ function RecipeView(props) {
                   ? recipes 
                     ? recipes
                       .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                      .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                      .map(recipe => <RecipeThumbnail key={recipe.recipeid} recipe={recipe} onClick={handleClick}/>) 
                     : <div><Spinner src={spinner} alt="spinner"/></div>
                   : recipes 
                     ? recipes
                       .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
-                      .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                      .map(recipe => <RecipeThumbnail key={recipe.recipeid} recipe={recipe} onClick={handleClick}/>) 
                     : <div><Spinner src={spinner} alt="spinner"/></div>
                 }  
               </RecipeListPane>   
@@ -243,7 +242,7 @@ function RecipeView(props) {
                     {clicked
                       ? recipes
                         .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                        .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} recipeExpanded={recipeExpanded} />)
+                        .map(recipe => <RecipeCard key={recipe.recipeid} recipe={recipe} setClicked={setClicked} recipeExpanded={recipeExpanded} />)
                       : null
                     }   
                   </RecipeDirectionsPane>        
@@ -314,18 +313,18 @@ function RecipeView(props) {
               ? clicked
                 ? recipes
                   .filter(recipe => recipe.name.match(new RegExp(`^${clicked}$`, "i")))
-                  .map(recipe => <RecipeCard key={uuidv4()} recipe={recipe} setClicked={setClicked} />)
+                  .map(recipe => <RecipeCard key={recipe.recipeid} recipe={recipe} setClicked={setClicked} />)
                 :  null
               : searchToggle
                 ? recipes 
                   ? recipes
                     .filter(recipe => recipe.name.match(new RegExp(`${search}`, "i")))
-                    .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                    .map(recipe => <RecipeThumbnail key={recipe.recipeid} recipe={recipe} onClick={handleClick}/>) 
                   : <div><Spinner src={spinner} alt="spinner"/></div>
                 : recipes 
                   ? recipes
                     .filter(recipe => recipe.ingredients.some(ing => ing.name.match(new RegExp(`${search}`, "i"))))
-                    .map(recipe => <RecipeThumbnail key={uuidv4()} recipe={recipe} onClick={handleClick}/>) 
+                    .map(recipe => <RecipeThumbnail key={recipe.recipeid} recipe={recipe} onClick={handleClick}/>) 
                   : <div><Spinner src={spinner} alt="spinner"/></div>
           }
         </RecipeListPane>     
