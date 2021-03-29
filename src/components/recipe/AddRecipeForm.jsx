@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { recipeActions } from '../../state/ducks';
 import { useFormHelpers } from '../utils/useFormHelpers';
@@ -25,6 +25,16 @@ const AddRecipeForm = (props) => {
 
   //Redux State Managers
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setFormValues({
+      name: "(Enter Title)",
+      type: "(Enter Type)",
+      imageURL: "",
+      ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
+      steps: [{stepnumber: 1, instructions: ""}]
+    });
+  },[setFormValues])
   
   useEffect(() => {
     schema.isValid(formValues)
@@ -65,7 +75,6 @@ const AddRecipeForm = (props) => {
   };
 
   
-  const form = useRef();
   return (
     <FormContainer>
       <RecipeTitle>
