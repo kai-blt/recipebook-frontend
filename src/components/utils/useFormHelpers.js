@@ -27,11 +27,11 @@ export const useFormHelpers = () => {
   const [formValues, setFormValues] = useState(initialFormValues);  
   const [errors, setErrors] = useState(initialErrors);
 
-
   const addIngredient = (e, index) => {
     e.preventDefault();
-    formValues.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
-    setFormValues({ ...formValues, formValues });
+    const newIng = { ...formValues };
+    newIng.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
+    setFormValues(newIng);
   };
 
   
