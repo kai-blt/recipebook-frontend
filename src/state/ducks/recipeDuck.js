@@ -1,4 +1,6 @@
+import axios from 'axios';
 import axiosWithAuth from '../../axios/axiosWithAuth';
+const { REACT_APP_SEARCH_URL, REACT_APP_API_KEY, REACT_APP_SEARCH_CX } = process.env;
 
 /******************************************************
  * USER ACTION TYPES
@@ -22,6 +24,11 @@ export const DELETE_RECIPE_START = 'DELETE_RECIPE_START';
 export const DELETE_RECIPE_SUCCESS = 'DELETE_RECIPE_SUCCESS';
 export const DELETE_RECIPE_FAIL = 'DELETE_RECIPE_FAIL';
 export const DELETE_RECIPE_RESOLVE = 'DELETE_RECIPE_RESOLVE';
+
+export const SEARCH_IMAGE_START = 'SEARCH_IMAGE_START';
+export const SEARCH_IMAGE_SUCCESS = 'SEARCH_IMAGE_SUCCESS';
+export const SEARCH_IMAGE_FAIL = 'SEARCH_IMAGE_FAIL';
+export const SEARCH_IMAGE_RESOLVE = 'SEARCH_IMAGE_RESOLVE';
 
 
 
@@ -84,7 +91,19 @@ export const recipeActions = {
     .finally(() => dispatch({ type: DELETE_RECIPE_RESOLVE }));
   },
 
-  
+   // SEARCH IMAGE
+   searchImage: (imageQuery) => dispatch => {
+    dispatch({ type: SEARCH_IMAGE_START });
+
+    axios
+    .get(`${REACT_APP_SEARCH_URL}?key=${REACT_APP_API_KEY}&cx=${REACT_APP_SEARCH_CX}&q=${imageQuery}&searchType=image`)
+    .then(res => {
+      console.log(res.data.items)
+      dispatch({ type: SEARCH_IMAGE_SUCCESS, payload: res.data.items });
+    })
+    .catch(err => dispatch({ type: SEARCH_IMAGE_FAIL }))
+    .finally(() => dispatch({ type: SEARCH_IMAGE_RESOLVE }));
+  },
 
 };
 
@@ -93,6 +112,7 @@ export const recipeActions = {
  ******************************************************/
 export const recipeInitialState = {
   recipes: [],
+  imageSearch: [],
   status: 'idle',
 };
 
@@ -157,6 +177,21 @@ const recipeReducer = (state = recipeInitialState, action) => {
   case DELETE_RECIPE_FAIL:
     return { ...state, status: 'delete-recipe/error', error: action.payload };
   case DELETE_RECIPE_RESOLVE:
+    return { ...state, status: 'idle' };
+
+  // SEARCH IMAGE
+  case SEARCH_IMAGE_START:
+    return { ...state, status: 'search-image/pending' };
+  case SEARCH_IMAGE_SUCCESS:
+    return {
+    ...state,
+    imageSearch: action.payload,
+    status: 'search-image/success',
+    error: ''
+    };
+  case SEARCH_IMAGE_FAIL:
+    return { ...state, status: 'search-image/error', error: action.payload };
+  case SEARCH_IMAGE_RESOLVE:
     return { ...state, status: 'idle' };
 
   // DEFAULT

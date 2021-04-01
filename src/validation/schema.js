@@ -11,6 +11,8 @@ export default yup.object().shape({
   imageURL: yup
     .string()
     .url("Please enter a valid url"),   
+  imageSearch: yup
+    .string(),   
   quantity: yup
     .string(),
   measurement: yup

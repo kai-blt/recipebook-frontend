@@ -74,6 +74,10 @@ const AddRecipeForm = (props) => {
     document.documentElement.scrollTop = 0;
   };
 
+  const searchImages = (e) => {
+    e.preventDefault();
+    dispatch(recipeActions.searchImage(formValues.imageSearch))
+  }
   
   return (
     <FormContainer>
@@ -119,6 +123,17 @@ const AddRecipeForm = (props) => {
                 onChange={handleChange}
               />
             </label>
+          </div>
+          <div>
+            <label>Image Search
+              <input 
+                type="text"
+                name="imageSearch"
+                value={formValues.imageSearch}
+                onChange={handleChange}
+              />
+            </label>
+            <button onClick={e => searchImages(e)}>Search</button>
           </div>
         </EditInfoBox>
         <ErrorMessages>

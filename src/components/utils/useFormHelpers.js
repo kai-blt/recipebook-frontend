@@ -7,6 +7,7 @@ export const initialFormValues = {
   name: "(Enter Title)",
   type: "(Enter Type)",
   imageURL: "",
+  imageSearch: "",
   ingredients: [{ quantity: "", measurement: "", name: "", ingredientgroup: "" }],
   steps: [{stepnumber: 1, instructions: ""}]
 };
@@ -15,6 +16,7 @@ export const initialErrors = {
   name: "",
   type: "",
   imageURL: "",
+  imageSearch: "",
   quantity: "",
   ingredientname: "",
   measurement: "",
