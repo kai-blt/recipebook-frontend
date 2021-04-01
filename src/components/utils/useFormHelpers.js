@@ -29,33 +29,34 @@ export const useFormHelpers = () => {
 
   const addIngredient = (e, index) => {
     e.preventDefault();
-    const newIng = { ...formValues };
-    newIng.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
-    setFormValues(newIng);
+    const addIngredients = { ...formValues };
+    addIngredients.ingredients.splice(index + 1, 0, {quantity: "", measurement: "", name: "", ingredientgroup: ""});
+    setFormValues(addIngredients);
   };
 
   
   const delIngredient = (e, ingIndex) => {
     e.preventDefault();
     if (formValues.ingredients.length !== 1) {
-        const newList = formValues.ingredients.filter((ing, index)=> index !== ingIndex); 
-        setFormValues({ ...formValues, ingredients: newList });
+        const delIngredient = formValues.ingredients.filter((ing, index)=> index !== ingIndex); 
+        setFormValues({ ...formValues, ingredients: delIngredient });
     };
   };
 
   const addStep = (e, index) => {
     e.preventDefault();
-    formValues.steps.splice(index + 1, 0, {stepnumber: index + 1, instructions: ""});
-    formValues.steps.map((step, index) => step.stepnumber = index + 1);
-    setFormValues({ ...formValues, formValues });
+    const addSteps = { ...formValues };
+    addSteps.steps.splice(index + 1, 0, {stepnumber: index + 1, instructions: ""});
+    addSteps.steps.map((step, index) => step.stepnumber = index + 1);
+    setFormValues(addSteps);
   };
 
   const delStep = (e, stpIndex) => {
     e.preventDefault();
     if (formValues.steps.length !== 1) {
-        const newList = formValues.steps.filter((stp, index) => index !== stpIndex);  
-        newList.map((step, index) => step.stepnumber = index + 1);
-        setFormValues({ ...formValues, steps: newList });  
+        const delSteps = formValues.steps.filter((stp, index) => index !== stpIndex);  
+        delSteps.map((step, index) => step.stepnumber = index + 1);
+        setFormValues({ ...formValues, steps: delSteps });  
     };
   };
 
